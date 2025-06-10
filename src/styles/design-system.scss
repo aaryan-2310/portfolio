@@ -1,0 +1,115 @@
+// src/styles/design-system.scss
+
+// 1. Color Palette
+$color-primary: #1F2937;
+$color-accent: #10B981;
+$color-text-light: #F9FAFB;
+$color-surface: #374151;
+$color-border: #4B5563;
+$color-warning: #F59E0B;
+$color-success: #84CC16;
+$color-error: #F87171;
+
+// 2. Typography
+$font-primary: 'Inter', sans-serif;
+$font-secondary: 'Space Grotesk', sans-serif;
+
+$heading-1: 48px;
+$heading-2: 36px;
+$heading-3: 28px;
+$body-large: 18px;
+$body-medium: 16px;
+$caption: 14px;
+
+// 3. Spacing Scale
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 48px;
+
+// 4. Border Radius
+$radius-small: 8px;
+$radius-medium: 12px;
+$radius-large: 16px;
+$radius-round: 9999px;
+
+// 5. Box Shadow
+$shadow-card: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+// 6. Buttons
+.button {
+  font-family: $font-primary;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-medium;
+  font-size: $body-medium;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &--primary {
+    background-color: $color-accent;
+    color: $color-text-light;
+    border: none;
+
+    &:hover {
+      background-color: lighten($color-accent, 5%);
+      transform: scale(1.02);
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    color: $color-accent;
+    border: 1px solid $color-accent;
+
+    &:hover {
+      background-color: rgba($color-accent, 0.1);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: $color-border;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// 7. Card Component
+.card {
+  background-color: $color-surface;
+  padding: $spacing-lg;
+  border-radius: $radius-medium;
+  box-shadow: $shadow-card;
+  color: $color-text-light;
+}
+
+// 8. Input Fields
+.input {
+  height: 44px;
+  padding: 0 $spacing-md;
+  border: 1px solid $color-border;
+  background-color: $color-surface;
+  color: $color-text-light;
+  font-family: $font-primary;
+  border-radius: $radius-small;
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+  }
+}
+
+// 9. Chip Component
+.chip {
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  background-color: $color-surface;
+  color: $color-text-light;
+  border-radius: $radius-round;
+  font-size: $caption;
+  font-weight: 500;
+}

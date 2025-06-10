@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+@use './colors' as *;
+
+html {
+  color-scheme: dark;
+  @include mat.theme((
+    color: $color-accent,
+    typography: Roboto,
+    density: 0
+  ));
+}

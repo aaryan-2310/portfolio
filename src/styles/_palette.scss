@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@use './colors' as *;
+
+$my-primary: (
+  500: $color-primary,
+  contrast: (500: white)
+);
+
+$my-accent: (
+  500: $color-accent,
+  contrast: (500: white)
+);
+
+$my-warn: (
+  500: $color-warning,
+  contrast: (500: black)
+);
