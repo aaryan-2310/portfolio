@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemeService } from '../theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,7 +27,13 @@ export class LayoutComponent {
   currentYear = new Date().getFullYear();
   isMenuOpen = false;
 
+  constructor(private theme: ThemeService) {}
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleTheme() {
+    this.theme.toggle();
   }
 }

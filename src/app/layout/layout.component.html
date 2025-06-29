@@ -27,6 +27,10 @@
       <mat-icon>menu</mat-icon>
     </button>
 
+    <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle theme">
+      <mat-icon>brightness_6</mat-icon>
+    </button>
+
     <mat-menu #menu="matMenu">
       <a mat-menu-item routerLink="/home" routerLinkActive="active">
         <mat-icon>home</mat-icon>
