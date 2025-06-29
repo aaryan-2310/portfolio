@@ -17,6 +17,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The tests run in a headless Chrome browser. Ensure Chrome is installed or set the
+`CHROME_BIN` environment variable to the path of a Chrome/Chromium executable.
 
 ## Running end-to-end tests
 
