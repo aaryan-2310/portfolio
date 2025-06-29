@@ -2,6 +2,37 @@
 @use "./generated/themes/dark/green/_theme-colors" as green-theme-colors;
 @use "./colors" as colors;
 
+// Define theme-specific CSS variable sets
+$light-vars: (
+  surface: #ffffff,
+  on-surface: #1f2937,
+  primary: #10b981,
+  on-primary: #ffffff,
+  accent: #10b981,
+  surface-variant: #f0f0f0,
+  on-surface-variant: #4b5563,
+  outline: #d1d5db,
+  border: #e5e7eb,
+);
+
+$dark-vars: (
+  surface: #181818,
+  on-surface: #f9fafb,
+  primary: #10b981,
+  on-primary: #000000,
+  accent: #10b981,
+  surface-variant: #374151,
+  on-surface-variant: #a0aec0,
+  outline: #4b5563,
+  border: #333333,
+);
+
+@mixin theme-vars($map) {
+  @each $name, $value in $map {
+    --theme-#{$name}: #{$value};
+  }
+}
+
 $light-theme: mat.define-theme(
   (
     color: (
@@ -35,10 +66,12 @@ html {
       container-text-color: colors.$color-accent,
     )
   );
+  @include theme-vars($light-vars);
 }
 
 html[data-theme='dark'] {
   @include mat.theme($dark-theme);
+  @include theme-vars($dark-vars);
 }
 
 // .custom-theme {
