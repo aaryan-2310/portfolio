@@ -9,8 +9,8 @@
   margin: 16px 0;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background: var(--mdc-theme-surface, var(--mat-card-background, #fff));
-  color: var(--mdc-theme-on-surface, var(--mat-card-text, #222));
+  background: var(--theme-surface, var(--mat-card-background, #fff));
+  color: var(--theme-on-surface, var(--mat-card-text, #222));
   transition:
     transform 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
@@ -23,7 +23,7 @@
 
 mat-card-header {
   padding: 16px;
-  background: var(--mdc-theme-surface-variant, rgba(0, 0, 0, 0.02));
+  background: var(--theme-surface-variant, rgba(0, 0, 0, 0.02));
   border-radius: 12px 12px 0 0;
 
   .header-content {
@@ -35,7 +35,7 @@ mat-card-header {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--mdc-theme-primary, #1976d2);
+  color: var(--theme-primary, #1976d2);
 }
 
 .date-range {
@@ -43,7 +43,7 @@ mat-card-header {
   align-items: center;
   gap: 8px;
   margin-top: 8px;
-  color: var(--mdc-theme-on-surface-variant, rgba(0, 0, 0, 0.6));
+  color: var(--theme-on-surface-variant, rgba(0, 0, 0, 0.6));
   font-size: 0.9rem;
 
   .date-icon {
@@ -63,7 +63,7 @@ mat-card-content {
   h4 {
     margin: 0 0 16px;
     font-size: 1.1rem;
-    color: var(--mdc-theme-on-surface, #222);
+    color: var(--theme-on-surface, #222);
   }
 
   ul {
@@ -85,7 +85,7 @@ mat-card-content {
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background-color: var(--mdc-theme-primary, #1976d2);
+        background-color: var(--theme-primary, #1976d2);
       }
     }
   }
@@ -95,7 +95,7 @@ mat-card-content {
   h4 {
     margin: 0 0 16px;
     font-size: 1.1rem;
-    color: var(--mdc-theme-on-surface, #222);
+    color: var(--theme-on-surface, #222);
   }
 }
 
@@ -108,8 +108,8 @@ mat-card-content {
 .tech-chip {
   padding: 6px 12px;
   border-radius: 16px;
-  background-color: var(--mdc-theme-primary, #1976d2);
-  color: var(--mdc-theme-on-primary, #fff);
+  background-color: var(--theme-primary, #1976d2);
+  color: var(--theme-on-primary, #fff);
   font-size: 0.875rem;
   transition: transform 0.2s ease;
 
@@ -185,11 +185,11 @@ mat-card-content {
   }
 
   .mat-step-icon-selected {
-    background-color: var(--mdc-theme-primary) !important;
+    background-color: var(--theme-primary) !important;
   }
 
   .mat-step-icon-state-edit {
-    background-color: var(--mdc-theme-primary) !important;
+    background-color: var(--theme-primary) !important;
     content: none !important;
   }
 }
@@ -200,34 +200,34 @@ mat-card-content {
 
   .mat-vertical-stepper-header {
     background: transparent;
-    color: var(--mdc-theme-on-surface, #222);
+    color: var(--theme-on-surface, #222);
     font-weight: 500;
     
     &.cdk-focused, &.cdk-program-focused, &:hover {
-      color: var(--mdc-theme-primary, #1976d2);
+      color: var(--theme-primary, #1976d2);
     }
   }
 
   .mat-step-icon, .mat-step-icon-selected, .mat-step-icon-state-edit, .mat-step-icon-state-done, .mat-step-icon-state-number {
-    background: var(--mdc-theme-surface, #fff);
-    color: var(--mdc-theme-primary, #1976d2);
-    border: 1.5px solid var(--mdc-theme-primary, #1976d2);
+    background: var(--theme-surface, #fff);
+    color: var(--theme-primary, #1976d2);
+    border: 1.5px solid var(--theme-primary, #1976d2);
     font-weight: bold;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   }
 
   .mat-step-icon-selected {
-    background: var(--mdc-theme-primary, #1976d2);
-    color: var(--mdc-theme-on-primary, #fff);
-    border-color: var(--mdc-theme-primary, #1976d2);
+    background: var(--theme-primary, #1976d2);
+    color: var(--theme-on-primary, #fff);
+    border-color: var(--theme-primary, #1976d2);
   }
 
   .mat-step-label {
-    color: var(--mdc-theme-on-surface, #222);
+    color: var(--theme-on-surface, #222);
   }
 
   .mat-step-label-active {
-    color: var(--mdc-theme-primary, #1976d2);
+    color: var(--theme-primary, #1976d2);
     font-weight: 600;
   }
 }
@@ -235,26 +235,26 @@ mat-card-content {
 // Material stepper overrides for strong visibility
 :host ::ng-deep .mat-vertical-stepper-header {
   background: transparent !important;
-  color: var(--mdc-theme-on-surface, #222) !important;
+  color: var(--theme-on-surface, #222) !important;
   font-weight: 500;
 }
 :host ::ng-deep .mat-step-icon {
-  background: var(--mdc-theme-surface, #fff) !important;
-  color: var(--mdc-theme-primary, #10b981) !important;
-  border: 2px solid var(--mdc-theme-primary, #10b981) !important;
+  background: var(--theme-surface, #fff) !important;
+  color: var(--theme-primary, #10b981) !important;
+  border: 2px solid var(--theme-primary, #10b981) !important;
   // font-weight: bold;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 :host ::ng-deep .mat-step-icon-selected {
-  background: var(--mdc-theme-primary, #10b981) !important;
-  color: var(--mdc-theme-on-primary, #fff) !important;
-  border-color: var(--mdc-theme-primary, #10b981) !important;
+  background: var(--theme-primary, #10b981) !important;
+  color: var(--theme-on-primary, #fff) !important;
+  border-color: var(--theme-primary, #10b981) !important;
 }
 :host ::ng-deep .mat-step-label {
-  color: var(--mdc-theme-on-surface, #222) !important;
+  color: var(--theme-on-surface, #222) !important;
 }
 :host ::ng-deep .mat-step-label-active {
-  color: var(--mdc-theme-primary, #10b981) !important;
+  color: var(--theme-primary, #10b981) !important;
   font-weight: 600;
 }
 :host ::ng-deep .stepper-company-icon {
@@ -262,8 +262,8 @@ mat-card-content {
   height: 22px;
   object-fit: contain;
   border-radius: 4px;
-  background: var(--mdc-theme-surface, #fff);
-  border: 2px solid var(--mdc-theme-primary, #10b981);
+  background: var(--theme-surface, #fff);
+  border: 2px solid var(--theme-primary, #10b981);
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   display: inline-block;
   vertical-align: middle;

@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
       margin: 0 auto;
     }
     h1 {
-      color: var(--mdc-theme-primary);
+      color: var(--theme-primary);
       margin-bottom: 1rem;
     }
   `]

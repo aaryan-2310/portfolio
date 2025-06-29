@@ -1,17 +1,25 @@
 @use './theme';
 
 :root {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+
+  /* Theme CSS custom properties */
+  --theme-surface: var(--mdc-theme-surface, #ffffff);
+  --theme-on-surface: var(--mdc-theme-on-surface, #000000);
+  --theme-primary: var(--mdc-theme-primary, #10b981);
+  --theme-on-primary: var(--mdc-theme-on-primary, #ffffff);
+  --theme-surface-variant: var(--mdc-theme-surface-variant, #f0f0f0);
+  --theme-on-surface-variant: var(--mdc-theme-on-surface-variant, #666666);
+  --theme-outline: var(--mdc-theme-outline, #d1d5db);
+  --theme-border: var(--mdc-theme-outline, #333333);
+  --theme-shadow: rgba(0, 0, 0, 0.08);
+  --theme-shadow-hover: rgba(0, 0, 0, 0.12);
+  --theme-accent: var(--mdc-theme-primary, #10b981);
 }
 
-html {
-    margin: 0;
-    padding: 0;
-}
-
+html,
 body {
-    margin: 0;
-    padding: 0;
-    
+  margin: 0;
+  padding: 0;
 }
