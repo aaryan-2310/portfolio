@@ -7,7 +7,7 @@ html {
     (
       color: green-theme-colors.$primary-palette,
       tertiary: green-theme-colors.$tertiary-palette,
-      typography: Inter,
+      typography: mat.define-typography-config($font-family: 'Inter'),
       density: 0,
     )
   );
