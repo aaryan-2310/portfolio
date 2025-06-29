@@ -9,8 +9,8 @@
   margin: 16px 0;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background: var(--theme-surface, var(--mat-card-background, #fff));
-  color: var(--theme-on-surface, var(--mat-card-text, #222));
+  background: var(--theme-surface, var(--mat-card-background));
+  color: var(--theme-on-surface, var(--mat-card-text));
   transition:
     transform 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
@@ -35,7 +35,7 @@ mat-card-header {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--theme-primary, #1976d2);
+  color: var(--theme-primary);
 }
 
 .date-range {
@@ -63,7 +63,7 @@ mat-card-content {
   h4 {
     margin: 0 0 16px;
     font-size: 1.1rem;
-    color: var(--theme-on-surface, #222);
+    color: var(--theme-on-surface);
   }
 
   ul {
@@ -85,7 +85,7 @@ mat-card-content {
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background-color: var(--theme-primary, #1976d2);
+        background-color: var(--theme-primary);
       }
     }
   }
@@ -95,7 +95,7 @@ mat-card-content {
   h4 {
     margin: 0 0 16px;
     font-size: 1.1rem;
-    color: var(--theme-on-surface, #222);
+    color: var(--theme-on-surface);
   }
 }
 
@@ -108,8 +108,8 @@ mat-card-content {
 .tech-chip {
   padding: 6px 12px;
   border-radius: 16px;
-  background-color: var(--theme-primary, #1976d2);
-  color: var(--theme-on-primary, #fff);
+  background-color: var(--theme-primary);
+  color: var(--theme-on-primary);
   font-size: 0.875rem;
   transition: transform 0.2s ease;
 
@@ -200,34 +200,34 @@ mat-card-content {
 
   .mat-vertical-stepper-header {
     background: transparent;
-    color: var(--theme-on-surface, #222);
+    color: var(--theme-on-surface);
     font-weight: 500;
     
     &.cdk-focused, &.cdk-program-focused, &:hover {
-      color: var(--theme-primary, #1976d2);
+      color: var(--theme-primary);
     }
   }
 
   .mat-step-icon, .mat-step-icon-selected, .mat-step-icon-state-edit, .mat-step-icon-state-done, .mat-step-icon-state-number {
-    background: var(--theme-surface, #fff);
-    color: var(--theme-primary, #1976d2);
-    border: 1.5px solid var(--theme-primary, #1976d2);
+    background: var(--theme-surface);
+    color: var(--theme-primary);
+    border: 1.5px solid var(--theme-primary);
     font-weight: bold;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   }
 
   .mat-step-icon-selected {
-    background: var(--theme-primary, #1976d2);
-    color: var(--theme-on-primary, #fff);
-    border-color: var(--theme-primary, #1976d2);
+    background: var(--theme-primary);
+    color: var(--theme-on-primary);
+    border-color: var(--theme-primary);
   }
 
   .mat-step-label {
-    color: var(--theme-on-surface, #222);
+    color: var(--theme-on-surface);
   }
 
   .mat-step-label-active {
-    color: var(--theme-primary, #1976d2);
+    color: var(--theme-primary);
     font-weight: 600;
   }
 }
@@ -235,26 +235,26 @@ mat-card-content {
 // Material stepper overrides for strong visibility
 :host ::ng-deep .mat-vertical-stepper-header {
   background: transparent !important;
-  color: var(--theme-on-surface, #222) !important;
+  color: var(--theme-on-surface) !important;
   font-weight: 500;
 }
 :host ::ng-deep .mat-step-icon {
-  background: var(--theme-surface, #fff) !important;
-  color: var(--theme-primary, #10b981) !important;
-  border: 2px solid var(--theme-primary, #10b981) !important;
+  background: var(--theme-surface) !important;
+  color: var(--theme-primary) !important;
+  border: 2px solid var(--theme-primary) !important;
   // font-weight: bold;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 :host ::ng-deep .mat-step-icon-selected {
-  background: var(--theme-primary, #10b981) !important;
-  color: var(--theme-on-primary, #fff) !important;
-  border-color: var(--theme-primary, #10b981) !important;
+  background: var(--theme-primary) !important;
+  color: var(--theme-on-primary) !important;
+  border-color: var(--theme-primary) !important;
 }
 :host ::ng-deep .mat-step-label {
-  color: var(--theme-on-surface, #222) !important;
+  color: var(--theme-on-surface) !important;
 }
 :host ::ng-deep .mat-step-label-active {
-  color: var(--theme-primary, #10b981) !important;
+  color: var(--theme-primary) !important;
   font-weight: 600;
 }
 :host ::ng-deep .stepper-company-icon {
@@ -262,8 +262,8 @@ mat-card-content {
   height: 22px;
   object-fit: contain;
   border-radius: 4px;
-  background: var(--theme-surface, #fff);
-  border: 2px solid var(--theme-primary, #10b981);
+  background: var(--theme-surface);
+  border: 2px solid var(--theme-primary);
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   display: inline-block;
   vertical-align: middle;

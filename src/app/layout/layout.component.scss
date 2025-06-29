@@ -160,9 +160,9 @@ mat-nav-list {
 
 .footer {
   width: 100%;
-  background: #111;
-  color: #fff;
-  border-top: 1px solid #222;
+  background: var(--theme-surface);
+  color: var(--theme-on-surface);
+  border-top: 1px solid var(--theme-border);
   padding: 16px 0;
   display: flex;
   flex-direction: column;
@@ -196,7 +196,7 @@ mat-nav-list {
 
       .footer-tagline {
         font-size: 1rem;
-        color: #bbb;
+        color: var(--theme-on-surface-variant);
         margin-bottom: 4px;
       }
 
@@ -204,14 +204,14 @@ mat-nav-list {
         display: flex;
         gap: 16px;
         font-size: 0.95rem;
-        color: #bbb;
+        color: var(--theme-on-surface-variant);
 
         a {
-          color: #63d219;
+          color: var(--theme-accent);
           text-decoration: underline dotted;
 
           &:hover {
-            color: #fff;
+            color: var(--theme-on-surface);
           }
         }
 
@@ -229,16 +229,16 @@ mat-nav-list {
       align-items: center;
 
       a {
-        color: #fff;
+        color: var(--theme-on-surface);
         text-decoration: none;
         transition: color 0.2s;
 
         &:hover {
-          color: #63d219;
+          color: var(--theme-accent);
         }
 
         mat-icon {
-          color: #fff;
+          color: var(--theme-on-surface);
           font-size: 22px;
           vertical-align: middle;
         }
@@ -256,7 +256,7 @@ mat-nav-list {
     justify-content: space-between;
     align-items: center;
     font-size: 0.92rem;
-    color: #bbb;
+    color: var(--theme-on-surface-variant);
 
     .footer-made {
       display: flex;

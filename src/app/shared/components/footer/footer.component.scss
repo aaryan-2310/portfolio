@@ -1,6 +1,6 @@
 .footer {
-  background-color: var(--theme-surface, #181818);
-  color: var(--theme-on-surface, #fff);
+  background-color: var(--theme-surface);
+  color: var(--theme-on-surface);
   padding: 3rem 2rem;
   font-family: "Inter", sans-serif;
 
@@ -14,33 +14,33 @@
     }
     .footer-brand {
       max-width: 400px;
-      h3 {
-        font-size: 1.5rem;
-        color: var(--theme-accent, #63d219);
-      }
+        h3 {
+          font-size: 1.5rem;
+          color: var(--theme-accent);
+        }
       p {
         margin-top: 0.5rem;
         line-height: 1.6;
         font-size: 0.95rem;
       }
-      .social-icons {
-        color: #fff;
+        .social-icons {
+          color: var(--theme-on-surface);
         display: flex;
         gap: 1rem;
         margin-top: 1rem;
-        a,
-        img,
-        svg,
-        mat-icon {
-          color: #fff;
+          a,
+          img,
+          svg,
+          mat-icon {
+            color: var(--theme-on-surface);
           width: 22px;
           height: 22px;
           filter: brightness(0.8);
           transition: filter 0.2s, color 0.2s;
-          &:hover {
-            filter: brightness(1.2);
-            color: var(--theme-on-surface, #63d219);
-          }
+            &:hover {
+              filter: brightness(1.2);
+              color: var(--theme-accent);
+            }
         }
       }
     }
@@ -56,21 +56,21 @@
           font-weight: 600;
           font-size: 1rem;
         }
-        a {
-          font-size: 0.9rem;
-          color: var(--theme-on-surface, #fff);
-          text-decoration: none;
-          transition: color 0.2s;
-          &:hover {
-            color: var(--theme-accent, #63d219);
+          a {
+            font-size: 0.9rem;
+            color: var(--theme-on-surface);
+            text-decoration: none;
+            transition: color 0.2s;
+            &:hover {
+              color: var(--theme-accent);
+            }
           }
-        }
       }
     }
   }
   .footer-bottom {
     margin-top: 2rem;
-    border-top: 1px solid var(--theme-border, #333);
+    border-top: 1px solid var(--theme-border);
     padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -86,10 +86,10 @@
       gap: 1.25rem;
       a {
         text-decoration: none;
-        color: var(--theme-on-surface, #fff);
+        color: var(--theme-on-surface);
         transition: color 0.2s;
         &:hover {
-          color: var(--theme-accent, #63d219);
+          color: var(--theme-accent);
         }
       }
     }
