@@ -2,28 +2,24 @@
 @use "./generated/themes/dark/green/_theme-colors" as green-theme-colors;
 @use "./colors" as colors;
 
-$light-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: light,
-      primary: green-theme-colors.$primary-palette,
-      tertiary: green-theme-colors.$tertiary-palette,
-    ),
-    typography: Inter,
-    density: 0,
-  )
+$light-theme: (
+  color: (
+    theme-type: light,
+    primary: green-theme-colors.$primary-palette,
+    tertiary: green-theme-colors.$tertiary-palette,
+  ),
+  typography: Inter,
+  density: 0,
 );
 
-$dark-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: dark,
-      primary: green-theme-colors.$primary-palette,
-      tertiary: green-theme-colors.$tertiary-palette,
-    ),
-    typography: Inter,
-    density: 0,
-  )
+$dark-theme: (
+  color: (
+    theme-type: dark,
+    primary: green-theme-colors.$primary-palette,
+    tertiary: green-theme-colors.$tertiary-palette,
+  ),
+  typography: Inter,
+  density: 0,
 );
 
 html {
@@ -37,7 +33,7 @@ html {
   );
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   @include mat.theme($dark-theme);
 }
 
