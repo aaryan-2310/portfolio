@@ -1,0 +1,276 @@
+:host {
+  display: block;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.experience-card {
+  margin: 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--mdc-theme-surface, var(--mat-card-background, #fff));
+  color: var(--mdc-theme-on-surface, var(--mat-card-text, #222));
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+mat-card-header {
+  padding: 16px;
+  background: var(--mdc-theme-surface-variant, rgba(0, 0, 0, 0.02));
+  border-radius: 12px 12px 0 0;
+
+  .header-content {
+    width: 100%;
+  }
+}
+
+.role-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--mdc-theme-primary, #1976d2);
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--mdc-theme-on-surface-variant, rgba(0, 0, 0, 0.6));
+  font-size: 0.9rem;
+
+  .date-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+.responsibilities {
+  margin: 0 0 24px;
+
+  h4 {
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+    color: var(--mdc-theme-on-surface, #222);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: none;
+
+    li {
+      position: relative;
+      margin: 12px 0;
+      line-height: 1.5;
+      padding-left: 24px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--mdc-theme-primary, #1976d2);
+      }
+    }
+  }
+}
+
+.tech-stack {
+  h4 {
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+    color: var(--mdc-theme-on-surface, #222);
+  }
+}
+
+.tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-chip {
+  padding: 6px 12px;
+  border-radius: 16px;
+  background-color: var(--mdc-theme-primary, #1976d2);
+  color: var(--mdc-theme-on-primary, #fff);
+  font-size: 0.875rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.step-actions {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px 16px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.external-links {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 160px;
+  }
+}
+
+.work-experience-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  // Add subtle animation for cards entering viewport
+  app-experience-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: calc(var(--index, 0) * 0.1s);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Make stepper icons consistent
+::ng-deep {
+  .mat-step-icon {
+    background-color: transparent !important;
+  }
+
+  .mat-vertical-stepper-header {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .mat-step-icon-selected {
+    background-color: var(--mdc-theme-primary) !important;
+  }
+
+  .mat-step-icon-state-edit {
+    background-color: var(--mdc-theme-primary) !important;
+    content: none !important;
+  }
+}
+
+.custom-stepper {
+  // Make stepper background transparent for custom backgrounds
+  background: transparent;
+
+  .mat-vertical-stepper-header {
+    background: transparent;
+    color: var(--mdc-theme-on-surface, #222);
+    font-weight: 500;
+    
+    &.cdk-focused, &.cdk-program-focused, &:hover {
+      color: var(--mdc-theme-primary, #1976d2);
+    }
+  }
+
+  .mat-step-icon, .mat-step-icon-selected, .mat-step-icon-state-edit, .mat-step-icon-state-done, .mat-step-icon-state-number {
+    background: var(--mdc-theme-surface, #fff);
+    color: var(--mdc-theme-primary, #1976d2);
+    border: 1.5px solid var(--mdc-theme-primary, #1976d2);
+    font-weight: bold;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  .mat-step-icon-selected {
+    background: var(--mdc-theme-primary, #1976d2);
+    color: var(--mdc-theme-on-primary, #fff);
+    border-color: var(--mdc-theme-primary, #1976d2);
+  }
+
+  .mat-step-label {
+    color: var(--mdc-theme-on-surface, #222);
+  }
+
+  .mat-step-label-active {
+    color: var(--mdc-theme-primary, #1976d2);
+    font-weight: 600;
+  }
+}
+
+// Material stepper overrides for strong visibility
+:host ::ng-deep .mat-vertical-stepper-header {
+  background: transparent !important;
+  color: var(--mdc-theme-on-surface, #222) !important;
+  font-weight: 500;
+}
+:host ::ng-deep .mat-step-icon {
+  background: var(--mdc-theme-surface, #fff) !important;
+  color: var(--mdc-theme-primary, #10b981) !important;
+  border: 2px solid var(--mdc-theme-primary, #10b981) !important;
+  // font-weight: bold;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+:host ::ng-deep .mat-step-icon-selected {
+  background: var(--mdc-theme-primary, #10b981) !important;
+  color: var(--mdc-theme-on-primary, #fff) !important;
+  border-color: var(--mdc-theme-primary, #10b981) !important;
+}
+:host ::ng-deep .mat-step-label {
+  color: var(--mdc-theme-on-surface, #222) !important;
+}
+:host ::ng-deep .mat-step-label-active {
+  color: var(--mdc-theme-primary, #10b981) !important;
+  font-weight: 600;
+}
+:host ::ng-deep .stepper-company-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: var(--mdc-theme-surface, #fff);
+  border: 2px solid var(--mdc-theme-primary, #10b981);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .mat-step-icon .mat-icon[svgicon="edit"],
+:host ::ng-deep .mat-step-icon .mat-icon[ng-reflect-svg-icon="edit"],
+:host ::ng-deep .mat-step-icon .mat-icon.mat-step-icon-edit {
+  display: none !important;
+}

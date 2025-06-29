@@ -1,0 +1,97 @@
+.footer {
+  background-color: var(--theme-surface, #181818);
+  color: var(--theme-on-surface, #fff);
+  padding: 3rem 2rem;
+  font-family: "Inter", sans-serif;
+
+  .footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .footer-brand {
+      max-width: 400px;
+      h3 {
+        font-size: 1.5rem;
+        color: var(--theme-accent, #63d219);
+      }
+      p {
+        margin-top: 0.5rem;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+      .social-icons {
+        color: #fff;
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        a,
+        img,
+        svg,
+        mat-icon {
+          color: #fff;
+          width: 22px;
+          height: 22px;
+          filter: brightness(0.8);
+          transition: filter 0.2s, color 0.2s;
+          &:hover {
+            filter: brightness(1.2);
+            color: var(--theme-on-surface, #63d219);
+          }
+        }
+      }
+    }
+    .footer-links {
+      display: flex;
+      gap: 4rem;
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        h4 {
+          margin-bottom: 0.6rem;
+          font-weight: 600;
+          font-size: 1rem;
+        }
+        a {
+          font-size: 0.9rem;
+          color: var(--theme-on-surface, #fff);
+          text-decoration: none;
+          transition: color 0.2s;
+          &:hover {
+            color: var(--theme-accent, #63d219);
+          }
+        }
+      }
+    }
+  }
+  .footer-bottom {
+    margin-top: 2rem;
+    border-top: 1px solid var(--theme-border, #333);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .legal-links {
+      display: flex;
+      gap: 1.25rem;
+      a {
+        text-decoration: none;
+        color: var(--theme-on-surface, #fff);
+        transition: color 0.2s;
+        &:hover {
+          color: var(--theme-accent, #63d219);
+        }
+      }
+    }
+  }
+}

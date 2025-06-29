@@ -1,0 +1,22 @@
+.hero-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+#hero {
+  margin: 0;
+  height: 100dvh;
+  width: 100%;
+  font-size: xx-large;
+  background-color: rgba(127, 255, 212, 0.173);
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}

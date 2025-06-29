@@ -1,0 +1,55 @@
+<mat-vertical-stepper #stepper class="custom-stepper" [linear]="false">
+  @for (exp of experiences; track exp.company; let i = $index) {
+    <mat-step [label]="exp.company" [state]="exp.state || ''">
+      <div class="work-experience-container">
+        <portfolio-experience-card 
+          [experience]="exp"
+          [index]="i" />
+      </div>
+    </mat-step>
+  }
+  
+  <mat-step>
+    <ng-template matStepLabel>More Experience</ng-template>
+    <mat-card class="experience-card">
+      <mat-card-content>
+        <h3>Connect & Learn More</h3>
+        <p>Find more about my professional journey on:</p>
+        <div class="external-links">
+          <a mat-flat-button color="primary" [href]="githubUrl" target="_blank">
+            <mat-icon>code</mat-icon>
+            GitHub Profile
+          </a>
+          <a mat-flat-button color="accent" [href]="linkedinUrl" target="_blank">
+            <mat-icon>link</mat-icon>
+            LinkedIn Profile
+          </a>
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <div class="step-actions">
+          <button mat-button matStepperPrevious>
+            <mat-icon>arrow_back</mat-icon>
+            Previous
+          </button>
+          <button mat-button (click)="stepper.reset()">
+            <mat-icon>refresh</mat-icon>
+            Start Over
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </mat-step>
+
+  <ng-container *ngFor="let exp of experiences">
+    <ng-template matStepperIcon="current">
+      <ng-container *ngIf="exp.logoUrl; else defaultIcon">
+        <img [src]="exp.logoUrl" [alt]="exp.company" width="16" class="stepper-company-icon">
+      </ng-container>
+      <ng-template #defaultIcon>
+        <mat-icon class="stepper-company-icon">work</mat-icon>
+      </ng-template>
+    </ng-template>
+  </ng-container>
+</mat-vertical-stepper>

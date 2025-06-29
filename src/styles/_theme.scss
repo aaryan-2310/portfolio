@@ -1,11 +1,27 @@
-@use '@angular/material' as mat;
-@use './colors' as *;
-
+@use "@angular/material" as mat;
+@use "./generated/themes/dark/green/_theme-colors" as green-theme-colors;
+@use "./colors" as colors;
 html {
-  color-scheme: dark;
-  @include mat.theme((
-    color: $color-accent,
-    typography: Roboto,
-    density: 0
-  ));
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: green-theme-colors.$primary-palette,
+      tertiary: green-theme-colors.$tertiary-palette,
+      typography: Inter,
+      density: 0,
+    )
+  );
+
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: transparent,
+      container-text-color: colors.$color-accent,)
+  );
 }
+
+// .custom-theme {
+//   @include mat.theme((
+//       primary: $color-primary,
+//       tertiary: $color-accent
+//   ));
+// }

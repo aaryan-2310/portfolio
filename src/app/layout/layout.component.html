@@ -1,0 +1,51 @@
+<div class="layout-container">
+  <mat-toolbar class="navbar">
+    <span class="logo">Aryan Mishra</span>
+
+    <!-- Desktop Menu -->
+    <div class="nav-links desktop-menu">
+      <a mat-button routerLink="/home" routerLinkActive="active">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-button routerLink="/about" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>About</span>
+      </a>
+      <a mat-button routerLink="/career" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Professional Experience</span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="mobile-menu-button"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="/home" routerLinkActive="active">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-menu-item routerLink="/about" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>About</span>
+      </a>
+      <a mat-menu-item routerLink="/career" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Professional Experience</span>
+      </a>
+    </mat-menu>
+  </mat-toolbar>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <portfolio-footer></portfolio-footer>
+</div>
