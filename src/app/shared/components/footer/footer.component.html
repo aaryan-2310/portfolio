@@ -1,8 +1,44 @@
-<footer class="footer" style="background: var(--theme-surface, #181818); color: var(--theme-on-surface, #fff);">
+﻿<footer class="footer">
+  <div class="footer-cta" aria-labelledby="cta-title">
+    <div class="cta-copy">
+      <button class="availability" type="button"
+              role="switch"
+              [attr.aria-checked]="availableForFreelance"
+              (click)="toggleAvailability()">
+        <span class="dot" [class.on]="availableForFreelance"></span>
+        <span class="label">{{ availableForFreelance ? 'Available for freelance' : 'Currently booked' }}</span>
+      </button>
+      <h3 id="cta-title" class="cta-title">Let's build something great.</h3>
+      <p class="cta-sub">Have an idea or a challenge? I can help plan, design, and ship fast, reliable web apps.</p>
+    </div>
+    <div class="cta-actions">
+      <portfolio-button
+        [label]="availableForFreelance ? 'Book a call' : 'Join waitlist'"
+        variant="primary"
+        size="lg"
+        [href]="availableForFreelance ? calendlyUrl : undefined"
+        [target]="availableForFreelance ? '_blank' : '_self'"
+        [routerLink]="availableForFreelance ? null : '/about'"
+        (clicked)="onPrimaryClick()"
+      >
+        <span icon class="material-icons">{{ availableForFreelance ? 'video_call' : 'hourglass_bottom' }}</span>
+      </portfolio-button>
+      <portfolio-button
+        [label]="availableForFreelance ? 'Email me' : 'View experience'"
+        variant="tonal"
+        size="lg"
+        [href]="availableForFreelance ? 'mailto:contact@example.com' : undefined"
+        [routerLink]="availableForFreelance ? null : '/career'"
+      >
+        <span icon class="material-icons">{{ availableForFreelance ? 'mail' : 'description' }}</span>
+      </portfolio-button>
+    </div>
+  </div>
+
   <div class="footer-top">
     <div class="footer-brand">
-      <h3 style="color: var(--theme-accent, #63d219);">Aryan Mishra</h3>
-      <p>Empowering teams with scalable full-stack solutions — from frontend visuals to backend logic.</p>
+      <h3>Aryan Mishra</h3>
+      <p>Empowering teams with scalable full‑stack solutions — from frontend visuals to backend logic.</p>
 
       <div class="social-icons">
         <a href="#" aria-label="X">
@@ -31,9 +67,9 @@
     <div class="footer-links">
       <div>
         <h4>Portfolio</h4>
-        <a href="#">Projects</a>
-        <a href="#">Resume</a>
-        <a href="#">Technologies</a>
+        <a routerLink="/projects">Projects</a>
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a routerLink="/career">Experience</a>
       </div>
       <div>
         <h4>Resources</h4>
@@ -43,15 +79,15 @@
       </div>
       <div>
         <h4>Company</h4>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a routerLink="/about">About</a>
+        <a href="mailto:contact@example.com">Contact</a>
         <a href="#">Freelance Services</a>
       </div>
     </div>
   </div>
 
   <div class="footer-bottom">
-    <p>© {{ year }} Aryan Mishra. All rights reserved.</p>
+    <p>Â© {{ year }} Aryan Mishra. All rights reserved.</p>
     <div class="legal-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Service</a>
@@ -59,3 +95,6 @@
     </div>
   </div>
 </footer>
+
+
+

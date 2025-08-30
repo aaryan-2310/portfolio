@@ -1,36 +1,34 @@
 <mat-card class="experience-card" [@cardAnimation]>
   <mat-card-header>
     <div class="company-logo" [attr.aria-label]="'Logo of ' + experience.company">
-      <img [src]="experience.logoUrl" [alt]="experience.company" [matTooltip]="experience.company">
+      <img [src]="experience.logoUrl" [alt]="experience.company" [matTooltip]="experience.company" [title]="experience.company">
     </div>
     <div class="header-content">
       <div class="company-info">
         <h2 class="company-name">{{experience.company}}</h2>
-        @if (experience.location) {
-          <span class="location" [matTooltip]="'Location: ' + experience.location">
-            <mat-icon aria-hidden="true">location_on</mat-icon>
-            <span class="visually-hidden">Location:</span>
-            {{experience.location}}
-          </span>
-        }
       </div>
       <h3 class="role">{{experience.role}}</h3>
-      <div class="date-info">
-        <div class="date-range" [matTooltip]="'Duration: ' + getDuration()">
-          <mat-icon aria-hidden="true">event</mat-icon>
-          <span class="visually-hidden">Duration:</span>
-          <span>{{getDateRange()}}</span>
-        </div>
-        <span class="duration" aria-label="Total duration">{{getDuration()}}</span>
+      <div class="meta-line" *ngIf="experience.location as loc">
+        <span class="meta-badge" aria-hidden="true">
+          <mat-icon>event</mat-icon>
+        </span>
+        <span class="meta-text">{{ loc }}</span>
+        <span class="dot">•</span>
+        <span class="meta-text">{{ formatDate(experience.endDate) }}</span>
+        <span class="meta-spacer"></span>
+        <span class="meta-text">{{ getDuration() }}</span>
       </div>
     </div>
   </mat-card-header>
 
   <mat-card-content>
     <div class="description">
-      <ul>
+      <ul class="points">
         @for (point of experience.description; track point) {
-          <li>{{point}}</li>
+          <li>
+            <mat-icon aria-hidden="true" class="point-icon">check_circle</mat-icon>
+            <span class="point-text" [innerHTML]="emphasize(point)"></span>
+          </li>
         }
       </ul>
     </div>

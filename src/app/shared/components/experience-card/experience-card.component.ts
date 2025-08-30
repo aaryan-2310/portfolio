@@ -40,6 +40,12 @@ export class ExperienceCardComponent implements AfterViewInit {
   @Input({ required: true }) experience!: WorkExperience;
   @Input() index = 0;
 
+  // Terms to emphasize inside description points
+  private readonly emphasisTerms = [
+    'Angular', 'Spring Boot', 'TypeScript', 'RxJS', 'Java',
+    'UI', 'UX', 'optimizations?', 'performance', 'code reviews', 'junior developers',
+  ];
+
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
@@ -81,5 +87,31 @@ export class ExperienceCardComponent implements AfterViewInit {
     } else {
       return `${years} ${years === 1 ? 'year' : 'years'}, ${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}`;
     }
+  }
+
+  // Emphasize key phrases and numeric deltas within bullet points
+  emphasize(text: string): string {
+    const escape = (s: string) => s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+    let safe = escape(text);
+
+    // Percentages and numeric improvements
+    safe = safe.replace(/([+\-]?\d+%)/g, '<span class="em">$1</span>');
+
+    // Known terms (case-insensitive)
+    for (const term of this.emphasisTerms) {
+      const re = new RegExp(`\\b(${term})\\b`, 'gi');
+      safe = safe.replace(re, '<span class="em">$1</span>');
+    }
+
+    // Plus sign between technologies e.g., Angular + Spring Boot
+    safe = safe.replace(/(Angular)\s*\+\s*(Spring Boot)/gi, '<span class="em">$1 + $2</span>');
+
+    return safe;
   }
 }

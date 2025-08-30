@@ -1,23 +1,137 @@
-@use '@angular/material' as mat;
+:host {
+  display: inline-block;
+}
 
-// :host {
-//   display: inline-block;
-// }
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--theme-on-surface);
+  --btn-border: transparent;
+  --btn-bg-hover: rgba(0, 0, 0, 0.04);
+  --btn-shadow: 0 1px 2px var(--theme-shadow);
+  --btn-shadow-hover: 0 2px 6px var(--theme-shadow-hover);
 
-// button {
-//   padding: 8px 24px;
-//   font-weight: 500;
-//   text-transform: uppercase;
-//   letter-spacing: 0.5px;
-//   transition: all 0.3s ease;
+  appearance: none;
+  border: 1px solid var(--btn-border);
+  border-radius: 9999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 600;
+  letter-spacing: .2px;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease, transform .06s ease;
+  box-shadow: var(--btn-shadow, var(--elev-1));
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none; // ensure <a> doesn't underline
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
-//   &:hover {
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-//   }
+  &.btn--sm { height: 36px; padding: 0 14px; font-size: 0.9rem; }
+  &.btn--md { height: 44px; padding: 0 18px; font-size: 0.95rem; }
+  &.btn--lg { height: 52px; padding: 0 22px; font-size: 1rem; }
 
-//   &:active {
-//     transform: translateY(0);
-//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-//   }
-// }
+  &:hover:not(.btn--disabled) {
+    background: var(--btn-bg-hover);
+    box-shadow: var(--btn-shadow-hover, var(--elev-2));
+  }
+  &:active:not(.btn--disabled) {
+    transform: translateY(1px);
+  }
+  &:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+
+  &.btn--primary {
+    --btn-bg: var(--theme-accent);
+    --btn-fg: var(--theme-on-primary);
+    --btn-border: var(--theme-accent);
+    --btn-bg-hover: color-mix(in oklab, var(--theme-accent) 86%, black);
+  }
+
+  &.btn--secondary {
+    --btn-bg: transparent;
+    --btn-fg: var(--theme-accent);
+    --btn-border: var(--theme-accent);
+    --btn-bg-hover: color-mix(in oklab, var(--theme-accent) 12%, transparent);
+  }
+
+  /* Tonal button: soft filled, lower emphasis */
+  &.btn--tonal {
+    --btn-bg: color-mix(in oklab, var(--theme-accent) 12%, var(--theme-surface-1));
+    --btn-fg: var(--theme-on-surface);
+    --btn-border: color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
+    --btn-bg-hover: color-mix(in oklab, var(--theme-accent) 18%, var(--theme-surface-1));
+  }
+
+  &.btn--ghost {
+    --btn-bg: transparent;
+    --btn-fg: var(--theme-on-surface-variant);
+    --btn-border: transparent;
+    --btn-bg-hover: rgba(127,127,127,.08);
+  }
+
+  &.btn--link {
+    --btn-bg: transparent;
+    --btn-fg: var(--theme-accent);
+    --btn-border: transparent;
+    --btn-bg-hover: transparent;
+    padding: 0;
+    height: auto;
+    box-shadow: none;
+    text-decoration: underline;
+  }
+
+  &.btn--loading {
+    cursor: progress;
+  }
+
+  &.btn--disabled,
+  &:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn__spinner {
+    width: 18px; height: 18px; margin-right: 8px; border-radius: 50%; display: inline-block;
+    border: 2px solid color-mix(in oklab, var(--btn-fg) 30%, transparent);
+    border-top-color: currentColor;
+    animation: spin 1s linear infinite;
+    vertical-align: -3px;
+  }
+  .btn__label { line-height: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Icon spacing */
+.btn {
+  .btn__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--btn-fg) 12%, transparent);
+    color: currentColor;
+  }
+  .btn__icon:empty { display: none; }
+  .btn__icon--end {
+    margin-right: 0;
+    margin-left: 8px;
+  }
+
+  &.btn--primary {
+    .btn__icon { background: color-mix(in oklab, var(--theme-on-primary) 20%, var(--theme-accent)); color: var(--theme-on-primary); }
+  }
+  &.btn--secondary {
+    .btn__icon { background: color-mix(in oklab, var(--theme-accent) 16%, transparent); color: var(--theme-accent); }
+  }
+  &.btn--tonal {
+    .btn__icon { background: color-mix(in oklab, var(--theme-accent) 20%, transparent); color: var(--theme-on-surface); }
+  }
+}

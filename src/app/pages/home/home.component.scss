@@ -1,22 +1,42 @@
-.hero-buttons {
-  display: flex;
-  justify-content: flex-start;
-  gap: 2rem;
-}
-
+/* Hero section */
 #hero {
   margin: 0;
-  height: 100dvh;
-  width: 100%;
-  font-size: xx-large;
-  background-color: rgba(127, 255, 212, 0.173);
+  padding: 0;
+}
+
+.hero-surface {
+  min-height: calc(100dvh - 64px);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(1200px 600px at 20% 10%, color-mix(in oklab, var(--theme-accent) 12%, transparent), transparent),
+    radial-gradient(800px 500px at 80% 30%, color-mix(in oklab, var(--theme-accent) 8%, transparent), transparent),
+    var(--theme-surface);
+  border-bottom: 1px solid var(--theme-border);
 }
 
 .hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  max-width: 980px;
+  padding: 0 16px;
   text-align: center;
+}
+
+.hero-title {
+  margin: 0 0 12px 0;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--theme-on-surface);
+}
+
+.hero-sub {
+  margin: 0 auto 28px auto;
+  max-width: 52ch;
+  color: var(--theme-on-surface-variant);
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: inline-flex;
+  gap: 16px;
 }

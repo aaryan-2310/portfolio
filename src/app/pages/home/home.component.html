@@ -1,13 +1,28 @@
-<section id="hero">
-  <div class="hero-content">
-    <h1>
-      Hi, I'm Aryan!<br />
-      Freelance Full Stack Software Engineer
-    </h1>
-    <p>I work with startups and scaleups to build robust digital products</p>
-    <div class="hero-buttons">
-      <button mat-flat-button>View Projects</button>
-      <button mat-stroked-button>Hire me</button>
+<section id="hero" aria-labelledby="hero-title">
+  <div class="hero-surface">
+    <div class="hero-content">
+      <h1 id="hero-title" class="hero-title">Full‑stack engineer for TypeScript/Angular products.</h1>
+      <p class="hero-sub">I help startups and scaleups design, build, and ship reliable web apps — fast.</p>
+
+      <div class="hero-buttons">
+        <portfolio-button
+          label="View Projects"
+          variant="primary"
+          size="lg"
+          [routerLink]="'/projects'"
+        >
+          <span icon class="material-icons">north_east</span>
+        </portfolio-button>
+        <portfolio-button
+          label="Hire me"
+          variant="tonal"
+          size="lg"
+          [routerLink]="'/career'"
+        >
+          <span icon class="material-icons">person</span>
+        </portfolio-button>
+      </div>
     </div>
   </div>
 </section>
+

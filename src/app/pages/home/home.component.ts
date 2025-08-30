@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { ButtonComponent } from '../../shared/button/button.component';
 
 @Component({
   selector: 'portfolio-home',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [ButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

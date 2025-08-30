@@ -1,36 +1,53 @@
-// Card styling
+﻿// Card styling
 .experience-card {
   margin: 16px;
   border-radius: 12px;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  background: var(--mat-card-background, var(--theme-surface));
-  color: var(--mat-card-text, var(--theme-on-surface));
-  box-shadow: 0 4px 16px var(--theme-shadow, rgba(0,0,0,0.08));
-  border: 1px solid var(--theme-outline);
+  background: var(--theme-surface-1, var(--theme-surface));
+  color: var(--theme-on-surface);
+  box-shadow: var(--elev-1);
+  border: 1px solid var(--theme-border);
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px var(--theme-shadow-hover, rgba(0,0,0,0.12));
+    box-shadow: 0 8px 24px var(--theme-shadow-hover, rgba(0, 0, 0, 0.12));
   }
 
   mat-card-header {
     display: flex;
     align-items: flex-start;
     gap: 20px;
-    padding: 16px;
-    background: var(--theme-surface-variant, rgba(0, 0, 0, 0.02));
+    padding: var(--space-16);
+    background: transparent;
+    border-bottom: 1px solid var(--theme-border);
 
     .company-logo {
-      width: 80px;
-      height: 80px;
-      border-radius: 8px;
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
       overflow: hidden;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--theme-surface-variant);
-      border: 1px solid var(--theme-outline);
+      background:
+        radial-gradient(120px 80px at 20% 15%, color-mix(in oklab, var(--theme-accent) 14%, transparent), transparent),
+        linear-gradient(180deg, color-mix(in oklab, var(--theme-surface-2) 92%, transparent), var(--theme-surface-2));
+      border: 1px solid var(--theme-border);
+      box-shadow: var(--elev-1);
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        background: radial-gradient(40px 40px at 100% 0%, color-mix(in oklab, #ffffff 18%, transparent), transparent);
+        pointer-events: none;
+        border-top-right-radius: inherit;
+      }
 
       img {
         width: 100%;
@@ -46,137 +63,171 @@
       .company-info {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         margin-bottom: 4px;
 
         .company-name {
           margin: 0;
-          font-size: 1.5rem;
-          font-weight: 600;
-          color: var(--mat-primary, var(--theme-primary));
+          font-weight: 700;
+          color: var(--theme-on-surface);
         }
 
         .location {
           display: flex;
           align-items: center;
           gap: 4px;
-          color: var(--mat-secondary, var(--theme-on-surface-variant));
+          color: var(--theme-on-surface-variant);
           font-size: 0.9rem;
 
           mat-icon {
             font-size: 18px;
             width: 18px;
             height: 18px;
+            color: var(--theme-accent);
           }
         }
       }
 
       .role {
         margin: 0;
-        font-size: 1.1rem;
-        color: var(--mat-card-text, var(--theme-on-surface));
-        font-weight: 500;
+        color: var(--theme-on-surface);
+        font-weight: 700;
+        font-size: clamp(1.4rem, 2.4vw, 1.9rem);
       }
 
-      .date-info {
+      .meta-line {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         margin-top: 8px;
-        color: var(--mat-secondary, var(--theme-on-surface-variant));
-        font-size: 0.9rem;
-
-        .date-range {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-
-          mat-icon {
-            font-size: 18px;
-            width: 18px;
-            height: 18px;
-            color: var(--theme-primary);
-          }
-        }
-
-        .duration {
-          &::before {
-            content: '•';
-            margin-right: 8px;
-            color: var(--theme-on-surface-variant);
-          }
-        }
-      }
-    }
-  }
-
-  mat-card-content {
-    padding: 16px;
-      color: var(--mat-card-text, var(--theme-on-surface));
-
-    .description {
-      ul {
-        margin: 0;
-        padding-left: 20px;
-        
-        li {
-          margin-bottom: 8px;
-          color: var(--mat-card-text, var(--theme-on-surface));
-          line-height: 1.5;
-
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
-
-    .skills-section {
-      margin-top: 24px;
-
-      h4 {
-        margin: 0 0 12px;
+        color: var(--theme-on-surface-variant);
         font-size: 1rem;
-        color: var(--mat-card-text, var(--theme-on-surface));
-      }
 
-      .skills-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-
-        .skill-chip {
-          display: flex;
+        .meta-badge {
+          width: 28px;
+          height: 28px;
+          border-radius: 8px;
+          display: inline-flex;
           align-items: center;
-          gap: 6px;
-          padding: 6px 12px;
-          border-radius: 16px;
-          box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-          border: 1px solid var(--mat-chip-border, var(--theme-outline));
-          background: var(--mat-chip-bg, var(--theme-surface-variant));
-          color: var(--mat-chip-text, var(--theme-on-surface-variant));
-          font-size: 0.9rem;
-          font-weight: 500;
-          transition: background-color 0.2s ease;
+          justify-content: center;
+          background: color-mix(in oklab, var(--theme-accent) 16%, transparent);
+          border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
+        }
 
-          &:hover {
-            background-color: var(--theme-surface-variant-hover);
-          }
+        .meta-badge mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          color: var(--theme-accent);
+        }
 
-          mat-icon, .skill-icon {
-            width: 18px;
-            height: 18px;
-            font-size: 18px;
-          }
+        .meta-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          color: var(--theme-accent);
+        }
 
-          .skill-icon {
-            object-fit: contain;
-            filter: grayscale(20%);
-          }
+        .meta-text {
+          color: var(--theme-on-surface-variant);
+        }
+
+        .dot {
+          margin: 0 6px;
+          color: var(--theme-on-surface-variant);
+        }
+
+        .meta-spacer {
+          width: 8px;
         }
       }
     }
   }
+}
+
+mat-card-content {
+  padding: var(--space-16);
+  color: var(--theme-on-surface);
+
+  .description {
+    .points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .points li {
+      display: flex;
+      align-items: start;
+      gap: 10px;
+      color: var(--theme-on-surface);
+    }
+
+    .point-icon {
+      color: var(--theme-success, var(--theme-accent));
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .point-text {
+      line-height: 1.6;
+    }
+  }
+
+  .skills-section {
+    margin-top: 24px;
+
+    h4 {
+      margin: 0 0 var(--space-12);
+      color: var(--theme-on-surface);
+      font-weight: 600;
+    }
+
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      .skill-chip {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 16px;
+        box-shadow: var(--elev-1);
+        border: 1px solid var(--theme-border);
+        background: var(--theme-surface-2);
+        color: var(--theme-on-surface-variant);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: color-mix(in oklab, var(--theme-accent) 12%, var(--theme-surface-2));
+        }
+
+        mat-icon,
+        .skill-icon {
+          width: 18px;
+          height: 18px;
+          font-size: 18px;
+        }
+
+        .skill-icon {
+          object-fit: contain;
+          filter: grayscale(20%);
+        }
+      }
+    }
+  }
+}
+
+/* Normalize the duration separator bullet using theme-friendly dot */
+.experience-card .duration::before {
+  content: '�' !important;
 }
 
 // Responsive styles
@@ -212,4 +263,21 @@
       }
     }
   }
+}
+
+/* Force the correct bullet character for the duration separator */
+.experience-card .duration::before {
+  content: '�' !important;
+}
+
+
+
+
+
+
+
+/* Emphasis styling for highlighted phrases */
+.em {
+  color: var(--theme-accent);
+  font-weight: 600;
 }

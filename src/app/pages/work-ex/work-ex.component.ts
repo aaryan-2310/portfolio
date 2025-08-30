@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,7 @@ import { WorkExperience } from '../../shared/models/work-experience.interface';
 import { ExperienceCardComponent } from '../../shared/components/experience-card/experience-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { ButtonComponent } from '../../shared/button/button.component';
 
 @Component({
   selector: 'portfolio-work-ex',
@@ -16,12 +17,25 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-    ExperienceCardComponent
+    ExperienceCardComponent,
+    ButtonComponent
   ],
   templateUrl: './work-ex.component.html',
   styleUrl: './work-ex.component.scss'
 })
-export class WorkExComponent {
+export class WorkExComponent implements AfterViewInit {
+  revealActive = true;
+
+  ngAfterViewInit(): void {
+    // Ensure initial animation plays after view is ready
+    setTimeout(() => (this.revealActive = true), 0);
+  }
+
+  replayReveal(): void {
+    // Toggle the class to retrigger CSS animations
+    this.revealActive = false;
+    setTimeout(() => (this.revealActive = true), 0);
+  }
   readonly githubUrl = 'https://github.com/'; // Replace with your GitHub profile URL
   readonly linkedinUrl = 'https://linkedin.com/in/'; // Replace with your LinkedIn profile URL
   readonly xUrl = 'https://x.com/'; // Replace with your X (formerly Twitter) profile URL
@@ -51,7 +65,7 @@ export class WorkExComponent {
     },
     {
       company: 'Tech Solutions',
-      logoUrl: 'assets/img/TS.png',
+      logoUrl: 'assets/img/CLVT.png',
       role: 'Junior Developer',
       startDate: new Date('2022-01-01'),
       endDate: new Date('2023-05-31'),

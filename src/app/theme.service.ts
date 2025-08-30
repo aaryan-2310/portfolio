@@ -26,4 +26,8 @@ export class ThemeService {
     if (typeof document === 'undefined') return;
     document.documentElement.setAttribute('data-theme', this.currentTheme);
   }
+
+  getCurrentTheme(): 'light' | 'dark' {
+    return this.currentTheme;
+  }
 }

@@ -1,4 +1,6 @@
-<mat-vertical-stepper #stepper class="custom-stepper" [linear]="false">
+<mat-vertical-stepper #stepper class="custom-stepper" [linear]="false"
+  [class.reveal-active]="revealActive"
+  (selectionChange)="replayReveal()">
   @for (exp of experiences; track exp.company; let i = $index) {
     <mat-step [label]="exp.company" [state]="exp.state || ''">
       <div class="work-experience-container">
@@ -16,14 +18,22 @@
         <h3>Connect & Learn More</h3>
         <p>Find more about my professional journey on:</p>
         <div class="external-links">
-          <a mat-flat-button color="primary" [href]="githubUrl" target="_blank">
-            <mat-icon>code</mat-icon>
-            GitHub Profile
-          </a>
-          <a mat-flat-button color="accent" [href]="linkedinUrl" target="_blank">
-            <mat-icon>link</mat-icon>
-            LinkedIn Profile
-          </a>
+          <portfolio-button
+            label="GitHub Profile"
+            variant="tonal"
+            [href]="githubUrl"
+            target="_blank"
+          >
+            <span icon class="material-icons">code</span>
+          </portfolio-button>
+          <portfolio-button
+            label="LinkedIn Profile"
+            variant="tonal"
+            [href]="linkedinUrl"
+            target="_blank"
+          >
+            <span icon class="material-icons">link</span>
+          </portfolio-button>
         </div>
       </mat-card-content>
       
