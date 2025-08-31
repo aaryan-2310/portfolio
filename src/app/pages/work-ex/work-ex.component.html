@@ -1,16 +1,18 @@
-<mat-vertical-stepper #stepper class="custom-stepper" [linear]="false"
+<mat-vertical-stepper
+  #stepper
+  class="custom-stepper"
+  [linear]="false"
   [class.reveal-active]="revealActive"
-  (selectionChange)="replayReveal()">
+  (selectionChange)="replayReveal()"
+>
   @for (exp of experiences; track exp.company; let i = $index) {
     <mat-step [label]="exp.company" [state]="exp.state || ''">
       <div class="work-experience-container">
-        <portfolio-experience-card 
-          [experience]="exp"
-          [index]="i" />
+        <portfolio-experience-card [experience]="exp" [index]="i" />
       </div>
     </mat-step>
   }
-  
+
   <mat-step>
     <ng-template matStepLabel>More Experience</ng-template>
     <mat-card class="experience-card">
@@ -36,7 +38,7 @@
           </portfolio-button>
         </div>
       </mat-card-content>
-      
+
       <mat-card-actions>
         <div class="step-actions">
           <button mat-button matStepperPrevious>
@@ -55,7 +57,7 @@
   <ng-container *ngFor="let exp of experiences">
     <ng-template matStepperIcon="current">
       <ng-container *ngIf="exp.logoUrl; else defaultIcon">
-        <img [src]="exp.logoUrl" [alt]="exp.company" width="16" class="stepper-company-icon">
+        <img [src]="exp.logoUrl" [alt]="exp.company" width="16" class="stepper-company-icon" />
       </ng-container>
       <ng-template #defaultIcon>
         <mat-icon class="stepper-company-icon">work</mat-icon>

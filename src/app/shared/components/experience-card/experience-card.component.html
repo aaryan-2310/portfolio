@@ -1,13 +1,22 @@
 <mat-card class="experience-card" [@cardAnimation]>
   <mat-card-header>
     <div class="company-logo" [attr.aria-label]="'Logo of ' + experience.company">
-      <img [ngSrc]="experience.logoUrl" width="48" height="48" [alt]="experience.company" decoding="async" loading="lazy" [matTooltip]="experience.company" [title]="experience.company">
+      <img
+        [ngSrc]="experience.logoUrl"
+        width="48"
+        height="48"
+        [alt]="experience.company"
+        decoding="async"
+        loading="lazy"
+        [matTooltip]="experience.company"
+        [title]="experience.company"
+      />
     </div>
     <div class="header-content">
       <div class="company-info">
-        <h2 class="company-name">{{experience.company}}</h2>
+        <h2 class="company-name">{{ experience.company }}</h2>
       </div>
-      <h3 class="role">{{experience.role}}</h3>
+      <h3 class="role">{{ experience.role }}</h3>
       <div class="meta-line" *ngIf="experience.location as loc">
         <span class="meta-badge" aria-hidden="true">
           <mat-icon>event</mat-icon>
@@ -37,16 +46,27 @@
       <h4>Skills & Technologies</h4>
       <div class="skills-container" role="list">
         @for (skill of experience.skills; track skill.name) {
-          <div class="skill-chip" 
-               role="listitem"
-               [matTooltip]="skill.name"
-               [attr.aria-label]="skill.name">
+          <div
+            class="skill-chip"
+            role="listitem"
+            [matTooltip]="skill.name"
+            [attr.aria-label]="skill.name"
+          >
             @if (skill.isCustomIcon) {
-              <img [ngSrc]="skill.icon" alt="" width="20" height="20" class="skill-icon" aria-hidden="true" decoding="async" loading="lazy">
+              <img
+                [ngSrc]="skill.icon"
+                alt=""
+                width="20"
+                height="20"
+                class="skill-icon"
+                aria-hidden="true"
+                decoding="async"
+                loading="lazy"
+              />
             } @else {
-              <mat-icon class="skill-icon" aria-hidden="true">{{skill.icon}}</mat-icon>
+              <mat-icon class="skill-icon" aria-hidden="true">{{ skill.icon }}</mat-icon>
             }
-            <span class="skill-name">{{skill.name}}</span>
+            <span class="skill-name">{{ skill.name }}</span>
           </div>
         }
       </div>

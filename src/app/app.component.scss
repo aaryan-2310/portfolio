@@ -9,12 +9,14 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: color-mix(in oklab, var(--theme-error, #B00020) 12%, var(--theme-surface-2, #fff));
+  background: color-mix(in oklab, var(--theme-error, #b00020) 12%, var(--theme-surface-2, #fff));
   border-bottom: 1px solid var(--theme-border, #e5e7eb);
   color: var(--theme-on-surface, #111827);
   z-index: 1000;
 
-  .msg { flex: 1; }
+  .msg {
+    flex: 1;
+  }
   .dismiss {
     appearance: none;
     background: transparent;

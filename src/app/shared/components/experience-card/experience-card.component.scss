@@ -2,7 +2,9 @@
 .experience-card {
   margin: 16px;
   border-radius: 12px;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
   background: var(--theme-surface-1, var(--theme-surface));
   color: var(--theme-on-surface);
   box-shadow: var(--elev-1);
@@ -31,8 +33,16 @@
       align-items: center;
       justify-content: center;
       background:
-        radial-gradient(120px 80px at 20% 15%, color-mix(in oklab, var(--theme-accent) 14%, transparent), transparent),
-        linear-gradient(180deg, color-mix(in oklab, var(--theme-surface-2) 92%, transparent), var(--theme-surface-2));
+        radial-gradient(
+          120px 80px at 20% 15%,
+          color-mix(in oklab, var(--theme-accent) 14%, transparent),
+          transparent
+        ),
+        linear-gradient(
+          180deg,
+          color-mix(in oklab, var(--theme-surface-2) 92%, transparent),
+          var(--theme-surface-2)
+        );
       border: 1px solid var(--theme-border);
       box-shadow: var(--elev-1);
       position: relative;
@@ -44,7 +54,11 @@
         right: 0;
         width: 36px;
         height: 36px;
-        background: radial-gradient(40px 40px at 100% 0%, color-mix(in oklab, #ffffff 18%, transparent), transparent);
+        background: radial-gradient(
+          40px 40px at 100% 0%,
+          color-mix(in oklab, #ffffff 18%, transparent),
+          transparent
+        );
         pointer-events: none;
         border-top-right-radius: inherit;
       }
@@ -269,12 +283,6 @@ mat-card-content {
 .experience-card .duration::before {
   content: '�' !important;
 }
-
-
-
-
-
-
 
 /* Emphasis styling for highlighted phrases */
 .em {

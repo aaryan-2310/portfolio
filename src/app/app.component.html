@@ -1,7 +1,9 @@
 <div class="global-error" *ngIf="errorVisible" role="alert" aria-live="assertive">
   <span class="msg">{{ errorMessage }}</span>
-  <button type="button" class="dismiss" (click)="dismissError()" aria-label="Dismiss error">✕</button>
-  </div>
+  <button type="button" class="dismiss" (click)="dismissError()" aria-label="Dismiss error">
+    ✕
+  </button>
+</div>
 
 <router-outlet></router-outlet>
 

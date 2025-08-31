@@ -27,8 +27,8 @@ import { AvailabilityService } from '../availability.service';
     MatMenuModule,
     FooterComponent,
     ButtonComponent,
-    MatSnackBarModule
-  ]
+    MatSnackBarModule,
+  ],
 })
 export class LayoutComponent {
   currentYear = new Date().getFullYear();
@@ -37,7 +37,12 @@ export class LayoutComponent {
   isOwner = false;
   badgePulse = false;
 
-  constructor(private theme: ThemeService, private availability: AvailabilityService, private snack: MatSnackBar, private destroyRef: DestroyRef) {
+  constructor(
+    private theme: ThemeService,
+    private availability: AvailabilityService,
+    private snack: MatSnackBar,
+    private destroyRef: DestroyRef,
+  ) {
     this.availableForFreelance = this.availability.value;
     this.isOwner = this.availability.isOwner;
     this.availability.available$
@@ -65,6 +70,7 @@ export class LayoutComponent {
     this.availability.toggle();
     const msg = this.availability.value ? 'Availability: Available' : 'Availability: Booked';
     this.snack.open(msg, 'OK', { duration: 1600 });
-    this.badgePulse = true; setTimeout(() => (this.badgePulse = false), 500);
+    this.badgePulse = true;
+    setTimeout(() => (this.badgePulse = false), 500);
   }
 }

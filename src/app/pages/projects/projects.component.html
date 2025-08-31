@@ -6,7 +6,10 @@
 
   <div class="projects__grid">
     <article class="project-card" *ngFor="let p of projects; trackBy: trackByProject">
-      <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient"></div>
+      <div
+        class="project-card__media"
+        [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient"
+      ></div>
       <div class="project-card__body">
         <h2 class="project-card__title">{{ p.title }}</h2>
         <p class="project-card__desc">{{ p.description }}</p>
@@ -26,7 +29,9 @@
             rel="noopener noreferrer"
             [variant]="link.kind === 'live' ? 'primary' : 'tonal'"
           >
-            <span icon class="material-icons">{{ link.kind === 'live' ? 'open_in_new' : 'code' }}</span>
+            <span icon class="material-icons">{{
+              link.kind === 'live' ? 'open_in_new' : 'code'
+            }}</span>
           </portfolio-button>
         </div>
       </div>

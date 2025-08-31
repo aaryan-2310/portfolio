@@ -9,8 +9,16 @@
   display: grid;
   place-items: center;
   background:
-    radial-gradient(1200px 600px at 20% 10%, color-mix(in oklab, var(--theme-accent) 12%, transparent), transparent),
-    radial-gradient(800px 500px at 80% 30%, color-mix(in oklab, var(--theme-accent) 8%, transparent), transparent),
+    radial-gradient(
+      1200px 600px at 20% 10%,
+      color-mix(in oklab, var(--theme-accent) 12%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      800px 500px at 80% 30%,
+      color-mix(in oklab, var(--theme-accent) 8%, transparent),
+      transparent
+    ),
     var(--theme-surface);
   border-bottom: 1px solid var(--theme-border);
 }

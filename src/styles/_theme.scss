@@ -1,6 +1,6 @@
-@use "@angular/material" as mat;
-@use "./generated/themes/dark/green/_theme-colors" as green-theme-colors;
-@use "./colors" as colors;
+@use '@angular/material' as mat;
+@use './generated/themes/dark/green/_theme-colors' as green-theme-colors;
+@use './colors' as colors;
 
 // Define theme-specific CSS variable sets
 $light-vars: (
@@ -51,16 +51,17 @@ $dark-vars: (
 }
 
 $light-theme: (
-    color: (
-      theme-type: light,
-      primary: green-theme-colors.$primary-palette,
-      tertiary: green-theme-colors.$tertiary-palette,
-    ),
-    typography: Inter,
-    density: 0,
-  );
+  color: (
+    theme-type: light,
+    primary: green-theme-colors.$primary-palette,
+    tertiary: green-theme-colors.$tertiary-palette,
+  ),
+  typography: Inter,
+  density: 0,
+);
 
-$dark-theme: (color: (
+$dark-theme: (
+  color: (
     theme-type: dark,
     primary: green-theme-colors.$primary-palette,
     tertiary: green-theme-colors.$tertiary-palette,
@@ -81,7 +82,7 @@ html {
   @include theme-vars($light-vars);
 }
 
-html[data-theme="dark"] {
+html[data-theme='dark'] {
   @include mat.theme($dark-theme);
   @include theme-vars($dark-vars);
 }

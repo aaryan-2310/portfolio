@@ -18,10 +18,10 @@ import { ButtonComponent } from '../../shared/button/button.component';
     MatCardModule,
     MatButtonModule,
     ExperienceCardComponent,
-    ButtonComponent
+    ButtonComponent,
   ],
   templateUrl: './work-ex.component.html',
-  styleUrl: './work-ex.component.scss'
+  styleUrl: './work-ex.component.scss',
 })
 export class WorkExComponent implements AfterViewInit {
   revealActive = true;
@@ -52,16 +52,16 @@ export class WorkExComponent implements AfterViewInit {
         'Developed and maintained enterprise-level applications using Angular and Spring Boot',
         'Implemented responsive UI designs and improved application performance',
         'Collaborated with cross-functional teams for feature development and bug fixes',
-        'Participated in code reviews and mentored junior developers'
+        'Participated in code reviews and mentored junior developers',
       ],
       skills: [
         { name: 'Angular', icon: 'code', isCustomIcon: false },
         { name: 'TypeScript', icon: 'language', isCustomIcon: false },
         { name: 'Java', icon: 'coffee', isCustomIcon: false },
         { name: 'Spring Boot', icon: '/assets/img/spring-boot.png', isCustomIcon: true },
-        { name: 'Git', icon: 'merge', isCustomIcon: false }
+        { name: 'Git', icon: 'merge', isCustomIcon: false },
       ],
-      state: 'current'
+      state: 'current',
     },
     {
       company: 'Tech Solutions',
@@ -74,17 +74,17 @@ export class WorkExComponent implements AfterViewInit {
         'Assisted in the development of web applications using React and Node.js',
         'Conducted testing and debugging of applications',
         'Aided in the migration of legacy systems to modern technologies',
-        'Documented technical specifications and user guides'
+        'Documented technical specifications and user guides',
       ],
       skills: [
         { name: 'React', icon: 'code', isCustomIcon: false },
         { name: 'Node.js', icon: 'nodejs', isCustomIcon: false },
         { name: 'JavaScript', icon: 'javascript', isCustomIcon: false },
         { name: 'HTML', icon: 'html5', isCustomIcon: false },
-        { name: 'CSS', icon: 'css3', isCustomIcon: false }
+        { name: 'CSS', icon: 'css3', isCustomIcon: false },
       ],
-      state: 'past'
-    }
+      state: 'past',
+    },
     // Add more experiences here
   ];
 }

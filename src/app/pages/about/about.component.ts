@@ -8,6 +8,6 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
   standalone: true,
   imports: [CommonModule, NgOptimizedImage, ButtonComponent, RevealOnScrollDirective],
   templateUrl: './about.component.html',
-  styleUrl: './about.component.scss'
+  styleUrl: './about.component.scss',
 })
 export class AboutComponent {}

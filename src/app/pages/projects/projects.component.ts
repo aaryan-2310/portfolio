@@ -22,8 +22,7 @@ type Project = {
 export class ProjectsComponent {
   header = {
     title: 'Projects',
-    subtitle:
-      'A curated selection of things I’ve designed, built, and shipped.'
+    subtitle: 'A curated selection of things I’ve designed, built, and shipped.',
   };
 
   projects: Project[] = [
@@ -40,18 +39,18 @@ export class ProjectsComponent {
     },
     {
       title: 'Job Hunt',
-      description: 'Find the job which matches you the best and Use the automatic application feature to autonomously apply to jobs',
+      description:
+        'Find the job which matches you the best and Use the automatic application feature to autonomously apply to jobs',
       tech: ['React', 'Spring Boot', 'Gemini'],
       gradient: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
       links: [
         // {label: 'View Repo', href: 'https://github.com/', kind: 'repo'},
-        {label: 'Live Demo', href: 'https://job-hunt-frontend-j3nh.onrender.com/', kind: 'live'}
-      ]
+        { label: 'Live Demo', href: 'https://job-hunt-frontend-j3nh.onrender.com/', kind: 'live' },
+      ],
     },
     {
       title: 'API Explorer',
-      description:
-        'Explore REST endpoints with a slick UI and persistent collections.',
+      description: 'Explore REST endpoints with a slick UI and persistent collections.',
       tech: ['Angular', 'Material', 'Node.js'],
       gradient: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
       links: [
@@ -65,4 +64,3 @@ export class ProjectsComponent {
   trackByTech = (_: number, t: string) => t;
   trackByLink = (_: number, l: ProjectLink) => `${l.kind}:${l.href}`;
 }
-

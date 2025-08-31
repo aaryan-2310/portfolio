@@ -20,7 +20,12 @@ export class FooterComponent implements OnInit {
   availableForFreelance = true;
   readonly calendlyUrl = 'https://calendly.com/mishra-ary';
 
-  constructor(private availability: AvailabilityService, private snack: MatSnackBar, private dialog: MatDialog, private destroyRef: DestroyRef) {}
+  constructor(
+    private availability: AvailabilityService,
+    private snack: MatSnackBar,
+    private dialog: MatDialog,
+    private destroyRef: DestroyRef,
+  ) {}
 
   ngOnInit(): void {
     this.availableForFreelance = this.availability.value;
@@ -35,7 +40,9 @@ export class FooterComponent implements OnInit {
       return;
     }
     this.availability.toggle();
-    const msg = this.availability.value ? 'Availability set to: Available' : 'Availability set to: Booked';
+    const msg = this.availability.value
+      ? 'Availability set to: Available'
+      : 'Availability set to: Booked';
     this.snack.open(msg, 'OK', { duration: 2000 });
   }
 

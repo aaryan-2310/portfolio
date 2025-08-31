@@ -9,7 +9,7 @@ import { GlobalErrorService } from './core/error/global-error.service';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'portfolio';
@@ -17,12 +17,10 @@ export class AppComponent {
   errorMessage = '';
 
   constructor(errors: GlobalErrorService, destroyRef: DestroyRef) {
-    errors.errors$
-      .pipe(takeUntilDestroyed(destroyRef))
-      .subscribe(msg => {
-        this.errorMessage = msg || 'Something went wrong';
-        this.errorVisible = true;
-      });
+    errors.errors$.pipe(takeUntilDestroyed(destroyRef)).subscribe(msg => {
+      this.errorMessage = msg || 'Something went wrong';
+      this.errorVisible = true;
+    });
   }
 
   dismissError() {

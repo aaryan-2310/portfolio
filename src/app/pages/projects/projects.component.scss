@@ -43,7 +43,10 @@
   box-shadow: var(--elev-1);
   display: flex;
   flex-direction: column;
-  transition: transform 140ms ease, box-shadow 140ms ease, border-color 200ms ease;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 200ms ease;
 
   &:hover {
     transform: translateY(-2px);
@@ -87,7 +90,11 @@
   }
 
   /* Skill chips – match Work Experience tonal chips */
-  .skills-container { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
   .skill-chip {
     display: inline-flex;
     align-items: center;
@@ -99,9 +106,13 @@
     border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
     font-size: 0.9rem;
     font-weight: 500;
-    transition: transform .2s ease, background-color .2s ease;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
 
-    &:hover { transform: translateY(-1px); }
+    &:hover {
+      transform: translateY(-1px);
+    }
   }
 
   .project-card__actions {
@@ -116,7 +127,9 @@
   display: inline-block;
   filter: none;
 }
-:host-context(html[data-theme="dark"]) .projects :where(img[icon]) { filter: invert(1) contrast(0.95) brightness(1.1); }
+:host-context(html[data-theme='dark']) .projects :where(img[icon]) {
+  filter: invert(1) contrast(0.95) brightness(1.1);
+}
 
 /* Light/dark surface support for this section */
 .projects {

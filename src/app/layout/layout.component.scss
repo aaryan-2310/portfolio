@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 .sidenav-container {
   height: 100%;
@@ -143,10 +143,10 @@ mat-nav-list {
     border-bottom: 2px solid transparent;
     position: relative;
     text-decoration: none;
-    transition: color .2s ease;
+    transition: color 0.2s ease;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       bottom: 0;
@@ -155,11 +155,11 @@ mat-nav-list {
       background: var(--theme-accent);
       transform: scaleX(0);
       transform-origin: left center;
-      transition: transform .18s ease;
+      transition: transform 0.18s ease;
     }
 
     &:hover::after {
-      transform: scaleX(.66);
+      transform: scaleX(0.66);
     }
 
     &.active {
@@ -355,7 +355,6 @@ mat-nav-list {
 
 @media (max-width: 800px) {
   .footer {
-
     .footer-content,
     .footer-bottom {
       flex-direction: column;
@@ -376,7 +375,6 @@ mat-nav-list {
   }
 }
 
-
 .avail-badge {
   appearance: none;
   border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
@@ -388,7 +386,9 @@ mat-nav-list {
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  transition: border-color .2s ease, background .2s ease;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
 
   .dot {
     width: 8px;
@@ -404,7 +404,7 @@ mat-nav-list {
 
   .label {
     font-weight: 600;
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   &:hover {
@@ -413,7 +413,7 @@ mat-nav-list {
 
   &.readonly {
     cursor: default;
-    opacity: .8;
+    opacity: 0.8;
   }
 }
 

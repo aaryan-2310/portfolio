@@ -13,12 +13,12 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
-        anchorScrolling: 'enabled'
-      })
+        anchorScrolling: 'enabled',
+      }),
     ),
     provideClientHydration(),
     provideAnimations(),
     { provide: TitleStrategy, useClass: AppTitleStrategy },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler }
-  ]
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+  ],
 };

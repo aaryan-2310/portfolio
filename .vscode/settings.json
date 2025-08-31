@@ -1,0 +1,4 @@
+{
+  // Ensures ESLint validates TypeScript and HTML files, so Prettier errors show in Problems panel
+  "eslint.validate": ["typescript", "typescriptreact", "html"]
+}

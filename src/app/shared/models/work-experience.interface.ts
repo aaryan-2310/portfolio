@@ -1,6 +1,6 @@
 export interface Skill {
   name: string;
-  icon: string;  // Material icon name or path to custom icon
+  icon: string; // Material icon name or path to custom icon
   isCustomIcon?: boolean;
 }
 
@@ -13,5 +13,5 @@ export interface WorkExperience {
   description: string[];
   skills: Skill[];
   location?: string;
-  state?: string;  // For Material Stepper state
+  state?: string; // For Material Stepper state
 }

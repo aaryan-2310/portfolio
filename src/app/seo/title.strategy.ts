@@ -18,4 +18,3 @@ export class AppTitleStrategy extends TitleStrategy {
     }
   }
 }
-

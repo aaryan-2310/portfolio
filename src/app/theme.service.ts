@@ -8,7 +8,10 @@ export class ThemeService {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
     if (stored === 'light' || stored === 'dark') {
       this.currentTheme = stored;
-    } else if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    } else if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
       this.currentTheme = 'dark';
     }
     this.applyTheme();
