@@ -29,7 +29,8 @@ jobs:
 
       # Use your package.json script or call ng directly
       - name: Build (Angular prod)
-        run: yarn ng build --configuration production
+        run: yarn build --configuration production
+
 
       - name: Prepare SPA fallback + nojekyll
         run: |
