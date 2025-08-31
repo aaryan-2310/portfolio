@@ -22,8 +22,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+
       - name: Build
         run: yarn build --configuration production
+
+      - name: Copy index.html to 404.html for SPA support
+        run: cp dist/index.html dist/404.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
