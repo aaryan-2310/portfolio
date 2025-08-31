@@ -21,7 +21,7 @@ export class ButtonComponent {
 
   // Navigation support
   @Input() href?: string;
-  @Input() routerLink?: string;
+  @Input() routerLink?: string | null;
   @Input() target?: '_self' | '_blank' | '_parent' | '_top' = '_self';
   @Input() rel?: string;
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
