@@ -90,3 +90,29 @@ small, .text-muted { color: var(--theme-on-surface-variant); font-size: 0.875rem
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+/* Skip link: hidden until focused */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus-visible {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  background: var(--theme-surface-2);
+  color: var(--theme-on-surface);
+  border: 2px solid var(--focus-ring-color);
+  border-radius: 8px;
+  z-index: 1000;
+  clip: auto !important;
+  clip-path: none !important;
+}

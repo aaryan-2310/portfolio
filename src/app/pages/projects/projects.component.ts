@@ -60,5 +60,9 @@ export class ProjectsComponent {
       ],
     },
   ];
+
+  trackByProject = (_: number, p: Project) => p.title;
+  trackByTech = (_: number, t: string) => t;
+  trackByLink = (_: number, l: ProjectLink) => `${l.kind}:${l.href}`;
 }
 

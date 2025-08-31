@@ -1,7 +1,7 @@
 <mat-card class="experience-card" [@cardAnimation]>
   <mat-card-header>
     <div class="company-logo" [attr.aria-label]="'Logo of ' + experience.company">
-      <img [src]="experience.logoUrl" [alt]="experience.company" [matTooltip]="experience.company" [title]="experience.company">
+      <img [ngSrc]="experience.logoUrl" width="48" height="48" [alt]="experience.company" decoding="async" loading="lazy" [matTooltip]="experience.company" [title]="experience.company">
     </div>
     <div class="header-content">
       <div class="company-info">
@@ -42,7 +42,7 @@
                [matTooltip]="skill.name"
                [attr.aria-label]="skill.name">
             @if (skill.isCustomIcon) {
-              <img [src]="skill.icon" [alt]="''" class="skill-icon" aria-hidden="true">
+              <img [ngSrc]="skill.icon" alt="" width="20" height="20" class="skill-icon" aria-hidden="true" decoding="async" loading="lazy">
             } @else {
               <mat-icon class="skill-icon" aria-hidden="true">{{skill.icon}}</mat-icon>
             }

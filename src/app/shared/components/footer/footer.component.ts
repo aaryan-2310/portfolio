@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '../../button/button.component';
@@ -19,11 +20,13 @@ export class FooterComponent implements OnInit {
   availableForFreelance = true;
   readonly calendlyUrl = 'https://calendly.com/mishra-ary';
 
-  constructor(private availability: AvailabilityService, private snack: MatSnackBar, private dialog: MatDialog) {}
+  constructor(private availability: AvailabilityService, private snack: MatSnackBar, private dialog: MatDialog, private destroyRef: DestroyRef) {}
 
   ngOnInit(): void {
     this.availableForFreelance = this.availability.value;
-    this.availability.available$.subscribe(v => (this.availableForFreelance = v));
+    this.availability.available$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(v => (this.availableForFreelance = v));
   }
 
   toggleAvailability(): void {

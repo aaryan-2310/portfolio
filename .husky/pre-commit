@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running lint-staged (eslint --fix + prettier --write on staged files)"
+npx lint-staged
+

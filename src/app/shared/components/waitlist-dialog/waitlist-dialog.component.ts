@@ -1,4 +1,4 @@
-﻿import { Component, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -20,7 +20,7 @@ export class WaitlistDialogComponent {
     return this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      message: ['Iâ€™d like to join the waitlist.']
+      message: ["I'd like to join the waitlist."]
     });
   }
 

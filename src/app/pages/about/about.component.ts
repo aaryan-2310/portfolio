@@ -1,26 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { ButtonComponent } from '../../shared/button/button.component';
+import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="container">
-      <h1>About Me</h1>
-      <p>I'm a software developer passionate about creating amazing web experiences.</p>
-    </div>
-  `,
-  styles: [`
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    h1 {
-      color: var(--theme-primary);
-      margin-bottom: 1rem;
-    }
-  `]
+  imports: [CommonModule, NgOptimizedImage, ButtonComponent, RevealOnScrollDirective],
+  templateUrl: './about.component.html',
+  styleUrl: './about.component.scss'
 })
 export class AboutComponent {}

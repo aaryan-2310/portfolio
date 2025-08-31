@@ -5,21 +5,21 @@
   </header>
 
   <div class="projects__grid">
-    <article class="project-card" *ngFor="let p of projects">
+    <article class="project-card" *ngFor="let p of projects; trackBy: trackByProject">
       <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient"></div>
       <div class="project-card__body">
         <h2 class="project-card__title">{{ p.title }}</h2>
         <p class="project-card__desc">{{ p.description }}</p>
 
         <div class="skills-container" role="list">
-          <div class="skill-chip" role="listitem" *ngFor="let t of p.tech">
+          <div class="skill-chip" role="listitem" *ngFor="let t of p.tech; trackBy: trackByTech">
             <span class="skill-name">{{ t }}</span>
           </div>
         </div>
 
         <div class="project-card__actions">
           <portfolio-button
-            *ngFor="let link of p.links"
+            *ngFor="let link of p.links; trackBy: trackByLink"
             [label]="link.label"
             [href]="link.href"
             target="_blank"

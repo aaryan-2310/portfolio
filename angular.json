@@ -26,10 +26,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "src/styles/styles.scss"
@@ -40,6 +38,11 @@
             "ssr": {
               "entry": "server.ts"
             }
+          },
+          "stylePreprocessorOptions": {
+            "includePaths": [
+              "src/styles"
+            ]
           },
           "configurations": {
             "production": {
@@ -65,13 +68,7 @@
           },
           "defaultConfiguration": "production"
         },
-        "options": {
-          "stylePreprocessorOptions": {
-            "includePaths": [
-              "src/styles/styles.scss"
-            ]
-          }
-        },
+        "options": {},
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
@@ -98,10 +95,8 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "src/styles/styles.scss"

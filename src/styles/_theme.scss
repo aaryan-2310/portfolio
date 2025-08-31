@@ -42,8 +42,11 @@ $dark-vars: (
 );
 
 @mixin theme-vars($map) {
-  @each $name, $value in $map {
-    --theme-#{$name}: #{$value};
+  // Wrap declarations to align with future Sass behavior changes for nested declarations.
+  & {
+    @each $name, $value in $map {
+      --theme-#{$name}: #{$value};
+    }
   }
 }
 

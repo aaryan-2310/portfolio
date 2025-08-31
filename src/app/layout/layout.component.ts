@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { ButtonComponent } from '../shared/button/button.component';
@@ -18,6 +19,7 @@ import { AvailabilityService } from '../availability.service';
   styleUrl: './layout.component.scss',
   imports: [
     CommonModule,
+    NgOptimizedImage,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
@@ -35,10 +37,12 @@ export class LayoutComponent {
   isOwner = false;
   badgePulse = false;
 
-  constructor(private theme: ThemeService, private availability: AvailabilityService, private snack: MatSnackBar) {
+  constructor(private theme: ThemeService, private availability: AvailabilityService, private snack: MatSnackBar, private destroyRef: DestroyRef) {
     this.availableForFreelance = this.availability.value;
     this.isOwner = this.availability.isOwner;
-    this.availability.available$.subscribe(v => (this.availableForFreelance = v));
+    this.availability.available$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(v => (this.availableForFreelance = v));
   }
 
   toggleMenu() {

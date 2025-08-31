@@ -1,9 +1,26 @@
-:root {
-    margin: 0;
-    padding: 0;
-}
+/* Global resets are defined in src/styles/styles.scss; avoid duplication here. */
 
-body{
-    margin: 0;
-    padding: 0;
+.global-error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: color-mix(in oklab, var(--theme-error, #B00020) 12%, var(--theme-surface-2, #fff));
+  border-bottom: 1px solid var(--theme-border, #e5e7eb);
+  color: var(--theme-on-surface, #111827);
+  z-index: 1000;
+
+  .msg { flex: 1; }
+  .dismiss {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: 18px;
+    cursor: pointer;
+  }
 }

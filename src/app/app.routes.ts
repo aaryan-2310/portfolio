@@ -1,9 +1,5 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
-import { WorkExComponent } from './pages/work-ex/work-ex.component';
-import { ProjectsComponent } from './pages/projects/projects.component';
 
 export const routes: Routes = [
     {
@@ -14,25 +10,36 @@ export const routes: Routes = [
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full'
-            },            {
+            },
+            {
                 path: 'home',
-                component: HomeComponent
+                title: 'Home',
+                data: { description: 'Full-stack engineer for TypeScript/Angular products.' },
+                loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
             },
             {
                 path: 'about',
-                component: AboutComponent
+                title: 'About',
+                data: { description: 'About Aryan — experience, values, and approach.' },
+                loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent)
             },
             {
                 path: 'projects',
-                component: ProjectsComponent
+                title: 'Projects',
+                data: { description: 'Selected projects — things designed, built, and shipped.' },
+                loadComponent: () => import('./pages/projects/projects.component').then(m => m.ProjectsComponent)
             },
             {
                 path: 'career',
-                component: WorkExComponent
+                title: 'Professional Experience',
+                data: { description: 'Work experience and highlights across roles and companies.' },
+                loadComponent: () => import('./pages/work-ex/work-ex.component').then(m => m.WorkExComponent)
             },
             {
                 path: '**',
-                redirectTo: 'home'
+                title: 'Page not found',
+                data: { description: 'The page you’re looking for doesn’t exist.' },
+                loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent)
             }
         ]
     }
