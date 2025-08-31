@@ -31,6 +31,7 @@ jobs:
       - name: Build (Angular prod)
         run: yarn build --configuration production
 
+
       - name: Prepare SPA fallback + nojekyll
         run: |
           cp dist/portfolio/browser/index.html dist/portfolio/browser/404.html
