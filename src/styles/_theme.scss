@@ -1,11 +1,95 @@
 @use '@angular/material' as mat;
-@use './colors' as *;
+@use './generated/themes/dark/green/_theme-colors' as green-theme-colors;
+@use './colors' as colors;
+
+// Define theme-specific CSS variable sets
+$light-vars: (
+  surface: #ffffff,
+  on-surface: #1f2937,
+  primary: #{colors.$color-accent},
+  on-primary: #ffffff,
+  accent: #{colors.$color-accent},
+  surface-variant: #f0f0f0,
+  on-surface-variant: #4b5563,
+  outline: #d1d5db,
+  border: #e5e7eb,
+  surface-1: #ffffff,
+  surface-2: #fafafa,
+  surface-3: #f5f5f5,
+  hover: color-mix(in oklab, var(--theme-on-surface) 6%, transparent),
+  active: color-mix(in oklab, var(--theme-on-surface) 12%, transparent),
+  disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
+  ring-color: color-mix(in oklab, var(--theme-accent) 80%, white),
+);
+
+$dark-vars: (
+  surface: #181818,
+  on-surface: #f9fafb,
+  primary: #{colors.$color-accent},
+  on-primary: #ffffff,
+  accent: #{colors.$color-accent},
+  surface-variant: #374151,
+  on-surface-variant: #a0aec0,
+  outline: #4b5563,
+  border: #333333,
+  surface-1: #1b1b1b,
+  surface-2: #212121,
+  surface-3: #262626,
+  hover: color-mix(in oklab, var(--theme-on-surface) 10%, transparent),
+  active: color-mix(in oklab, var(--theme-on-surface) 20%, transparent),
+  disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
+  ring-color: color-mix(in oklab, var(--theme-accent) 70%, black),
+);
+
+@mixin theme-vars($map) {
+  // Wrap declarations to align with future Sass behavior changes for nested declarations.
+  & {
+    @each $name, $value in $map {
+      --theme-#{$name}: #{$value};
+    }
+  }
+}
+
+$light-theme: (
+  color: (
+    theme-type: light,
+    primary: green-theme-colors.$primary-palette,
+    tertiary: green-theme-colors.$tertiary-palette,
+  ),
+  typography: Inter,
+  density: 0,
+);
+
+$dark-theme: (
+  color: (
+    theme-type: dark,
+    primary: green-theme-colors.$primary-palette,
+    tertiary: green-theme-colors.$tertiary-palette,
+  ),
+  typography: Inter,
+  density: 0,
+);
 
 html {
-  color-scheme: dark;
-  @include mat.theme((
-    color: $color-accent,
-    typography: Roboto,
-    density: 0
-  ));
+  color-scheme: light dark;
+  @include mat.theme($light-theme);
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: transparent,
+      container-text-color: colors.$color-accent,
+    )
+  );
+  @include theme-vars($light-vars);
 }
+
+html[data-theme='dark'] {
+  @include mat.theme($dark-theme);
+  @include theme-vars($dark-vars);
+}
+
+// .custom-theme {
+//   @include mat.theme((
+//       primary: $color-primary,
+//       tertiary: $color-accent
+//   ));
+// }

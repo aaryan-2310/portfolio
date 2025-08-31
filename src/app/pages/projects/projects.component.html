@@ -1,0 +1,55 @@
+<section class="projects">
+  <header class="projects__header">
+    <h1 class="projects__title">{{ header.title }}</h1>
+    <p class="projects__subtitle">{{ header.subtitle }}</p>
+  </header>
+
+  <div class="projects__grid">
+    <article class="project-card" *ngFor="let p of projects; trackBy: trackByProject">
+      <div
+        class="project-card__media"
+        [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient"
+      ></div>
+      <div class="project-card__body">
+        <h2 class="project-card__title">{{ p.title }}</h2>
+        <p class="project-card__desc">{{ p.description }}</p>
+
+        <div class="skills-container" role="list">
+          <div class="skill-chip" role="listitem" *ngFor="let t of p.tech; trackBy: trackByTech">
+            <span class="skill-name">{{ t }}</span>
+          </div>
+        </div>
+
+        <div class="project-card__actions">
+          <portfolio-button
+            *ngFor="let link of p.links; trackBy: trackByLink"
+            [label]="link.label"
+            [href]="link.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            [variant]="link.kind === 'live' ? 'primary' : 'tonal'"
+          >
+            <span icon class="material-icons">{{
+              link.kind === 'live' ? 'open_in_new' : 'code'
+            }}</span>
+          </portfolio-button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <footer class="projects__footer" aria-label="Projects footer">
+    <portfolio-button
+      label="See more on GitHub"
+      ariaLabel="See more projects on GitHub"
+      href="https://github.com/aaryan-2310"
+      target="_blank"
+      rel="noopener noreferrer"
+      variant="tonal"
+      size="lg"
+    >
+      <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
+      <span icon-end class="material-icons">north_east</span>
+    </portfolio-button>
+  </footer>
+</section>

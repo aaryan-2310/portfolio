@@ -1,10 +1,24 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, ErrorHandler } from '@angular/core';
+import { provideRouter, withInMemoryScrolling, TitleStrategy } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { AppTitleStrategy } from './seo/title.strategy';
+import { GlobalErrorHandler } from './core/error/global-error.handler';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(), provideAnimationsAsync()]
+  providers: [
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      }),
+    ),
+    provideClientHydration(),
+    provideAnimations(),
+    { provide: TitleStrategy, useClass: AppTitleStrategy },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+  ],
 };

@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Join the waitlist</h2>
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="waitlist-form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Your name</mat-label>
+      <input matInput formControlName="name" required />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required type="email" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Message</mat-label>
+      <textarea matInput rows="3" formControlName="message"></textarea>
+    </mat-form-field>
+  </form>
+  <p class="hint">I’ll get back to you as soon as a slot opens.</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
+    Send
+  </button>
+</div>

@@ -1,1 +1,78 @@
-<button matButton="outlined" color="primary">{{ label }}</button>
+<!-- Internal link variant: use RouterLink only when provided -->
+<ng-container *ngIf="routerLink; else maybeExternal">
+  <a
+    class="{{ classes() }}"
+    [routerLink]="routerLink"
+    role="button"
+    [attr.aria-busy]="loading ? 'true' : null"
+    [attr.aria-disabled]="disabled || loading ? 'true' : null"
+    [attr.tabindex]="disabled || loading ? -1 : null"
+    (click)="onClick($event)"
+  >
+    <span class="btn__spinner" *ngIf="loading" aria-hidden="true"></span>
+    <span class="btn__icon" *ngIf="!loading">
+      <ng-content select="[icon]"></ng-content>
+    </span>
+    <span class="btn__label">{{ label }}</span>
+    <span class="btn__icon btn__icon--end" *ngIf="!loading">
+      <ng-content select="[icon-end]"></ng-content>
+    </span>
+    <span class="btn__icon btn__icon--end" *ngIf="loading">
+      <span class="btn__spinner" aria-hidden="true">
+        <ng-content select="[icon-loading]"></ng-content>
+      </span>
+    </span>
+  </a>
+</ng-container>
+
+<!-- External link variant: plain anchor with href -->
+<ng-template #maybeExternal>
+  <ng-container *ngIf="href; else buttonTpl">
+    <a
+      class="{{ classes() }}"
+      [attr.href]="href"
+      [attr.target]="target"
+      [attr.rel]="rel || (target === '_blank' ? 'noopener noreferrer' : null)"
+      role="button"
+      [attr.aria-busy]="loading ? 'true' : null"
+      [attr.aria-disabled]="disabled || loading ? 'true' : null"
+      [attr.tabindex]="disabled || loading ? -1 : null"
+      (click)="onClick($event)"
+    >
+      <span class="btn__spinner" *ngIf="loading" aria-hidden="true"></span>
+      <span class="btn__icon" *ngIf="!loading">
+        <ng-content select="[icon]"></ng-content>
+      </span>
+      <span class="btn__label">{{ label }}</span>
+      <span class="btn__icon btn__icon--end" *ngIf="!loading">
+        <ng-content select="[icon-end]"></ng-content>
+      </span>
+      <span class="btn__icon btn__icon--end" *ngIf="loading">
+        <span class="btn__spinner" aria-hidden="true">
+          <ng-content select="[icon-loading]"></ng-content>
+        </span>
+      </span>
+    </a>
+  </ng-container>
+</ng-template>
+
+<ng-template #buttonTpl>
+  <button
+    [attr.type]="type"
+    [disabled]="disabled || loading"
+    class="{{ classes() }}"
+    [attr.aria-busy]="loading ? 'true' : null"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.tabindex]="disabled || loading ? -1 : null"
+    (click)="onClick($event)"
+  >
+    <span class="btn__spinner" *ngIf="loading" aria-hidden="true"></span>
+    <span class="btn__icon" *ngIf="!loading">
+      <ng-content select="[icon]"></ng-content>
+    </span>
+    <span class="btn__label">{{ label }}</span>
+    <span class="btn__icon btn__icon--end" *ngIf="!loading">
+      <ng-content select="[icon-end]"></ng-content>
+    </span>
+  </button>
+</ng-template>

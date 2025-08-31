@@ -1,0 +1,4 @@
+
+echo "Running lint-staged (eslint --fix + prettier --write on staged files)"
+npx lint-staged
+

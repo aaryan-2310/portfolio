@@ -1,0 +1,154 @@
+.projects {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+
+  .projects__header {
+    text-align: center;
+    margin: 12px 0 24px;
+
+    .projects__title {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      color: var(--theme-on-surface);
+      letter-spacing: 0.2px;
+    }
+    .projects__subtitle {
+      margin: 8px auto 0;
+      max-width: 720px;
+      color: var(--theme-on-surface-variant);
+      font-size: 1.05rem;
+    }
+  }
+
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 16px;
+
+    @media (max-width: 599px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.project-card {
+  grid-column: span 4;
+  /* Theme-aware card surface */
+  background: var(--theme-surface-1);
+  border: 1px solid var(--theme-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--elev-1);
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 200ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elev-2);
+    border-color: color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
+  }
+
+  @media (max-width: 959px) {
+    grid-column: span 6;
+  }
+  @media (max-width: 599px) {
+    grid-column: span 1;
+  }
+
+  .project-card__media {
+    aspect-ratio: 16/9;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid var(--theme-border);
+  }
+
+  .project-card__body {
+    padding: var(--space-16);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--theme-on-surface);
+  }
+
+  .project-card__desc {
+    margin: 0;
+    color: var(--theme-on-surface-variant);
+    line-height: 1.5;
+  }
+
+  /* Skill chips – match Work Experience tonal chips */
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+  .skill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background-color: color-mix(in oklab, var(--theme-accent) 16%, transparent);
+    color: var(--theme-on-surface);
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .project-card__actions {
+    display: flex;
+    gap: var(--space-8);
+    margin-top: 4px;
+  }
+}
+
+/* Ensure slot images/icons adapt to theme */
+.projects :where(img[icon]) {
+  display: inline-block;
+  filter: none;
+}
+:host-context(html[data-theme='dark']) .projects :where(img[icon]) {
+  filter: invert(1) contrast(0.95) brightness(1.1);
+}
+
+/* Light/dark surface support for this section */
+.projects {
+  background: var(--theme-surface);
+  color: var(--theme-on-surface);
+  border-radius: 16px;
+}
+
+/* Footer CTA placement and emphasis */
+.projects__footer {
+  margin: 24px auto 8px;
+  padding-top: 16px;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--theme-border);
+
+  :where(.btn) {
+    border-width: 2px; /* crisper outline for secondary style */
+    box-shadow: 0 10px 20px var(--theme-shadow);
+  }
+}
