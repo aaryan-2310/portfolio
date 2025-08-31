@@ -29,38 +29,51 @@
         <mat-icon>person</mat-icon>
         <span>Professional Experience</span>
       </a>
-    </div>
 
-    <div id="right-side">
-      <button
-        class="avail-badge"
-        type="button"
-        role="switch"
-        [class.readonly]="!isOwner"
-        [attr.aria-checked]="availableForFreelance"
-        (click)="isOwner && toggleAvailability()"
-        mat-button
-        [class.pulse]="badgePulse"
-      >
-        <span class="dot" [class.on]="availableForFreelance"></span>
-        <span class="label">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
-      </button>
-      <button
-        mat-icon-button
-        (click)="toggleTheme()"
-        aria-label="Toggle theme"
-        id="theme-toggle-button"
-      >
-        <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
-      </button>
+      <div id="right-side">
+        <button
+          class="avail-badge"
+          type="button"
+          role="switch"
+          [class.readonly]="!isOwner"
+          [attr.aria-checked]="availableForFreelance"
+          (click)="isOwner && toggleAvailability()"
+          mat-button
+          [class.pulse]="badgePulse"
+        >
+          <span class="dot" [class.on]="availableForFreelance"></span>
+          <span class="label">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
+        </button>
+        <button
+          mat-icon-button
+          (click)="toggleTheme()"
+          aria-label="Toggle theme"
+          id="theme-toggle-button"
+        >
+          <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Menu -->
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="mobile-menu-button">
+
+    <!-- Mobile Menu Button with aria-label and higher z-index -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="mobile-menu-button"
+      aria-label="Open navigation menu"
+    >
       <mat-icon>menu</mat-icon>
     </button>
 
-    <mat-menu #menu="matMenu">
+    <mat-menu
+      #menu="matMenu"
+      [overlapTrigger]="false"
+      yPosition="below"
+      xPosition="after"
+      class="mobile-nav-menu"
+    >
       <button mat-menu-item [disabled]="!isOwner" (click)="toggleAvailability()">
         <span class="avail-badge">
           <span class="dot" [class.on]="availableForFreelance"></span>
@@ -82,6 +95,10 @@
       <a mat-menu-item routerLink="/career" routerLinkActive="active">
         <mat-icon>person</mat-icon>
         <span>Professional Experience</span>
+      </a>
+      <a mat-menu-item (click)="toggleTheme()">
+        <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
+        <span>Toggle Theme</span>
       </a>
     </mat-menu>
   </mat-toolbar>
