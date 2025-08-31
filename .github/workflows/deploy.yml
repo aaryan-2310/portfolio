@@ -2,9 +2,14 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
-      - main
+    branches: [ master, main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -17,20 +22,26 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'yarn'
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build
-        run: yarn build --configuration production
+      # Use your package.json script or call ng directly
+      - name: Build (Angular prod)
+        run: |
+          yarn ng build --configuration production --base-href "/<REPO>/"
 
-      - name: Copy index.html to 404.html for SPA support
-        run: cp dist/index.html dist/404.html
+      - name: Prepare SPA fallback + nojekyll
+        run: |
+          cp dist/<project>/browser/index.html dist/<project>/browser/404.html
+          touch dist/<project>/browser/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist
+          folder: dist/<project>/browser
           clean: true
+          single-commit: true
+          commit-message: "Deploy to GitHub Pages"
