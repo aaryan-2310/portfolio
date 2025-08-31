@@ -9,10 +9,11 @@ export class GlobalErrorHandler implements ErrorHandler {
     try {
       const svc = this.injector.get(GlobalErrorService);
       svc.report(error);
-    } catch {}
+    } catch {
+      // Swallow errors from error reporting to avoid infinite loops
+    }
     // Always log for visibility during development/CI
     // eslint-disable-next-line no-console
     console.error(error);
   }
 }
-

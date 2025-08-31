@@ -1,4 +1,7 @@
 import { Component, Inject } from '@angular/core';
+interface WaitlistDialogData {
+  // Add properties as needed, or leave empty if no data is expected
+}
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -8,19 +11,30 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './waitlist-dialog.component.html',
-  styleUrls: ['./waitlist-dialog.component.scss']
+  styleUrls: ['./waitlist-dialog.component.scss'],
 })
 export class WaitlistDialogComponent {
   form = this._buildForm();
-  constructor(private fb: FormBuilder, private ref: MatDialogRef<WaitlistDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(
+    private fb: FormBuilder,
+    private ref: MatDialogRef<WaitlistDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: WaitlistDialogData,
+  ) {}
 
   private _buildForm() {
     return this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      message: ["I'd like to join the waitlist."]
+      message: ["I'd like to join the waitlist."],
     });
   }
 
@@ -33,4 +47,3 @@ export class WaitlistDialogComponent {
     this.ref.close(true);
   }
 }
-

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
-  constructor(private readonly router: Router, private readonly meta: Meta) {
+  constructor(
+    private readonly router: Router,
+    private readonly meta: Meta,
+  ) {
     // Update on navigation
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
@@ -23,10 +27,9 @@ export class MetaService {
     }
   }
 
-  private getDeepestChild(route: any): any {
+  private getDeepestChild(route: ActivatedRouteSnapshot): ActivatedRouteSnapshot {
     let current = route;
     while (current?.firstChild) current = current.firstChild;
     return current;
   }
 }
-
