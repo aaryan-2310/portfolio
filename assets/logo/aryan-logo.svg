@@ -1,0 +1,63 @@
+<svg width="1400" height="240" viewBox="0 0 1400 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Aryan Mishra – Code Crafted logo</title>
+  <desc id="desc">Geometric rounded letters forming ARYAN and MISHRA with a simple developer-at-laptop icon in the center. Brand color emerald #34d399.</desc>
+
+  <defs>
+    <style>
+      .brand-stroke{stroke:#34d399;stroke-width:16;stroke-linecap:round;stroke-linejoin:round}
+      .brand-fill{fill:#34d399}
+    </style>
+  </defs>
+
+  <!-- ===== Left word: ARYAN ===== -->
+  <!-- A -->
+  <path class="brand-stroke" d="M60 180 L100 60 L140 180"/>
+  <path class="brand-stroke" d="M82 140 L118 140"/>
+  <!-- R -->
+  <path class="brand-stroke" d="M170 60 L170 180"/>
+  <path class="brand-stroke" d="M170 60 C228 60 228 120 170 120"/>
+  <path class="brand-stroke" d="M170 120 L220 180"/>
+  <!-- Y -->
+  <path class="brand-stroke" d="M260 60 L295 105"/>
+  <path class="brand-stroke" d="M330 60 L295 105 L295 180"/>
+  <!-- A -->
+  <path class="brand-stroke" d="M360 180 L400 60 L440 180"/>
+  <path class="brand-stroke" d="M382 140 L418 140"/>
+  <!-- N -->
+  <path class="brand-stroke" d="M470 180 L470 60 L540 180 L540 60"/>
+
+  <!-- ===== Center icon: person with laptop ===== -->
+  <g transform="translate(610,20)">
+    <!-- head -->
+    <circle class="brand-stroke" cx="60" cy="32" r="18"/>
+    <!-- shoulders -->
+    <path class="brand-stroke" d="M18 92 Q60 70 102 92"/>
+    <!-- laptop body -->
+    <rect class="brand-fill" x="22" y="100" width="76" height="50" rx="8" />
+    <!-- webcam dot -->
+    <circle cx="60" cy="125" r="3.5" fill="#0f172a" />
+    <!-- base/shadow -->
+    <rect class="brand-fill" x="34" y="154" width="52" height="6" rx="3" opacity="0.6"/>
+  </g>
+
+  <!-- ===== Right word: MISHRA ===== -->
+  <!-- M -->
+  <path class="brand-stroke" d="M820 180 L820 60 L860 120 L900 60 L900 180"/>
+  <!-- I (stylized dot) -->
+  <circle class="brand-fill" cx="931" cy="140" r="7.5"/>
+  <!-- S (broken segments) -->
+  <path class="brand-stroke" d="M960 90 Q985 60 1010 78"/>
+  <path class="brand-stroke" d="M965 140 L1005 140"/>
+  <path class="brand-stroke" d="M960 190 Q985 160 1010 178"/>
+  <!-- H -->
+  <path class="brand-stroke" d="M1040 60 L1040 180"/>
+  <path class="brand-stroke" d="M1110 60 L1110 180"/>
+  <path class="brand-stroke" d="M1040 120 L1110 120"/>
+  <!-- R -->
+  <path class="brand-stroke" d="M1140 60 L1140 180"/>
+  <path class="brand-stroke" d="M1140 60 C1195 60 1195 120 1140 120"/>
+  <path class="brand-stroke" d="M1140 120 L1200 180"/>
+  <!-- A -->
+  <path class="brand-stroke" d="M1230 180 L1270 60 L1310 180"/>
+  <path class="brand-stroke" d="M1252 140 L1288 140"/>
+</svg>
