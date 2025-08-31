@@ -5,8 +5,8 @@ import { isPlatformBrowser } from '@angular/common';
   selector: '[revealOnScroll]',
   standalone: true,
   host: {
-    '[class.reveal-on-scroll]': 'true'
-  }
+    '[class.reveal-on-scroll]': 'true',
+  },
 })
 export class RevealOnScrollDirective {
   @Input() threshold = 0.1;
@@ -14,7 +14,10 @@ export class RevealOnScrollDirective {
 
   private io?: IntersectionObserver;
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object, private el: ElementRef<HTMLElement>) {
+  constructor(
+    @Inject(PLATFORM_ID) platformId: object,
+    private el: ElementRef<HTMLElement>,
+  ) {
     if (!isPlatformBrowser(platformId)) {
       // On the server, render revealed to avoid hidden SSR content.
       this.el.nativeElement.classList.add('revealed');
@@ -36,10 +39,9 @@ export class RevealOnScrollDirective {
           }
         }
       },
-      { root: null, rootMargin: this.rootMargin, threshold: this.threshold }
+      { root: null, rootMargin: this.rootMargin, threshold: this.threshold },
     );
 
     this.io.observe(this.el.nativeElement);
   }
 }
-
