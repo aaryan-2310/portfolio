@@ -15,7 +15,9 @@ export class AvailabilityService {
       if (stored === 'available' || stored === 'unavailable') {
         this._available$.next(stored === 'available');
       }
-    } catch {}
+    } catch {
+      /* empty */
+    }
   }
 
   get value(): boolean {
@@ -26,7 +28,9 @@ export class AvailabilityService {
     this._available$.next(v);
     try {
       localStorage.setItem(this.STORAGE_KEY, v ? 'available' : 'unavailable');
-    } catch {}
+    } catch {
+      /* empty */
+    }
   }
 
   toggle(): void {

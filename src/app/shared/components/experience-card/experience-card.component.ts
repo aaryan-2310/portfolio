@@ -18,24 +18,30 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     MatIconModule,
     MatChipsModule,
     MatTooltipModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './experience-card.component.html',
   styleUrls: ['./experience-card.component.scss'],
   animations: [
     trigger('cardAnimation', [
-      state('void', style({
-        opacity: 0,
-        transform: 'translateY(20px)'
-      })),
+      state(
+        'void',
+        style({
+          opacity: 0,
+          transform: 'translateY(20px)',
+        }),
+      ),
       transition(':enter', [
-        animate('0.3s ease-out', style({
-          opacity: 1,
-          transform: 'translateY(0)'
-        }))
-      ])
-    ])
-  ]
+        animate(
+          '0.3s ease-out',
+          style({
+            opacity: 1,
+            transform: 'translateY(0)',
+          }),
+        ),
+      ]),
+    ]),
+  ],
 })
 export class ExperienceCardComponent implements AfterViewInit {
   @Input({ required: true }) experience!: WorkExperience;
@@ -43,8 +49,17 @@ export class ExperienceCardComponent implements AfterViewInit {
 
   // Terms to emphasize inside description points
   private readonly emphasisTerms = [
-    'Angular', 'Spring Boot', 'TypeScript', 'RxJS', 'Java',
-    'UI', 'UX', 'optimizations?', 'performance', 'code reviews', 'junior developers',
+    'Angular',
+    'Spring Boot',
+    'TypeScript',
+    'RxJS',
+    'Java',
+    'UI',
+    'UX',
+    'optimizations?',
+    'performance',
+    'code reviews',
+    'junior developers',
   ];
 
   constructor(private el: ElementRef) {}
@@ -56,9 +71,9 @@ export class ExperienceCardComponent implements AfterViewInit {
 
   formatDate(date: Date | null): string {
     if (!date) return 'Present';
-    return date.toLocaleDateString('en-US', { 
+    return date.toLocaleDateString('en-US', {
       month: 'short',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 
@@ -69,18 +84,18 @@ export class ExperienceCardComponent implements AfterViewInit {
   getDuration(): string {
     const start = this.experience.startDate;
     const end = this.experience.endDate || new Date();
-    
+
     // Handle invalid dates
     if (!start || isNaN(start.getTime())) {
       return 'Invalid date';
     }
 
-    const months = (end.getFullYear() - start.getFullYear()) * 12 + 
-                  (end.getMonth() - start.getMonth());
-    
+    const months =
+      (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+
     const years = Math.floor(months / 12);
     const remainingMonths = months % 12;
-    
+
     if (years === 0) {
       return `${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}`;
     } else if (remainingMonths === 0) {
@@ -92,17 +107,18 @@ export class ExperienceCardComponent implements AfterViewInit {
 
   // Emphasize key phrases and numeric deltas within bullet points
   emphasize(text: string): string {
-    const escape = (s: string) => s
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+    const escape = (s: string) =>
+      s
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 
     let safe = escape(text);
 
     // Percentages and numeric improvements
-    safe = safe.replace(/([+\-]?\d+%)/g, '<span class="em">$1</span>');
+    safe = safe.replace(/([+-]?\d+%)/g, '<span class="em">$1</span>');
 
     // Known terms (case-insensitive)
     for (const term of this.emphasisTerms) {

@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrl: './button.component.scss',
 })
 export class ButtonComponent {
   @Input() label: string = '';
@@ -17,11 +17,11 @@ export class ButtonComponent {
   @Input() disabled: boolean = false;
 
   // Optional semantic attributes
-  @Input({ alias: 'ariaLabel' }) ariaLabel?: string;
+  @Input() ariaLabel?: string;
 
   // Navigation support
   @Input() href?: string;
-  @Input() routerLink?: any;
+  @Input() routerLink?: unknown;
   @Input() target?: '_self' | '_blank' | '_parent' | '_top' = '_self';
   @Input() rel?: string;
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
