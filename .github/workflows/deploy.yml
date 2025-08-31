@@ -34,14 +34,14 @@ jobs:
 
       - name: Prepare SPA fallback + nojekyll
         run: |
-          cp dist/portfolio/browser/index.html dist/portfolio/browser/404.html
-          touch dist/portfolio/browser/.nojekyll
+          cp dist/browser/index.html dist/browser/404.html
+          touch dist/browser/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/portfolio/browser
+          folder: dist/browser
           clean: true
           single-commit: true
           commit-message: "Deploy to GitHub Pages"
