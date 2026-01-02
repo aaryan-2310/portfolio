@@ -29,9 +29,9 @@
       </a>
 
       <div id="right-side">
-        <button class="avail-badge" type="button" role="switch" [class.readonly]="!isOwner"
-          [attr.aria-checked]="availableForFreelance" [aria-checked]="availableForFreelance ? 'true' : 'false'"
-          (click)="isOwner && toggleAvailability()" mat-button [class.pulse]="badgePulse">
+        <button class="avail-badge" type="button" [class.readonly]="!isOwner"
+          [attr.aria-pressed]="availableForFreelance" (click)="isOwner && toggleAvailability()" mat-button
+          [class.pulse]="badgePulse">
           <span class="dot" [class.on]="availableForFreelance"></span>
           <span class="label">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
         </button>
