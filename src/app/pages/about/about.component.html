@@ -14,12 +14,12 @@
       <img ngSrc="assets/img/my_pic.jpg" width="140" height="140" alt="" decoding="async" />
     </div>
   </div>
-  <div class="bg-accent" aria-hidden="true"></div>
 </section>
 
 <section class="journey section" revealOnScroll aria-labelledby="journey-title">
   <h2 id="journey-title">My Journey</h2>
   <div class="timeline">
+    <div class="timeline-rail" aria-hidden="true"></div>
     <article class="event">
       <div class="marker" aria-hidden="true"></div>
       <div class="content">
@@ -60,31 +60,45 @@
       </div>
     </article>
   </div>
-  <div class="timeline-rail" aria-hidden="true"></div>
 </section>
 
 <section class="skills section" revealOnScroll aria-labelledby="skills-title">
-  <h2 id="skills-title">What I Do Best</h2>
-  <div class="grid">
-    <article class="card" tabindex="0">
-      <h3>🔎 Search & Data UX</h3>
-      <p>Simplifying complex queries, building error‑resistant workflows.</p>
+  <h2 id="skills-title" class="section-header">What I Do Best</h2>
+  <div class="skills-grid">
+    <article class="skill-card" tabindex="0">
+      <div class="skill-icon" aria-hidden="true">🔎</div>
+      <div class="skill-content">
+        <h3>Search & Data UX</h3>
+        <p>Simplifying complex queries, building error‑resistant workflows.</p>
+      </div>
     </article>
-    <article class="card" tabindex="0">
-      <h3>🎨 Frontend Development</h3>
-      <p>React.js, Angular, Redux, responsive UIs.</p>
+    <article class="skill-card" tabindex="0">
+      <div class="skill-icon" aria-hidden="true">🎨</div>
+      <div class="skill-content">
+        <h3>Frontend Development</h3>
+        <p>React.js, Angular, Redux, responsive UIs.</p>
+      </div>
     </article>
-    <article class="card" tabindex="0">
-      <h3>⚙️ Backend & Microservices</h3>
-      <p>Java, Spring, REST APIs, Oracle DB, PostgreSQL, MySQL.</p>
+    <article class="skill-card" tabindex="0">
+      <div class="skill-icon" aria-hidden="true">⚙️</div>
+      <div class="skill-content">
+        <h3>Backend & Microservices</h3>
+        <p>Java, Spring, REST APIs, Oracle DB, PostgreSQL, MySQL.</p>
+      </div>
     </article>
-    <article class="card" tabindex="0">
-      <h3>🧪 Automation</h3>
-      <p>Selenium‑based testing and workflow automation.</p>
+    <article class="skill-card" tabindex="0">
+      <div class="skill-icon" aria-hidden="true">🧪</div>
+      <div class="skill-content">
+        <h3>Automation</h3>
+        <p>Selenium‑based testing and workflow automation.</p>
+      </div>
     </article>
-    <article class="card" tabindex="0">
-      <h3>☁️ Cloud & Deployment</h3>
-      <p>Azure, AWS, GCP, Docker.</p>
+    <article class="skill-card" tabindex="0">
+      <div class="skill-icon" aria-hidden="true">☁️</div>
+      <div class="skill-content">
+        <h3>Cloud & Deployment</h3>
+        <p>Azure, AWS, GCP, Docker.</p>
+      </div>
     </article>
   </div>
 </section>
@@ -111,16 +125,33 @@
 <section class="facts section" revealOnScroll aria-labelledby="facts-title">
   <h2 id="facts-title">Quick Facts</h2>
   <div class="facts-grid">
-    <div class="fact"><span class="label">📍 Based in</span><strong>Bengaluru, India</strong></div>
     <div class="fact">
-      <span class="label">💼 Experience</span><strong>3+ years (Clarivate + Highradius)</strong>
+      <div class="label">
+        <span class="material-icons">place</span>
+        <span>Based in</span>
+      </div>
+      <strong>Bengaluru, India</strong>
     </div>
     <div class="fact">
-      <span class="label">🔧 Tech Stack</span
-      ><strong>Java, Spring, React, Angular, Oracle DB, PostgreSQL, Docker, Azure, AWS</strong>
+      <div class="label">
+        <span class="material-icons">work</span>
+        <span>Experience</span>
+      </div>
+      <strong>3+ years (Clarivate + Highradius)</strong>
     </div>
     <div class="fact">
-      <span class="label">🌱 Upskilling</span><strong>AI/ML + modern product design</strong>
+      <div class="label">
+        <span class="material-icons">code</span>
+        <span>Tech Stack</span>
+      </div>
+      <strong>Java, Spring, React, Angular, Oracle DB, PostgreSQL, Docker, Azure, AWS</strong>
+    </div>
+    <div class="fact">
+      <div class="label">
+        <span class="material-icons">school</span>
+        <span>Upskilling</span>
+      </div>
+      <strong>AI/ML + modern product design</strong>
     </div>
   </div>
 </section>
