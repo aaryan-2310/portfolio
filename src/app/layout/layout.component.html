@@ -37,7 +37,7 @@
         </button>
 
         <!-- Theme Toggle -->
-        <button class="theme-toggle" (click)="toggleTheme()" aria-label="Toggle theme" type="button">
+        <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="getCurrentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'" type="button">
           <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
         </button>
 
