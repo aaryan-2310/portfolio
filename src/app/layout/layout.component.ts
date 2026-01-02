@@ -1,16 +1,18 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, HostListener } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgOptimizedImage, DOCUMENT } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { ButtonComponent } from '../shared/button/button.component';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { AvailabilityService } from '../availability.service';
+import { inject } from '@angular/core';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'portfolio-layout',
@@ -28,15 +30,31 @@ import { AvailabilityService } from '../availability.service';
     FooterComponent,
     ButtonComponent,
     MatSnackBarModule,
+    A11yModule,
   ],
 })
 export class LayoutComponent {
   currentYear = new Date().getFullYear();
-  isMenuOpen = false;
-  mobileMenuOpen = false;
+  private _mobileMenuOpen = false;
   availableForFreelance = true;
   isOwner = false;
   badgePulse = false;
+  isScrolled = false;
+
+  private document = inject(DOCUMENT);
+
+  get mobileMenuOpen(): boolean {
+    return this._mobileMenuOpen;
+  }
+
+  set mobileMenuOpen(value: boolean) {
+    this._mobileMenuOpen = value;
+    if (value) {
+      this.document.body.style.overflow = 'hidden';
+    } else {
+      this.document.body.style.overflow = '';
+    }
+  }
 
   constructor(
     private theme: ThemeService,
@@ -49,10 +67,6 @@ export class LayoutComponent {
     this.availability.available$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(v => (this.availableForFreelance = v));
-  }
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
   }
 
   getCurrentTheme(): 'light' | 'dark' {
@@ -73,5 +87,17 @@ export class LayoutComponent {
     this.snack.open(msg, 'OK', { duration: 1600 });
     this.badgePulse = true;
     setTimeout(() => (this.badgePulse = false), 500);
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 10;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey() {
+    if (this.mobileMenuOpen) {
+      this.mobileMenuOpen = false;
+    }
   }
 }

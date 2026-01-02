@@ -1,6 +1,6 @@
 ﻿<div class="layout-container">
   <!-- Modern Navbar -->
-  <header class="navbar">
+  <header class="navbar" [class.scrolled]="isScrolled">
     <div class="navbar-inner">
       <!-- Logo -->
       <a class="navbar-logo" routerLink="/home" aria-label="Go to home">
@@ -58,7 +58,8 @@
   <div class="mobile-menu-overlay" [class.open]="mobileMenuOpen" (click)="mobileMenuOpen = false"></div>
 
   <!-- Mobile Slide-in Menu -->
-  <aside class="mobile-menu" [class.open]="mobileMenuOpen" aria-label="Mobile navigation">
+  <aside class="mobile-menu" [class.open]="mobileMenuOpen" aria-label="Mobile navigation"
+    [cdkTrapFocus]="mobileMenuOpen" cdkTrapFocusAutoCapture>
     <nav class="mobile-nav">
       <a class="mobile-nav-link" routerLink="/home" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>home</mat-icon>
