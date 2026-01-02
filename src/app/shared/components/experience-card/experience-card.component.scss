@@ -35,16 +35,12 @@
       align-items: center;
       justify-content: center;
       background:
-        radial-gradient(
-          120px 80px at 20% 15%,
+        radial-gradient(120px 80px at 20% 15%,
           color-mix(in oklab, var(--theme-accent) 14%, transparent),
-          transparent
-        ),
-        linear-gradient(
-          180deg,
+          transparent),
+        linear-gradient(180deg,
           color-mix(in oklab, var(--theme-surface-2) 92%, transparent),
-          var(--theme-surface-2)
-        );
+          var(--theme-surface-2));
       border: 1px solid var(--theme-border);
       box-shadow: var(--elev-1);
       position: relative;
@@ -56,11 +52,9 @@
         right: 0;
         width: 36px;
         height: 36px;
-        background: radial-gradient(
-          40px 40px at 100% 0%,
-          color-mix(in oklab, #ffffff 18%, transparent),
-          transparent
-        );
+        background: radial-gradient(40px 40px at 100% 0%,
+            color-mix(in oklab, #ffffff 18%, transparent),
+            transparent);
         pointer-events: none;
         border-top-right-radius: inherit;
       }
@@ -270,8 +264,8 @@ mat-card-content {
   .experience-card {
     mat-card-header {
       flex-direction: column;
-      gap: var(--space-20);
-      padding: var(--space-20);
+      gap: var(--space-24);
+      padding: var(--space-24);
 
       .company-logo {
         width: 64px;
@@ -300,7 +294,7 @@ mat-card-content {
 
     .skills-section {
       margin-top: var(--space-24);
-      padding-top: var(--space-20);
+      padding-top: var(--space-24);
     }
   }
 }
@@ -318,7 +312,7 @@ mat-card-content {
   }
 
   mat-card-content {
-    padding: var(--space-20);
+    padding: var(--space-24);
 
     .description .points li {
       gap: var(--space-12);
