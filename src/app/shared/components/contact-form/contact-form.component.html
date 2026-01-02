@@ -1,0 +1,118 @@
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form" novalidate>
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="form-alert form-alert--success" role="alert">
+    <span class="material-icons">check_circle</span>
+    <span>{{ successMessage }}</span>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="form-alert form-alert--error" role="alert">
+    <span class="material-icons">error</span>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <!-- Name Field -->
+  <div class="form-field">
+    <label for="contact-name" class="form-label"> Name <span class="required">*</span> </label>
+    <input
+      type="text"
+      id="contact-name"
+      formControlName="name"
+      class="form-input"
+      [class.form-input--error]="nameControl?.invalid && nameControl?.touched"
+      placeholder="Your name"
+      autocomplete="name"
+    />
+    <span *ngIf="nameControl?.invalid && nameControl?.touched" class="form-error" role="alert">
+      <ng-container *ngIf="nameControl?.errors?.['required']">Name is required</ng-container>
+      <ng-container *ngIf="nameControl?.errors?.['minlength']"
+        >Name must be at least 2 characters</ng-container
+      >
+    </span>
+  </div>
+
+  <!-- Email Field -->
+  <div class="form-field">
+    <label for="contact-email" class="form-label"> Email <span class="required">*</span> </label>
+    <input
+      type="email"
+      id="contact-email"
+      formControlName="email"
+      class="form-input"
+      [class.form-input--error]="emailControl?.invalid && emailControl?.touched"
+      placeholder="you@example.com"
+      autocomplete="email"
+    />
+    <span *ngIf="emailControl?.invalid && emailControl?.touched" class="form-error" role="alert">
+      <ng-container *ngIf="emailControl?.errors?.['required']">Email is required</ng-container>
+      <ng-container *ngIf="emailControl?.errors?.['email']"
+        >Please enter a valid email</ng-container
+      >
+    </span>
+  </div>
+
+  <!-- Subject Field -->
+  <div class="form-field">
+    <label for="contact-subject" class="form-label">
+      Subject <span class="required">*</span>
+    </label>
+    <input
+      type="text"
+      id="contact-subject"
+      formControlName="subject"
+      class="form-input"
+      [class.form-input--error]="subjectControl?.invalid && subjectControl?.touched"
+      placeholder="What's this about?"
+    />
+    <span
+      *ngIf="subjectControl?.invalid && subjectControl?.touched"
+      class="form-error"
+      role="alert"
+    >
+      <ng-container *ngIf="subjectControl?.errors?.['required']">Subject is required</ng-container>
+      <ng-container *ngIf="subjectControl?.errors?.['minlength']"
+        >Subject must be at least 3 characters</ng-container
+      >
+    </span>
+  </div>
+
+  <!-- Message Field -->
+  <div class="form-field">
+    <label for="contact-message" class="form-label">
+      Message <span class="required">*</span>
+    </label>
+    <textarea
+      id="contact-message"
+      formControlName="message"
+      class="form-input form-textarea"
+      [class.form-input--error]="messageControl?.invalid && messageControl?.touched"
+      placeholder="Tell me about your project..."
+      rows="5"
+    ></textarea>
+    <span
+      *ngIf="messageControl?.invalid && messageControl?.touched"
+      class="form-error"
+      role="alert"
+    >
+      <ng-container *ngIf="messageControl?.errors?.['required']">Message is required</ng-container>
+      <ng-container *ngIf="messageControl?.errors?.['minlength']"
+        >Message must be at least 10 characters</ng-container
+      >
+    </span>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="form-actions">
+    <portfolio-button
+      label="Send Message"
+      variant="primary"
+      size="lg"
+      type="submit"
+      [loading]="loading"
+      [disabled]="loading"
+      ripple
+    >
+      <span icon class="material-icons">send</span>
+    </portfolio-button>
+  </div>
+</form>
