@@ -37,7 +37,9 @@
         </button>
 
         <!-- Theme Toggle -->
-        <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="getCurrentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'" type="button">
+        <button class="theme-toggle" (click)="toggleTheme()"
+          [attr.aria-label]="getCurrentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          type="button">
           <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
         </button>
 
@@ -61,7 +63,8 @@
   <aside class="mobile-menu" [class.open]="mobileMenuOpen" aria-label="Mobile navigation"
     [cdkTrapFocus]="mobileMenuOpen" cdkTrapFocusAutoCapture>
     <nav class="mobile-nav">
-      <a class="mobile-nav-link" routerLink="/home" routerLinkActive="active" (click)="mobileMenuOpen = false">
+      <a class="mobile-nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        (click)="mobileMenuOpen = false">
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </a>

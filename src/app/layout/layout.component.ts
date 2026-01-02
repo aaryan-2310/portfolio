@@ -1,4 +1,4 @@
-import { Component, DestroyRef, HostListener } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject, OnDestroy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,7 +11,6 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
 import { ButtonComponent } from '../shared/button/button.component';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { AvailabilityService } from '../availability.service';
-import { inject } from '@angular/core';
 import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
@@ -33,7 +32,7 @@ import { A11yModule } from '@angular/cdk/a11y';
     A11yModule,
   ],
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnDestroy {
   currentYear = new Date().getFullYear();
   private _mobileMenuOpen = false;
   availableForFreelance = true;
@@ -102,5 +101,10 @@ export class LayoutComponent {
     if (this.mobileMenuOpen) {
       this.mobileMenuOpen = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    // Clean up body overflow style to prevent it persisting
+    this.document.body.style.overflow = '';
   }
 }
