@@ -33,6 +33,7 @@ import { AvailabilityService } from '../availability.service';
 export class LayoutComponent {
   currentYear = new Date().getFullYear();
   isMenuOpen = false;
+  mobileMenuOpen = false;
   availableForFreelance = true;
   isOwner = false;
   badgePulse = false;
