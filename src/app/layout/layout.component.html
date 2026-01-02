@@ -1,86 +1,98 @@
 ﻿<div class="layout-container">
-  <mat-toolbar class="navbar">
-    <a class="logo" routerLink="/home" aria-label="Go to home">
-      <img ngSrc="assets/logo/aryan-logo.svg" width="120" height="32" priority alt="Aryan Mishra - Code Crafted"
-        class="logo-img" />
-    </a>
-
-    <!-- Desktop Menu -->
-    <div class="nav-links desktop-menu">
-      <a mat-button routerLink="/home" routerLinkActive="active">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-      </a>
-      <a mat-button routerLink="/about" routerLinkActive="active">
-        <mat-icon>person</mat-icon>
-        <span>About</span>
-      </a>
-      <a mat-button routerLink="/projects" routerLinkActive="active">
-        <mat-icon>apps</mat-icon>
-        <span>Projects</span>
-      </a>
-      <a mat-button routerLink="/career" routerLinkActive="active">
-        <mat-icon>work</mat-icon>
-        <span>Experience</span>
-      </a>
-      <a mat-button routerLink="/contact" routerLinkActive="active">
-        <mat-icon>mail</mat-icon>
-        <span>Contact</span>
+  <!-- Modern Navbar -->
+  <header class="navbar" [class.scrolled]="isScrolled">
+    <div class="navbar-inner">
+      <!-- Logo -->
+      <a class="navbar-logo" routerLink="/home" aria-label="Go to home">
+        <img ngSrc="assets/logo/aryan-logo.svg" width="120" height="32" priority alt="Aryan Mishra" class="logo-img" />
       </a>
 
-      <div id="right-side">
+      <!-- Desktop Navigation -->
+      <nav class="navbar-nav desktop-only" aria-label="Main navigation">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          Home
+        </a>
+        <a class="nav-link" routerLink="/about" routerLinkActive="active">
+          About
+        </a>
+        <a class="nav-link" routerLink="/projects" routerLinkActive="active">
+          Projects
+        </a>
+        <a class="nav-link" routerLink="/career" routerLinkActive="active">
+          Experience
+        </a>
+        <a class="nav-link" routerLink="/contact" routerLinkActive="active">
+          Contact
+        </a>
+      </nav>
+
+      <!-- Right Side Actions -->
+      <div class="navbar-actions">
+        <!-- Availability Badge -->
         <button class="avail-badge" type="button" [class.readonly]="!isOwner"
-          [attr.aria-pressed]="availableForFreelance" (click)="isOwner && toggleAvailability()" mat-button
+          [attr.aria-pressed]="availableForFreelance" (click)="toggleAvailability()" [disabled]="!isOwner"
           [class.pulse]="badgePulse">
-          <span class="dot" [class.on]="availableForFreelance"></span>
-          <span class="label">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
+          <span class="avail-dot" [class.available]="availableForFreelance"></span>
+          <span class="avail-label desktop-only">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
         </button>
-        <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle theme" id="theme-toggle-button">
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" (click)="toggleTheme()"
+          [attr.aria-label]="getCurrentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          type="button">
           <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle mobile-only" (click)="mobileMenuOpen = !mobileMenuOpen"
+          [attr.aria-expanded]="mobileMenuOpen" aria-label="Toggle navigation menu" type="button">
+          <span class="hamburger" [class.open]="mobileMenuOpen">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </span>
         </button>
       </div>
     </div>
+  </header>
 
-    <!-- Mobile Menu -->
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay" [class.open]="mobileMenuOpen" (click)="mobileMenuOpen = false"></div>
 
-    <!-- Mobile Menu Button with aria-label and higher z-index -->
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="mobile-menu-button" aria-label="Open navigation menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="after" class="mobile-nav-menu">
-      <button mat-menu-item [disabled]="!isOwner" (click)="toggleAvailability()">
-        <span class="avail-badge">
-          <span class="dot" [class.on]="availableForFreelance"></span>
-          <span class="label">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
-        </span>
-      </button>
-      <a mat-menu-item routerLink="/home" routerLinkActive="active">
+  <!-- Mobile Slide-in Menu -->
+  <aside class="mobile-menu" [class.open]="mobileMenuOpen" aria-label="Mobile navigation"
+    [cdkTrapFocus]="mobileMenuOpen" cdkTrapFocusAutoCapture>
+    <nav class="mobile-nav">
+      <a class="mobile-nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        (click)="mobileMenuOpen = false">
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </a>
-      <a mat-menu-item routerLink="/about" routerLinkActive="active">
+      <a class="mobile-nav-link" routerLink="/about" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>person</mat-icon>
         <span>About</span>
       </a>
-      <a mat-menu-item routerLink="/projects" routerLinkActive="active">
+      <a class="mobile-nav-link" routerLink="/projects" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>apps</mat-icon>
         <span>Projects</span>
       </a>
-      <a mat-menu-item routerLink="/career" routerLinkActive="active">
+      <a class="mobile-nav-link" routerLink="/career" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>work</mat-icon>
         <span>Experience</span>
       </a>
-      <a mat-menu-item routerLink="/contact" routerLinkActive="active">
+      <a class="mobile-nav-link" routerLink="/contact" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>mail</mat-icon>
         <span>Contact</span>
       </a>
-      <a mat-menu-item (click)="toggleTheme()">
+    </nav>
+
+    <div class="mobile-menu-footer">
+      <button class="mobile-theme-toggle" (click)="toggleTheme()" type="button">
         <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
-        <span>Toggle Theme</span>
-      </a>
-    </mat-menu>
-  </mat-toolbar>
+        <span>{{ getCurrentTheme() === 'dark' ? 'Light Mode' : 'Dark Mode' }}</span>
+      </button>
+    </div>
+  </aside>
 
   <main class="content" id="main">
     <router-outlet></router-outlet>

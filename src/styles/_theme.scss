@@ -6,11 +6,11 @@
 $light-vars: (
   surface: #ffffff,
   on-surface: #1f2937,
-  primary: #{colors.$color-accent},
+  primary: #059669,
   on-primary: #ffffff,
-  accent: #{colors.$color-accent},
+  accent: #059669,
   surface-variant: #f0f0f0,
-  on-surface-variant: #4b5563,
+  on-surface-variant: #374151,
   outline: #d1d5db,
   border: #e5e7eb,
   surface-1: #ffffff,
@@ -19,7 +19,7 @@ $light-vars: (
   hover: color-mix(in oklab, var(--theme-on-surface) 6%, transparent),
   active: color-mix(in oklab, var(--theme-on-surface) 12%, transparent),
   disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
-  ring-color: color-mix(in oklab, var(--theme-accent) 80%, white),
+  ring-color: color-mix(in oklab, var(--theme-accent) 50%, white),
 );
 
 $dark-vars: (
@@ -42,6 +42,7 @@ $dark-vars: (
 );
 
 @mixin theme-vars($map) {
+
   // Wrap declarations to align with future Sass behavior changes for nested declarations.
   & {
     @each $name, $value in $map {
@@ -51,8 +52,7 @@ $dark-vars: (
 }
 
 $light-theme: (
-  color: (
-    theme-type: light,
+  color: (theme-type: light,
     primary: green-theme-colors.$primary-palette,
     tertiary: green-theme-colors.$tertiary-palette,
   ),
@@ -61,8 +61,7 @@ $light-theme: (
 );
 
 $dark-theme: (
-  color: (
-    theme-type: dark,
+  color: (theme-type: dark,
     primary: green-theme-colors.$primary-palette,
     tertiary: green-theme-colors.$tertiary-palette,
   ),
@@ -73,12 +72,9 @@ $dark-theme: (
 html {
   color-scheme: light dark;
   @include mat.theme($light-theme);
-  @include mat.toolbar-overrides(
-    (
-      container-background-color: transparent,
+  @include mat.toolbar-overrides((container-background-color: transparent,
       container-text-color: colors.$color-accent,
-    )
-  );
+    ));
   @include theme-vars($light-vars);
 }
 
