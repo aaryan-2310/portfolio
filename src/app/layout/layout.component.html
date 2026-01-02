@@ -1,14 +1,8 @@
 ﻿<div class="layout-container">
   <mat-toolbar class="navbar">
     <a class="logo" routerLink="/home" aria-label="Go to home">
-      <img
-        ngSrc="assets/logo/aryan-logo.svg"
-        width="120"
-        height="32"
-        priority
-        alt="Aryan Mishra - Code Crafted"
-        class="logo-img"
-      />
+      <img ngSrc="assets/logo/aryan-logo.svg" width="120" height="32" priority alt="Aryan Mishra - Code Crafted"
+        class="logo-img" />
     </a>
 
     <!-- Desktop Menu -->
@@ -26,30 +20,22 @@
         <span>Projects</span>
       </a>
       <a mat-button routerLink="/career" routerLinkActive="active">
-        <mat-icon>person</mat-icon>
-        <span>Professional Experience</span>
+        <mat-icon>work</mat-icon>
+        <span>Experience</span>
+      </a>
+      <a mat-button routerLink="/contact" routerLinkActive="active">
+        <mat-icon>mail</mat-icon>
+        <span>Contact</span>
       </a>
 
       <div id="right-side">
-        <button
-          class="avail-badge"
-          type="button"
-          role="switch"
-          [class.readonly]="!isOwner"
-          [attr.aria-checked]="availableForFreelance"
-          (click)="isOwner && toggleAvailability()"
-          mat-button
-          [class.pulse]="badgePulse"
-        >
+        <button class="avail-badge" type="button" [class.readonly]="!isOwner"
+          [attr.aria-pressed]="availableForFreelance" (click)="isOwner && toggleAvailability()" mat-button
+          [class.pulse]="badgePulse">
           <span class="dot" [class.on]="availableForFreelance"></span>
           <span class="label">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
         </button>
-        <button
-          mat-icon-button
-          (click)="toggleTheme()"
-          aria-label="Toggle theme"
-          id="theme-toggle-button"
-        >
+        <button mat-icon-button (click)="toggleTheme()" aria-label="Toggle theme" id="theme-toggle-button">
           <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
         </button>
       </div>
@@ -58,22 +44,11 @@
     <!-- Mobile Menu -->
 
     <!-- Mobile Menu Button with aria-label and higher z-index -->
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="menu"
-      class="mobile-menu-button"
-      aria-label="Open navigation menu"
-    >
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="mobile-menu-button" aria-label="Open navigation menu">
       <mat-icon>menu</mat-icon>
     </button>
 
-    <mat-menu
-      #menu="matMenu"
-      [overlapTrigger]="false"
-      yPosition="below"
-      xPosition="after"
-      class="mobile-nav-menu"
-    >
+    <mat-menu #menu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="after" class="mobile-nav-menu">
       <button mat-menu-item [disabled]="!isOwner" (click)="toggleAvailability()">
         <span class="avail-badge">
           <span class="dot" [class.on]="availableForFreelance"></span>
@@ -93,8 +68,12 @@
         <span>Projects</span>
       </a>
       <a mat-menu-item routerLink="/career" routerLinkActive="active">
-        <mat-icon>person</mat-icon>
-        <span>Professional Experience</span>
+        <mat-icon>work</mat-icon>
+        <span>Experience</span>
+      </a>
+      <a mat-menu-item routerLink="/contact" routerLinkActive="active">
+        <mat-icon>mail</mat-icon>
+        <span>Contact</span>
       </a>
       <a mat-menu-item (click)="toggleTheme()">
         <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
@@ -109,14 +88,8 @@
 
   <!-- Mobile sticky CTA -->
   <div class="sticky-cta">
-    <portfolio-button
-      label="Book a Call"
-      variant="primary"
-      size="lg"
-      [routerLink]="'/about'"
-      ariaLabel="Book a call"
-    >
-      <span icon class="material-icons">phone_in_talk</span>
+    <portfolio-button label="Get in Touch" variant="primary" size="lg" [routerLink]="'/contact'" ariaLabel="Contact me">
+      <span icon class="material-icons">mail</span>
     </portfolio-button>
   </div>
 
