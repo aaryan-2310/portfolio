@@ -4,6 +4,8 @@
     class="{{ classes() }}"
     [routerLink]="routerLink"
     role="button"
+    ripple
+    [rippleColor]="variant === 'primary' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'"
     [attr.aria-busy]="loading ? 'true' : null"
     [attr.aria-disabled]="disabled || loading ? 'true' : null"
     [attr.tabindex]="disabled || loading ? -1 : null"
@@ -34,6 +36,8 @@
       [attr.target]="target"
       [attr.rel]="rel || (target === '_blank' ? 'noopener noreferrer' : null)"
       role="button"
+      ripple
+      [rippleColor]="variant === 'primary' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'"
       [attr.aria-busy]="loading ? 'true' : null"
       [attr.aria-disabled]="disabled || loading ? 'true' : null"
       [attr.tabindex]="disabled || loading ? -1 : null"
@@ -61,6 +65,8 @@
     [attr.type]="type"
     [disabled]="disabled || loading"
     class="{{ classes() }}"
+    ripple
+    [rippleColor]="variant === 'primary' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'"
     [attr.aria-busy]="loading ? 'true' : null"
     [attr.aria-label]="ariaLabel || null"
     [attr.tabindex]="disabled || loading ? -1 : null"

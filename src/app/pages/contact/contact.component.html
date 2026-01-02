@@ -1,0 +1,85 @@
+<section class="contact-hero" aria-labelledby="contact-title">
+  <div class="hero-content">
+    <span class="hero-eyebrow">
+      <span class="status-dot"></span>
+      Let's Connect
+    </span>
+    <h1 id="contact-title" class="hero-title">Get in Touch</h1>
+    <p class="hero-sub">
+      Have a project in mind? Looking for a developer? Or just want to say hi? I'd love to hear from
+      you.
+    </p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="contact-container">
+    <!-- Contact Form -->
+    <div class="contact-form-wrapper">
+      <div class="form-card">
+        <h2 class="form-title">Send a Message</h2>
+        <p class="form-subtitle">
+          Fill out the form below and I'll get back to you as soon as possible.
+        </p>
+
+        <portfolio-contact-form
+          (formSubmit)="handleFormSubmit($event)"
+          [loading]="isSubmitting"
+          [successMessage]="successMessage"
+          [errorMessage]="errorMessage"
+        ></portfolio-contact-form>
+      </div>
+    </div>
+
+    <!-- Contact Info Sidebar -->
+    <aside class="contact-sidebar">
+      <!-- Direct Contact -->
+      <div class="info-card">
+        <h3 class="info-title">Direct Contact</h3>
+        <ul class="info-list">
+          <li class="info-item">
+            <span class="material-icons info-icon">mail</span>
+            <a href="mailto:hello@aaryan.dev" class="info-link"> hello&#64;aaryan.dev </a>
+          </li>
+          <li class="info-item">
+            <span class="material-icons info-icon">location_on</span>
+            <span class="info-text">Bangalore, India</span>
+          </li>
+          <li class="info-item">
+            <span class="material-icons info-icon">schedule</span>
+            <span class="info-text">Usually responds within 24h</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Social Links -->
+      <div class="info-card">
+        <h3 class="info-title">Connect</h3>
+        <div class="social-links">
+          <a
+            *ngFor="let social of socialLinks"
+            [href]="social.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            [attr.aria-label]="social.name"
+          >
+            <img [src]="social.icon" [alt]="social.name" class="social-icon" />
+            <span class="social-name">{{ social.name }}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Availability -->
+      <div class="info-card info-card--highlight">
+        <div class="availability-badge">
+          <span class="availability-dot"></span>
+          <span class="availability-text">Available for work</span>
+        </div>
+        <p class="availability-desc">
+          Currently accepting new projects and freelance opportunities.
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>

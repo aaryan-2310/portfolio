@@ -38,9 +38,16 @@ export const routes: Routes = [
           import('./pages/work-ex/work-ex.component').then(m => m.WorkExComponent),
       },
       {
+        path: 'contact',
+        title: 'Contact',
+        data: { description: 'Get in touch - let us work together on your next project.' },
+        loadComponent: () =>
+          import('./pages/contact/contact.component').then(m => m.ContactComponent),
+      },
+      {
         path: '**',
         title: 'Page not found',
-        data: { description: 'The page you’re looking for doesn’t exist.' },
+        data: { description: 'The page you are looking for does not exist.' },
         loadComponent: () =>
           import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
       },

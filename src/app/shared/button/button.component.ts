@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { RippleDirective } from '../directives/ripple.directive';
 
 @Component({
   selector: 'portfolio-button',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, RippleDirective],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })
