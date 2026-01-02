@@ -1,6 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": ["dist/**", ".angular/**", "coverage/**", "node_modules/**", "**/*.scss"],
+  "ignorePatterns": [
+    "dist/**",
+    ".angular/**",
+    "coverage/**",
+    "node_modules/**",
+    "**/*.scss"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -9,25 +15,17 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
       },
-      "plugins": ["@typescript-eslint", "@angular-eslint", "prettier"],
+      "plugins": ["@typescript-eslint", "@angular-eslint"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@angular-eslint/recommended",
-        "plugin:prettier/recommended"
+        "plugin:@angular-eslint/recommended"
       ],
-      "rules": {
-        "prettier/prettier": [
-          "error",
-          {
-            "endOfLine": "auto"
-          }
-        ]
-      }
+      "rules": {}
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended", "prettier"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]

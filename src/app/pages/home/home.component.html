@@ -1,6 +1,10 @@
 <section id="hero" aria-labelledby="hero-title">
   <div class="hero-surface">
     <div class="hero-content">
+      <span class="hero-eyebrow">
+        <span class="status-dot"></span>
+        Available for new projects
+      </span>
       <h1 id="hero-title" class="hero-title">
         Full‑stack engineer for TypeScript/Angular products.
       </h1>
@@ -21,6 +25,124 @@
           <span icon class="material-icons">person</span>
         </portfolio-button>
       </div>
+
+      <div class="hero-trust">
+        <div class="trust-item">
+          <span class="trust-value">3+</span>
+          <span class="trust-label">Years Experience</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-value">10+</span>
+          <span class="trust-label">Projects Shipped</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-value">100%</span>
+          <span class="trust-label">Client Satisfaction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section id="featured-projects" class="section" aria-labelledby="featured-title">
+  <div class="section-header">
+    <h2 id="featured-title" class="section-title">Featured Work</h2>
+    <p class="section-sub">A selection of projects I've designed and built.</p>
+  </div>
+
+  <div class="projects-grid">
+    <a
+      *ngFor="let project of featuredProjects; trackBy: trackByProject"
+      class="project-card"
+      [routerLink]="project.link"
+    >
+      <div class="project-media" [style.background]="project.gradient"></div>
+      <div class="project-info">
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-desc">{{ project.description }}</p>
+      </div>
+      <span class="project-arrow material-icons">arrow_forward</span>
+    </a>
+  </div>
+
+  <div class="section-cta">
+    <portfolio-button
+      label="View All Projects"
+      variant="secondary"
+      size="md"
+      [routerLink]="'/projects'"
+    >
+      <span icon class="material-icons">apps</span>
+    </portfolio-button>
+  </div>
+</section>
+
+<!-- What I Do Section -->
+<section id="services" class="section" aria-labelledby="services-title">
+  <div class="section-header">
+    <span class="section-eyebrow">Services</span>
+    <h2 id="services-title" class="section-title">What I Do</h2>
+    <p class="section-sub">End-to-end development expertise to bring your ideas to life.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon-wrapper">
+        <span class="material-icons service-icon">web</span>
+      </div>
+      <h3 class="service-title">Frontend Development</h3>
+      <p class="service-desc">Responsive, accessible UIs with Angular, React, and modern CSS.</p>
+      <div class="service-tags">
+        <span class="service-tag">Angular</span>
+        <span class="service-tag">TypeScript</span>
+        <span class="service-tag">SCSS</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon-wrapper">
+        <span class="material-icons service-icon">dns</span>
+      </div>
+      <h3 class="service-title">Backend Development</h3>
+      <p class="service-desc">
+        Scalable APIs and microservices with Java, Spring Boot, and Node.js.
+      </p>
+      <div class="service-tags">
+        <span class="service-tag">Java</span>
+        <span class="service-tag">Spring Boot</span>
+        <span class="service-tag">Node.js</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon-wrapper">
+        <span class="material-icons service-icon">rocket_launch</span>
+      </div>
+      <h3 class="service-title">Full Product Delivery</h3>
+      <p class="service-desc">From concept to production — CI/CD, testing, and deployment.</p>
+      <div class="service-tags">
+        <span class="service-tag">Git</span>
+        <span class="service-tag">Docker</span>
+        <span class="service-tag">AWS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="section" aria-labelledby="skills-title">
+  <div class="section-header">
+    <h2 id="skills-title" class="section-title">Tech Stack</h2>
+    <p class="section-sub">Technologies I work with daily.</p>
+  </div>
+
+  <div class="skills-grid">
+    <div *ngFor="let skill of skills; trackBy: trackBySkill" class="skill-chip">
+      <span class="material-icons skill-icon">{{ skill.icon }}</span>
+      <span class="skill-name">{{ skill.name }}</span>
     </div>
   </div>
 </section>

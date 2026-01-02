@@ -26,6 +26,9 @@
   --space-16: 16px;
   --space-24: 24px;
   --space-32: 32px;
+  --space-42: 42px;
+  --space-48: 48px;
+  --space-64: 64px;
 
   /* Focus ring */
   --focus-ring-width: 2px;
@@ -39,6 +42,7 @@ body {
   padding: 0;
   background: var(--theme-surface);
   color: var(--theme-on-surface);
+  scroll-behavior: smooth;
 }
 
 /* Ensure routed content inherits themed surface */
@@ -78,6 +82,7 @@ body {
     'Apple Color Emoji',
     'Segoe UI Emoji';
 }
+
 h1,
 h2,
 h3,
@@ -89,28 +94,36 @@ h6 {
   line-height: 1.2;
   font-weight: 700;
 }
+
 h1 {
   font-size: clamp(2rem, 3.2vw, 2.6rem);
 }
+
 h2 {
   font-size: clamp(1.6rem, 2.6vw, 2.2rem);
 }
+
 h3 {
   font-size: clamp(1.3rem, 2.2vw, 1.8rem);
 }
+
 h4 {
   font-size: 1.25rem;
 }
+
 h5 {
   font-size: 1.1rem;
 }
+
 h6 {
   font-size: 1rem;
 }
+
 p {
   color: var(--theme-on-surface-variant);
   line-height: 1.6;
 }
+
 small,
 .text-muted {
   color: var(--theme-on-surface-variant);

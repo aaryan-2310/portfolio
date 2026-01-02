@@ -6,13 +6,13 @@
   --btn-bg: transparent;
   --btn-fg: var(--theme-on-surface);
   --btn-border: transparent;
-  --btn-bg-hover: rgba(0, 0, 0, 0.04);
+  --btn-bg-hover: var(--theme-hover);
   --btn-shadow: 0 1px 2px var(--theme-shadow);
   --btn-shadow-hover: 0 2px 6px var(--theme-shadow-hover);
 
   appearance: none;
   border: 1px solid var(--btn-border);
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   background: var(--btn-bg);
   color: var(--btn-fg);
   font-weight: 600;
@@ -31,18 +31,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--space-8);
 
   &.btn--sm {
     height: 36px;
     padding: 0 14px;
     font-size: 0.9rem;
   }
+
   &.btn--md {
     height: 44px;
     padding: 0 18px;
     font-size: 0.95rem;
   }
+
   &.btn--lg {
     height: 52px;
     padding: 0 22px;
@@ -53,9 +55,11 @@
     background: var(--btn-bg-hover);
     box-shadow: var(--btn-shadow-hover, var(--elev-2));
   }
+
   &:active:not(.btn--disabled) {
     transform: translateY(1px);
   }
+
   &:focus-visible {
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
     outline-offset: var(--focus-ring-offset);
@@ -87,7 +91,7 @@
     --btn-bg: transparent;
     --btn-fg: var(--theme-on-surface-variant);
     --btn-border: transparent;
-    --btn-bg-hover: rgba(127, 127, 127, 0.08);
+    --btn-bg-hover: var(--theme-hover);
   }
 
   &.btn--link {
@@ -115,7 +119,7 @@
   .btn__spinner {
     width: 18px;
     height: 18px;
-    margin-right: 8px;
+    margin-right: var(--space-8);
     border-radius: 50%;
     display: inline-block;
     border: 2px solid color-mix(in oklab, var(--btn-fg) 30%, transparent);
@@ -123,6 +127,7 @@
     animation: spin 1s linear infinite;
     vertical-align: -3px;
   }
+
   .btn__label {
     line-height: 1;
   }
@@ -146,12 +151,14 @@
     background: color-mix(in oklab, var(--btn-fg) 12%, transparent);
     color: currentColor;
   }
+
   .btn__icon:empty {
     display: none;
   }
+
   .btn__icon--end {
     margin-right: 0;
-    margin-left: 8px;
+    margin-left: var(--space-8);
   }
 
   &.btn--primary {
@@ -160,12 +167,14 @@
       color: var(--theme-on-primary);
     }
   }
+
   &.btn--secondary {
     .btn__icon {
       background: color-mix(in oklab, var(--theme-accent) 16%, transparent);
       color: var(--theme-accent);
     }
   }
+
   &.btn--tonal {
     .btn__icon {
       background: color-mix(in oklab, var(--theme-accent) 20%, transparent);

@@ -1,67 +1,116 @@
-<mat-vertical-stepper
-  #stepper
-  class="custom-stepper"
-  [linear]="false"
-  [class.reveal-active]="revealActive"
-  (selectionChange)="replayReveal()"
->
-  @for (exp of experiences; track exp.company; let i = $index) {
-    <mat-step [label]="exp.company" [state]="exp.state || ''">
-      <div class="work-experience-container">
-        <portfolio-experience-card [experience]="exp" [index]="i" />
+<!-- Hero Section -->
+<section class="career-hero" aria-labelledby="career-title">
+  <div class="hero-content">
+    <span class="hero-eyebrow">Professional Journey</span>
+    <h1 id="career-title" class="hero-title">Work Experience</h1>
+    <p class="hero-sub">
+      Building impactful products with modern technologies across enterprise and startup
+      environments.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-value">3+</span>
+        <span class="stat-label">Years Experience</span>
       </div>
+      <div class="stat">
+        <span class="stat-value">{{ experiences.length }}</span>
+        <span class="stat-label">Companies</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">10+</span>
+        <span class="stat-label">Projects Delivered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline-section" aria-label="Career Timeline">
+  <mat-vertical-stepper
+    #stepper
+    class="custom-stepper"
+    [linear]="false"
+    [class.reveal-active]="revealActive"
+    (selectionChange)="replayReveal()"
+  >
+    @for (exp of experiences; track exp.company; let i = $index) {
+      <mat-step [label]="exp.company" [state]="exp.state || ''">
+        <div class="work-experience-container">
+          <portfolio-experience-card [experience]="exp" [index]="i" />
+        </div>
+      </mat-step>
+    }
+
+    <mat-step>
+      <ng-template matStepLabel>Let's Connect</ng-template>
+      <mat-card class="connect-card">
+        <mat-card-content>
+          <div class="connect-icon" aria-hidden="true">
+            <span class="material-icons">handshake</span>
+          </div>
+          <h3>Ready to Work Together?</h3>
+          <p>
+            Explore my full professional background and let's discuss how I can contribute to your
+            team.
+          </p>
+          <div class="external-links">
+            <portfolio-button
+              label="GitHub Profile"
+              variant="tonal"
+              [href]="githubUrl"
+              target="_blank"
+            >
+              <span icon class="material-icons">code</span>
+            </portfolio-button>
+            <portfolio-button
+              label="LinkedIn Profile"
+              variant="primary"
+              [href]="linkedinUrl"
+              target="_blank"
+            >
+              <span icon class="material-icons">link</span>
+            </portfolio-button>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <div class="step-actions">
+            <button mat-button matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Previous
+            </button>
+            <button mat-button (click)="stepper.reset()">
+              <mat-icon>refresh</mat-icon>
+              Start Over
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
     </mat-step>
-  }
 
-  <mat-step>
-    <ng-template matStepLabel>More Experience</ng-template>
-    <mat-card class="experience-card">
-      <mat-card-content>
-        <h3>Connect & Learn More</h3>
-        <p>Find more about my professional journey on:</p>
-        <div class="external-links">
-          <portfolio-button
-            label="GitHub Profile"
-            variant="tonal"
-            [href]="githubUrl"
-            target="_blank"
-          >
-            <span icon class="material-icons">code</span>
-          </portfolio-button>
-          <portfolio-button
-            label="LinkedIn Profile"
-            variant="tonal"
-            [href]="linkedinUrl"
-            target="_blank"
-          >
-            <span icon class="material-icons">link</span>
-          </portfolio-button>
-        </div>
-      </mat-card-content>
-
-      <mat-card-actions>
-        <div class="step-actions">
-          <button mat-button matStepperPrevious>
-            <mat-icon>arrow_back</mat-icon>
-            Previous
-          </button>
-          <button mat-button (click)="stepper.reset()">
-            <mat-icon>refresh</mat-icon>
-            Start Over
-          </button>
-        </div>
-      </mat-card-actions>
-    </mat-card>
-  </mat-step>
-
-  <ng-container *ngFor="let exp of experiences">
-    <ng-template matStepperIcon="current">
-      <ng-container *ngIf="exp.logoUrl; else defaultIcon">
-        <img [src]="exp.logoUrl" [alt]="exp.company" width="16" class="stepper-company-icon" />
-      </ng-container>
-      <ng-template #defaultIcon>
-        <mat-icon class="stepper-company-icon">work</mat-icon>
+    <ng-container *ngFor="let exp of experiences">
+      <ng-template matStepperIcon="current">
+        <ng-container *ngIf="exp.logoUrl; else defaultIcon">
+          <img [src]="exp.logoUrl" [alt]="exp.company" width="16" class="stepper-company-icon" />
+        </ng-container>
+        <ng-template #defaultIcon>
+          <mat-icon class="stepper-company-icon">work</mat-icon>
+        </ng-template>
       </ng-template>
-    </ng-template>
-  </ng-container>
-</mat-vertical-stepper>
+    </ng-container>
+  </mat-vertical-stepper>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section" aria-labelledby="cta-title">
+  <h2 id="cta-title">Interested in working together?</h2>
+  <p>I'm always open to discussing new opportunities and exciting projects.</p>
+  <div class="cta-buttons">
+    <portfolio-button label="Hire Me" variant="primary" size="lg" [routerLink]="'/about'">
+      <span icon class="material-icons">mail</span>
+    </portfolio-button>
+    <portfolio-button label="View Projects" variant="tonal" size="lg" [routerLink]="'/projects'">
+      <span icon class="material-icons">north_east</span>
+    </portfolio-button>
+  </div>
+</section>

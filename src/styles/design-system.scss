@@ -113,3 +113,13 @@ $shadow-card: 0 4px 12px rgba(0, 0, 0, 0.15);
   font-size: $caption;
   font-weight: 500;
 }
+
+// 10. Extended Spacing Scale (CSS Custom Properties)
+:root {
+  --space-20: 20px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --radius-full: 9999px;
+}

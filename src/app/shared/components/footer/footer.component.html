@@ -5,7 +5,7 @@
         class="availability"
         type="button"
         role="switch"
-        [attr.aria-checked]="availableForFreelance"
+        [attr.aria-checked]="availableForFreelance ? 'true' : 'false'"
         (click)="toggleAvailability()"
       >
         <span class="dot" [class.on]="availableForFreelance"></span>
@@ -129,7 +129,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>Â© {{ year }} Aryan Mishra. All rights reserved.</p>
+    <p>© 2024 Aryan Mishra. All rights reserved</p>
     <div class="legal-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Service</a>

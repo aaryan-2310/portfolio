@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { WorkExperience } from '../../shared/models/work-experience.interface';
@@ -13,6 +14,7 @@ import { ButtonComponent } from '../../shared/button/button.component';
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
     MatStepperModule,
     MatIconModule,
     MatCardModule,
