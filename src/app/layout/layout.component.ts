@@ -91,6 +91,9 @@ export class LayoutComponent {
 
   @HostListener('window:scroll')
   onWindowScroll() {
+    if (typeof window === 'undefined') {
+      return;
+    }
     this.isScrolled = window.scrollY > 10;
   }
 
