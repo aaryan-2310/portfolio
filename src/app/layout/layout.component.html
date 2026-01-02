@@ -30,7 +30,7 @@
       <div class="navbar-actions">
         <!-- Availability Badge -->
         <button class="avail-badge" type="button" [class.readonly]="!isOwner"
-          [attr.aria-pressed]="availableForFreelance" (click)="isOwner && toggleAvailability()"
+          [attr.aria-pressed]="availableForFreelance" (click)="toggleAvailability()" [disabled]="!isOwner"
           [class.pulse]="badgePulse">
           <span class="avail-dot" [class.available]="availableForFreelance"></span>
           <span class="avail-label desktop-only">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
