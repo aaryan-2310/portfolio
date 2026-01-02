@@ -1,440 +1,637 @@
+// Work Experience Page - Modern Responsive Design
+// Mobile-first approach with enhanced desktop experience
+
 :host {
   display: block;
+  min-height: 100vh;
+  background: var(--theme-background);
 }
 
-/* ========================================
-   HERO SECTION
-   ======================================== */
+// ============================================
+// HERO SECTION
+// ============================================
 .career-hero {
   position: relative;
-  padding: var(--space-24) 0;
-  text-align: center;
-  background:
-    radial-gradient(
-      800px 600px at 50% 0%,
-      color-mix(in oklab, var(--theme-accent) 10%, transparent),
-      transparent
-    ),
-    var(--theme-surface);
-  border-bottom: 1px solid var(--theme-border);
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-48) var(--space-16);
   overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%,
+      color-mix(in oklab, var(--theme-accent) 15%, transparent),
+      transparent),
+    var(--theme-background);
 
-  &::before {
-    content: '';
+  .hero-backdrop {
     position: absolute;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      color-mix(in oklab, var(--theme-accent) 15%, transparent) 0%,
-      transparent 70%
-    );
-    top: -100px;
-    left: 10%;
-    animation: floatOrb 10s ease-in-out infinite;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 80%,
+        color-mix(in oklab, var(--theme-accent) 8%, transparent) 0%,
+        transparent 50%),
+      radial-gradient(circle at 80% 20%,
+        color-mix(in oklab, var(--theme-accent) 6%, transparent) 0%,
+        transparent 40%);
     pointer-events: none;
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      color-mix(in oklab, var(--theme-accent) 12%, transparent) 0%,
-      transparent 70%
-    );
-    bottom: -50px;
-    right: 15%;
-    animation: floatOrb 8s ease-in-out infinite reverse;
-    pointer-events: none;
-  }
-}
-
-@keyframes floatOrb {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
   }
 
-  50% {
-    transform: translate(20px, -20px) scale(1.05);
-  }
-}
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-16);
+    margin-bottom: var(--space-24);
+    background: color-mix(in oklab, var(--theme-accent) 12%, var(--theme-surface));
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
+    border-radius: var(--radius-full);
+    animation: fadeInDown 0.6s ease-out;
 
-.hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
+    .badge-icon {
+      font-size: 18px;
+      color: var(--theme-accent);
+    }
 
-.hero-eyebrow {
-  display: inline-block;
-  padding: var(--space-6) var(--space-16);
-  background: color-mix(in oklab, var(--theme-accent) 15%, transparent);
-  border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
-  border-radius: var(--radius-full);
-  color: var(--theme-accent);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-20);
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.hero-title {
-  margin: 0 0 var(--space-20);
-  font-size: clamp(2.25rem, 5vw, 3.25rem);
-  font-weight: 800;
-  color: var(--theme-on-surface);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out 0.1s forwards;
-}
-
-.hero-sub {
-  margin: 0 auto var(--space-40);
-  max-width: 85%;
-  font-size: 1.1875rem;
-  color: var(--theme-on-surface-variant);
-  line-height: 1.7;
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out 0.2s forwards;
-}
-
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-48);
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out 0.3s forwards;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.stat-value {
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 800;
-  color: var(--theme-accent);
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 0.875rem;
-  color: var(--theme-on-surface-variant);
-  font-weight: 500;
-}
-
-/* ========================================
-   TIMELINE SECTION
-   ======================================== */
-.timeline-section {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: var(--space-64) var(--space-24);
-}
-
-/* Connect Card (replaces experience-card for final step) */
-.connect-card {
-  margin: var(--space-24) 0;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--elev-1);
-  background: var(--theme-surface-1, var(--theme-surface));
-  color: var(--theme-on-surface);
-  border: 1px solid var(--theme-border);
-  text-align: center;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--elev-2);
+    .badge-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--theme-on-surface);
+      letter-spacing: 0.02em;
+    }
   }
 
-  mat-card-content {
-    padding: var(--space-48) var(--space-32);
+  .hero-title {
+    margin: 0 0 var(--space-16);
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+
+    .title-line {
+      display: block;
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--theme-on-surface);
+      letter-spacing: -0.02em;
+
+      &.accent {
+        color: var(--theme-accent);
+      }
+    }
   }
 
-  .connect-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto var(--space-24);
+  .hero-sub {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    color: var(--theme-on-surface-variant);
+    line-height: 1.6;
+    margin: 0 0 var(--space-32);
+    max-width: 480px;
+    margin-inline: auto;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+  }
+
+  .hero-stats {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: color-mix(in oklab, var(--theme-accent) 12%, transparent);
-    border: 2px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
-    border-radius: 50%;
+    gap: var(--space-16);
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-12) var(--space-16);
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: var(--radius-lg);
+    min-width: 80px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--elev-2);
+    }
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--theme-accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--theme-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-4);
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--theme-border);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: var(--space-24);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
 
     .material-icons {
-      font-size: 36px;
+      font-size: 32px;
+      color: var(--theme-on-surface-variant);
+      opacity: 0.5;
+    }
+  }
+}
+
+// ============================================
+// TIMELINE SECTION
+// ============================================
+.timeline-section {
+  padding: var(--space-48) var(--space-16);
+  background: var(--theme-background);
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-48);
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 700;
+    color: var(--theme-on-surface);
+    margin: 0 0 var(--space-8);
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--theme-on-surface-variant);
+    margin: 0;
+  }
+}
+
+// Mobile Timeline Layout
+.mobile-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.timeline-item {
+  display: flex;
+  gap: var(--space-16);
+  position: relative;
+
+  &.connect-item {
+    margin-top: var(--space-8);
+  }
+}
+
+.timeline-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  padding-top: var(--space-24);
+
+  .connector-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--theme-surface);
+    border: 2px solid var(--theme-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: var(--elev-1);
+    z-index: 2;
+
+    .connector-logo {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .material-icons {
+      font-size: 20px;
       color: var(--theme-accent);
     }
   }
 
-  h3 {
-    margin: 0 0 var(--space-12);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--theme-on-surface);
+  .connect-dot {
+    background: var(--theme-accent);
+
+    .material-icons {
+      color: var(--theme-on-primary);
+    }
   }
 
-  p {
-    margin: 0 auto var(--space-32);
-    max-width: 400px;
-    color: var(--theme-on-surface-variant);
-    font-size: 1rem;
-    line-height: 1.6;
+  .connector-line {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(to bottom,
+        var(--theme-accent),
+        color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border)));
+    min-height: 40px;
+    margin-top: var(--space-8);
+  }
+
+  &.last .connector-line {
+    display: none;
   }
 }
 
-/* ========================================
-   CTA SECTION
-   ======================================== */
+.timeline-content {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: var(--space-24);
+}
+
+// Mobile Connect Card
+.connect-card {
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-24);
+  box-shadow: var(--elev-1);
+
+  .connect-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-16);
+    margin-bottom: var(--space-24);
+  }
+
+  .connect-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: color-mix(in oklab, var(--theme-accent) 15%, var(--theme-surface));
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    .material-icons {
+      font-size: 24px;
+      color: var(--theme-accent);
+    }
+  }
+
+  .connect-text {
+    flex: 1;
+
+    h3 {
+      margin: 0 0 var(--space-4);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--theme-on-surface);
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--theme-on-surface-variant);
+      line-height: 1.5;
+    }
+  }
+
+  .connect-actions {
+    display: flex;
+    gap: var(--space-12);
+    flex-wrap: wrap;
+  }
+}
+
+// Desktop Stepper (Hidden on mobile)
+.desktop-stepper {
+  display: none;
+}
+
+// ============================================
+// CTA SECTION
+// ============================================
 .cta-section {
-  text-align: center;
-  padding: var(--space-32) var(--space-24);
-  background: var(--theme-surface-2);
+  padding: var(--space-64) var(--space-16);
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%,
+      color-mix(in oklab, var(--theme-accent) 10%, transparent),
+      transparent),
+    var(--theme-surface);
   border-top: 1px solid var(--theme-border);
 
+  .cta-content {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .cta-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--theme-accent) 15%, var(--theme-surface));
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-24);
+
+    .material-icons {
+      font-size: 28px;
+      color: var(--theme-accent);
+    }
+  }
+
   h2 {
-    margin: 0 0 var(--space-16);
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(1.5rem, 5vw, 2rem);
     font-weight: 700;
     color: var(--theme-on-surface);
+    margin: 0 0 var(--space-12);
   }
 
   p {
-    margin: 0 auto var(--space-32);
-    max-width: 500px;
-    font-size: 1.0625rem;
+    font-size: 1rem;
     color: var(--theme-on-surface-variant);
+    margin: 0 0 var(--space-32);
     line-height: 1.6;
   }
 
   .cta-buttons {
-    display: inline-flex;
-    gap: var(--space-16);
-    flex-wrap: wrap;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    align-items: stretch;
   }
 }
 
-/* ========================================
-   LEGACY STYLES (kept for compatibility)
-   ======================================== */
-.experience-card {
-  margin: var(--space-24) 0;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--elev-1);
-  background: var(--theme-surface-1, var(--theme-surface));
-  color: var(--theme-on-surface);
-  border: 1px solid var(--theme-border);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+// ============================================
+// DESKTOP STYLES (768px+)
+// ============================================
+@media (min-width: 769px) {
+  .career-hero {
+    min-height: 80vh;
+    padding: var(--space-32);
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--elev-2);
+    .hero-badge {
+      padding: var(--space-10) var(--space-24);
+
+      .badge-text {
+        font-size: 0.9375rem;
+      }
+    }
+
+    .stat-card {
+      padding: var(--space-16) var(--space-24);
+      min-width: 100px;
+    }
+
+    .stat-value {
+      font-size: 2.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.8125rem;
+    }
+
+    .hero-stats {
+      gap: var(--space-24);
+    }
   }
 
-  h3 {
-    margin: 0 0 var(--space-12);
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--theme-on-surface);
+  .timeline-section {
+    padding: var(--space-64) var(--space-32);
   }
 
-  p {
-    margin: 0;
-    color: var(--theme-on-surface-variant);
-    line-height: 1.6;
-  }
-}
-
-mat-card-header {
-  padding: var(--space-24);
-  background: var(--theme-surface-2, var(--theme-surface-variant));
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  border-bottom: 1px solid var(--theme-border);
-
-  .header-content {
-    width: 100%;
-  }
-}
-
-.role-title {
-  margin: 0;
-  font-weight: 700;
-  color: var(--theme-accent);
-}
-
-.date-range {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  margin-top: var(--space-12);
-  color: var(--theme-on-surface-variant);
-  font-size: 0.9375rem;
-
-  .date-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-    color: var(--theme-accent);
-  }
-}
-
-mat-card-content {
-  padding: var(--space-32);
-}
-
-.responsibilities {
-  margin: 0 0 var(--space-32);
-
-  h4 {
-    margin: 0 0 var(--space-20);
-    color: var(--theme-on-surface);
-    font-weight: 600;
-    font-size: 1rem;
+  // Hide mobile timeline, show desktop stepper
+  .mobile-timeline {
+    display: none;
   }
 
-  ul {
-    margin: 0;
-    padding-left: 0;
-    list-style-type: none;
+  .desktop-stepper {
+    display: block;
+    max-width: 900px;
+    margin: 0 auto;
+  }
 
-    li {
-      position: relative;
-      margin: var(--space-16) 0;
-      line-height: 1.6;
-      padding-left: var(--space-32);
-      color: var(--theme-on-surface-variant);
+  // Desktop Stepper Styles
+  .custom-stepper {
+    background: transparent;
+    padding: 0;
+  }
 
-      &:first-child {
-        margin-top: 0;
+  .work-experience-container {
+    padding: var(--space-24) 0 var(--space-32);
+    max-width: 100%;
+  }
+
+  // Desktop Connect Card
+  .connect-card-desktop {
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--elev-1);
+
+    mat-card-content {
+      padding: var(--space-48);
+    }
+
+    .connect-content-wrapper {
+      display: flex;
+      align-items: center;
+      gap: var(--space-32);
+      margin-bottom: var(--space-32);
+    }
+
+    .connect-icon-large {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklab, var(--theme-accent) 15%, var(--theme-surface));
+      border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      .material-icons {
+        font-size: 36px;
+        color: var(--theme-accent);
+      }
+    }
+
+    .connect-info {
+      flex: 1;
+
+      h3 {
+        margin: 0 0 var(--space-8);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--theme-on-surface);
       }
 
-      &:last-child {
-        margin-bottom: 0;
+      p {
+        margin: 0;
+        font-size: 1.0625rem;
+        color: var(--theme-on-surface-variant);
+        line-height: 1.6;
       }
+    }
 
-      &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 10px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: var(--theme-accent);
+    .external-links {
+      display: flex;
+      gap: var(--space-16);
+    }
+
+    mat-card-actions {
+      padding: var(--space-16) var(--space-48);
+      background: var(--theme-surface-2);
+      border-top: 1px solid var(--theme-border);
+    }
+
+    .step-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: var(--space-8);
+        color: var(--theme-on-surface-variant);
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: var(--theme-accent);
+        }
+
+        mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
-}
 
-.tech-stack {
-  h4 {
-    margin: 0 0 var(--space-16);
-    color: var(--theme-on-surface);
-    font-weight: 600;
-    font-size: 1rem;
+  // CTA Desktop
+  .cta-section {
+    padding: var(--space-96) var(--space-32);
+
+    .cta-buttons {
+      flex-direction: row;
+      justify-content: center;
+    }
   }
-}
 
-.tech-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-8);
-}
-
-.tech-chip {
-  padding: var(--space-6) var(--space-16);
-  border-radius: var(--radius-full);
-  background-color: color-mix(in oklab, var(--theme-accent) 12%, transparent);
-  color: var(--theme-on-surface);
-  border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    background-color: color-mix(in oklab, var(--theme-accent) 20%, transparent);
-  }
-}
-
-.step-actions {
-  display: flex;
-  gap: var(--space-12);
-  padding: var(--space-16) var(--space-24) var(--space-24);
-  border-top: 1px solid var(--theme-border);
-
-  button {
-    display: flex;
-    align-items: center;
-    gap: var(--space-8);
-    padding: var(--space-8) var(--space-16);
+  // Stepper Overrides
+  :host ::ng-deep .mat-vertical-stepper-header {
+    padding: var(--space-16) var(--space-24);
     border-radius: var(--radius-md);
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: var(--theme-hover);
+      background: color-mix(in oklab, var(--theme-accent) 8%, transparent);
+    }
+  }
+
+  :host ::ng-deep .mat-step-icon {
+    background: var(--theme-surface) !important;
+    color: var(--theme-accent) !important;
+    border: 2px solid var(--theme-accent) !important;
+    box-shadow: var(--elev-1);
+  }
+
+  :host ::ng-deep .mat-step-icon-selected {
+    background: var(--theme-accent) !important;
+    color: var(--theme-on-primary) !important;
+    border-color: var(--theme-accent) !important;
+  }
+
+  :host ::ng-deep .mat-step-label {
+    color: var(--theme-on-surface) !important;
+  }
+
+  :host ::ng-deep .mat-step-label-active {
+    color: var(--theme-accent) !important;
+    font-weight: 600;
+  }
+
+  :host ::ng-deep .stepper-company-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: var(--theme-surface);
+    border: 2px solid var(--theme-accent);
+    box-shadow: var(--elev-1);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  :host ::ng-deep .mat-step-icon .mat-icon[svgicon='edit'],
+  :host ::ng-deep .mat-step-icon .mat-icon[ng-reflect-svg-icon='edit'],
+  :host ::ng-deep .mat-step-icon .mat-icon.mat-step-icon-edit {
+    display: none !important;
+  }
+
+  :host ::ng-deep .mat-vertical-content-container {
+    margin-left: 36px !important;
+    border-left: 2px solid var(--theme-border);
+  }
+}
+
+// ============================================
+// LARGE DESKTOP (1200px+)
+// ============================================
+@media (min-width: 1200px) {
+  .timeline-section {
+    padding: var(--space-96) var(--space-48);
+  }
+
+  .desktop-stepper {
+    max-width: 1000px;
+  }
+
+  .career-hero {
+    min-height: 85vh;
+
+    .stat-card {
+      padding: var(--space-8) var(--space-12);
+      min-width: 120px;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
     }
   }
 }
 
-.external-links {
-  display: flex;
-  gap: var(--space-20);
-  margin: var(--space-32) 0 var(--space-16);
-  flex-wrap: wrap;
-
-  a {
-    display: flex;
-    align-items: center;
-    gap: var(--space-8);
-    min-width: 160px;
-  }
-}
-
-.work-experience-container {
-  max-width: 950px;
-  margin: 0 auto;
-  padding: var(--space-24) var(--space-16) var(--space-48);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-24);
-
-  // Add subtle animation for cards entering viewport
-  app-experience-card {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s ease forwards;
-    animation-delay: calc(var(--index, 0) * 0.1s);
-  }
-}
-
+// ============================================
+// ANIMATIONS
+// ============================================
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -447,330 +644,102 @@ mat-card-content {
   }
 }
 
-// Make stepper icons consistent
-::ng-deep {
-  .mat-step-icon {
-    background-color: transparent !important;
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
 
-  .mat-vertical-stepper-header {
-    &:hover {
-      background-color: var(--theme-hover);
-    }
-  }
-
-  .mat-step-icon-selected {
-    background-color: var(--theme-primary) !important;
-  }
-
-  .mat-step-icon-state-edit {
-    background-color: var(--theme-primary) !important;
-    content: none !important;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.custom-stepper {
-  // Make stepper background transparent for custom backgrounds
-  background: transparent;
+@keyframes bounce {
 
-  .mat-vertical-stepper-header {
-    background: transparent;
-    color: var(--theme-on-surface);
-    font-weight: 500;
-
-    &.cdk-focused,
-    &.cdk-program-focused,
-    &:hover {
-      color: var(--theme-accent);
-    }
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
   }
 
-  /* Animated reveal gated by class to allow re-trigger */
-  &.reveal-active {
-    .mat-vertical-stepper-header {
-      opacity: 0;
-      transform: translateY(8px);
-      animation: fadeInUp 0.45s ease forwards;
-    }
-
-    /* Stagger the headers slightly */
-    .mat-vertical-stepper-header:nth-of-type(1) {
-      animation-delay: 0.04s;
-    }
-
-    .mat-vertical-stepper-header:nth-of-type(2) {
-      animation-delay: 0.08s;
-    }
-
-    .mat-vertical-stepper-header:nth-of-type(3) {
-      animation-delay: 0.12s;
-    }
-
-    .mat-vertical-stepper-header:nth-of-type(4) {
-      animation-delay: 0.16s;
-    }
-
-    .mat-vertical-stepper-header:nth-of-type(5) {
-      animation-delay: 0.2s;
-    }
-
-    .mat-vertical-stepper-header:nth-of-type(6) {
-      animation-delay: 0.24s;
-    }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
   }
 
-  .mat-step-icon,
-  .mat-step-icon-selected,
-  .mat-step-icon-state-edit,
-  .mat-step-icon-state-done,
-  .mat-step-icon-state-number {
-    background: var(--theme-surface);
-    color: var(--theme-accent);
-    border: 1.5px solid var(--theme-accent);
-    font-weight: bold;
-    box-shadow: var(--elev-1);
-  }
-
-  .mat-step-icon-selected {
-    background: var(--theme-accent);
-    color: var(--theme-on-primary);
-    border-color: var(--theme-accent);
-  }
-
-  .mat-step-label {
-    color: var(--theme-on-surface);
-  }
-
-  .mat-step-label-active {
-    color: var(--theme-accent);
-    font-weight: 600;
+  60% {
+    transform: translateX(-50%) translateY(-5px);
   }
 }
 
-// Material stepper overrides for strong visibility
-:host ::ng-deep .mat-vertical-stepper-header {
-  background: transparent !important;
-  color: var(--theme-on-surface) !important;
-  font-weight: 500;
-}
+// Reveal animation for timeline items
+.timeline-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInRight 0.5s ease-out forwards;
 
-:host ::ng-deep .mat-step-icon {
-  background: var(--theme-surface) !important;
-  color: var(--theme-accent) !important;
-  border: 2px solid var(--theme-accent) !important;
-  // font-weight: bold;
-  box-shadow: var(--elev-1);
-}
-
-:host ::ng-deep .mat-step-icon-selected {
-  background: var(--theme-accent) !important;
-  color: var(--theme-on-primary) !important;
-  border-color: var(--theme-accent) !important;
-}
-
-:host ::ng-deep .mat-step-label {
-  color: var(--theme-on-surface) !important;
-}
-
-:host ::ng-deep .mat-step-label-active {
-  color: var(--theme-accent) !important;
-  font-weight: 600;
-}
-
-:host ::ng-deep .stepper-company-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-  background: var(--theme-surface);
-  border: 2px solid var(--theme-accent);
-  box-shadow: var(--elev-1);
-  display: inline-block;
-  vertical-align: middle;
-}
-
-:host ::ng-deep .mat-step-icon .mat-icon[svgicon='edit'],
-:host ::ng-deep .mat-step-icon .mat-icon[ng-reflect-svg-icon='edit'],
-:host ::ng-deep .mat-step-icon .mat-icon.mat-step-icon-edit {
-  display: none !important;
-}
-
-/* Responsive styles for work-ex page */
-@media (max-width: 768px) {
-  :host {
-    padding: var(--space-48) var(--space-20) var(--space-64);
-  }
-
-  .work-experience-container {
-    padding: var(--space-20) var(--space-8) var(--space-32);
-  }
-
-  .experience-card,
-  .connect-card {
-    margin: var(--space-16) 0;
-  }
-
-  mat-card-header {
-    padding: var(--space-20);
-  }
-
-  mat-card-content {
-    padding: var(--space-24);
-  }
-
-  .step-actions {
-    flex-wrap: wrap;
-    padding: var(--space-16);
-  }
-
-  .external-links {
-    justify-content: center;
-  }
-
-  /* Hero responsive */
-  .career-hero {
-    padding: var(--space-64) var(--space-20) !important;
-  }
-
-  .hero-stats {
-    gap: var(--space-32);
-  }
-
-  .stat-value {
-    font-size: 2rem;
-  }
-
-  /* Timeline responsive */
-  .timeline-section {
-    padding: var(--space-48) var(--space-20);
-  }
-
-  /* CTA responsive */
-  .cta-section {
-    padding: var(--space-64) var(--space-20);
-  }
-}
-
-@media (max-width: 480px) {
-  .work-experience-container {
-    padding: var(--space-16) 0 var(--space-24);
-    gap: var(--space-16);
-  }
-
-  mat-card-header {
-    padding: var(--space-16);
-  }
-
-  mat-card-content {
-    padding: var(--space-20);
-  }
-
-  .responsibilities ul li {
-    padding-left: var(--space-24);
-  }
-
-  .step-actions {
-    flex-direction: column;
-    gap: var(--space-8);
-  }
-
-  .external-links {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-12);
-  }
-
-  /* Hero responsive - mobile */
-  .career-hero {
-    padding: var(--space-48) var(--space-16);
-
-    &::before,
-    &::after {
-      display: none;
-    }
-  }
-
-  .hero-eyebrow {
-    font-size: 0.75rem;
-    padding: var(--space-4) var(--space-12);
-  }
-
-  .hero-title {
-    font-size: 1.75rem;
-  }
-
-  .hero-sub {
-    font-size: 1rem;
-    margin-bottom: var(--space-32);
-  }
-
-  .hero-stats {
-    flex-direction: column;
-    gap: var(--space-20);
-  }
-
-  .stat {
-    flex-direction: row;
-    gap: var(--space-12);
-  }
-
-  .stat-value {
-    font-size: 1.75rem;
-  }
-
-  .stat-label {
-    text-align: left;
-  }
-
-  /* Timeline responsive - mobile */
-  .timeline-section {
-    padding: var(--space-32) var(--space-16);
-  }
-
-  /* Connect card - mobile */
-  .connect-card {
-    mat-card-content {
-      padding: var(--space-32) var(--space-20);
-    }
-
-    .connect-icon {
-      width: 64px;
-      height: 64px;
-
-      .material-icons {
-        font-size: 28px;
-      }
-    }
-
-    h3 {
-      font-size: 1.25rem;
-    }
-  }
-
-  /* CTA responsive - mobile */
-  .cta-section {
-    padding: var(--space-48) var(--space-16);
-
-    .cta-buttons {
-      flex-direction: column;
-      width: 100%;
-      gap: var(--space-12);
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
     }
   }
 }
 
-/* Reduced motion support */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// ============================================
+// REDUCED MOTION
+// ============================================
 @media (prefers-reduced-motion: reduce) {
-  .hero-eyebrow,
+
+  .hero-badge,
   .hero-title,
   .hero-sub,
-  .hero-stats {
+  .hero-stats,
+  .timeline-item {
     opacity: 1;
+    transform: none;
     animation: none;
   }
 
-  .career-hero::before,
-  .career-hero::after {
+  .hero-scroll-hint {
     animation: none;
+  }
+
+  .stat-card,
+  .connect-card,
+  :host ::ng-deep .mat-vertical-stepper-header {
+    transition: none;
+  }
+}
+
+// ============================================
+// DARK/LIGHT THEME ADJUSTMENTS
+// ============================================
+:host-context(.light-theme) {
+  .career-hero {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%,
+        color-mix(in oklab, var(--theme-accent) 12%, transparent),
+        transparent),
+      var(--theme-background);
+  }
+
+  .stat-card {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 }
