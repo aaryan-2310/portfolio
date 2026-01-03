@@ -38,7 +38,7 @@ export class AboutComponent {
     this.services$ = this.serviceOfferingService.getServices();
   }
 
-  formatDateRange(start: string, end?: string): string {
+  formatDateRange(start: string, end?: string | null): string {
     const startDate = new Date(start);
     const startStr = startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     if (!end) return `${startStr} – Present`;
