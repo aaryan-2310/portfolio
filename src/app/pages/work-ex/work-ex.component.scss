@@ -12,7 +12,7 @@
 // ============================================
 .career-hero {
   position: relative;
-  min-height: 70vh;
+  min-height: calc(100dvh - 56px - 96px);
   display: flex;
   flex-direction: column;
   align-items: center;
