@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable, map } from 'rxjs';
@@ -16,7 +16,7 @@ import { Experience, ExperienceService } from '../../core/services/experience.se
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent {
   experiences$: Observable<Experience[]>;
   settings$: Observable<SiteSettings | null>;
   skills$: Observable<Skill[]>;
@@ -37,8 +37,6 @@ export class AboutComponent implements OnInit {
     );
     this.services$ = this.serviceOfferingService.getServices();
   }
-
-  ngOnInit(): void { }
 
   formatDateRange(start: string, end?: string): string {
     const startDate = new Date(start);
