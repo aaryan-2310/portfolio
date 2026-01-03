@@ -1,4 +1,4 @@
-import { Component, DestroyRef, HostListener, inject, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,8 +9,8 @@ import { CommonModule, NgOptimizedImage, DOCUMENT } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { ButtonComponent } from '../shared/button/button.component';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { AvailabilityService } from '../availability.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SettingsService } from '../core/services/settings.service';
 import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
@@ -32,12 +32,10 @@ import { A11yModule } from '@angular/cdk/a11y';
     A11yModule,
   ],
 })
-export class LayoutComponent implements OnDestroy {
+export class LayoutComponent implements OnInit, OnDestroy {
   currentYear = new Date().getFullYear();
   private _mobileMenuOpen = false;
-  availableForFreelance = true;
-  isOwner = false;
-  badgePulse = false;
+  availableForFreelance = false;
   isScrolled = false;
 
   private document = inject(DOCUMENT);
@@ -57,15 +55,18 @@ export class LayoutComponent implements OnDestroy {
 
   constructor(
     private theme: ThemeService,
-    private availability: AvailabilityService,
-    private snack: MatSnackBar,
+    private settingsService: SettingsService,
     private destroyRef: DestroyRef,
-  ) {
-    this.availableForFreelance = this.availability.value;
-    this.isOwner = this.availability.isOwner;
-    this.availability.available$
+  ) { }
+
+  ngOnInit(): void {
+    this.settingsService.settings$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(v => (this.availableForFreelance = v));
+      .subscribe(settings => {
+        if (settings) {
+          this.availableForFreelance = settings.availableForFreelance;
+        }
+      });
   }
 
   getCurrentTheme(): 'light' | 'dark' {
@@ -76,17 +77,6 @@ export class LayoutComponent implements OnDestroy {
     this.theme.toggle();
   }
 
-  toggleAvailability(): void {
-    if (!this.availability.isOwner) {
-      this.snack.open('Only the owner can toggle availability.', 'OK', { duration: 2000 });
-      return;
-    }
-    this.availability.toggle();
-    const msg = this.availability.value ? 'Availability: Available' : 'Availability: Booked';
-    this.snack.open(msg, 'OK', { duration: 1600 });
-    this.badgePulse = true;
-    setTimeout(() => (this.badgePulse = false), 500);
-  }
 
   @HostListener('window:scroll')
   onWindowScroll() {

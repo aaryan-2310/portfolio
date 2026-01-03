@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ButtonComponent } from '../../shared/button/button.component';
+import { ProjectService } from '../../core/services/project.service';
+import { Skill, SkillService } from '../../core/services/skill.service';
+import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
+import { Observable, map } from 'rxjs';
+import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 
-interface FeaturedProject {
+// Adapters for view
+interface FeaturedProjectView {
   title: string;
   description: string;
   gradient: string;
   link: string;
-}
-
-interface Skill {
-  name: string;
-  icon: string;
 }
 
 @Component({
@@ -23,38 +24,43 @@ interface Skill {
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  featuredProjects: FeaturedProject[] = [
-    {
-      title: 'Portfolio Site',
-      description: 'Angular 19 with SSR, theming, and smooth animations.',
-      gradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-      link: '/projects',
-    },
-    {
-      title: 'Job Hunt',
-      description: 'AI-powered job matching with automatic applications.',
-      gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-      link: '/projects',
-    },
-    {
-      title: 'API Explorer',
-      description: 'REST endpoint testing with persistent collections.',
-      gradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
-      link: '/projects',
-    },
-  ];
+  projects$: Observable<FeaturedProjectView[]>;
+  skills$: Observable<Skill[]>;
+  services$: Observable<ServiceOffering[]>;
+  settings$: Observable<SiteSettings | null>;
 
-  skills: Skill[] = [
-    { name: 'Angular', icon: 'code' },
-    { name: 'TypeScript', icon: 'language' },
-    { name: 'Java', icon: 'coffee' },
-    { name: 'Spring Boot', icon: 'bolt' },
-    { name: 'RxJS', icon: 'sync' },
-    { name: 'SCSS', icon: 'palette' },
-    { name: 'Node.js', icon: 'dns' },
-    { name: 'Git', icon: 'merge' },
-  ];
+  constructor(
+    private projectService: ProjectService,
+    private skillService: SkillService,
+    private serviceOfferingService: ServiceOfferingService,
+    private settingsService: SettingsService
+  ) {
+    this.projects$ = this.projectService.getFeatured().pipe(
+      map(projects => projects.slice(0, 3).map((p, i) => ({
+        title: p.title,
+        description: p.description,
+        gradient: this.getGradient(i),
+        link: p.demoUrl || '/projects'
+      })))
+    );
 
-  trackByProject = (_: number, p: FeaturedProject) => p.title;
-  trackBySkill = (_: number, s: Skill) => s.name;
+    this.skills$ = this.skillService.getAll();
+    this.services$ = this.serviceOfferingService.getServices();
+    this.settings$ = this.settingsService.settings$;
+  }
+
+
+
+  private getGradient(index: number): string {
+    const gradients = [
+      'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+      'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+      'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+    ];
+    return gradients[index % gradients.length];
+  }
+
+  trackByProject = (_: number, p: FeaturedProjectView) => p.title;
+  trackBySkill = (_: number, s: Skill) => s.id;
+  trackByService = (_: number, s: ServiceOffering) => s.title;
 }

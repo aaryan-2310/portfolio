@@ -1,9 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable, map } from 'rxjs';
 import {
   ContactFormComponent,
   ContactFormData,
 } from '../../shared/components/contact-form/contact-form.component';
+import { ContactService, SocialLink } from '../../core/services/contact.service';
+import { SettingsService, SiteSettings } from '../../core/services/settings.service';
+
+interface SocialLinkView {
+  name: string;
+  icon: string;
+  url: string;
+}
 
 @Component({
   selector: 'portfolio-contact',
@@ -12,29 +21,50 @@ import {
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
   isSubmitting = false;
   successMessage = '';
   errorMessage = '';
 
-  // Social links for the sidebar
-  socialLinks = [
-    {
-      name: 'GitHub',
-      icon: 'assets/icons/github.svg',
-      url: 'https://github.com/aaryan-2310',
-    },
-    {
-      name: 'LinkedIn',
-      icon: 'assets/icons/linkedin.svg',
-      url: 'https://linkedin.com/in/aaryan-2310',
-    },
-    {
-      name: 'X (Twitter)',
-      icon: 'assets/icons/x.svg',
-      url: 'https://x.com/aaryan_2310',
-    },
-  ];
+  settings$: Observable<SiteSettings | null>;
+  socialLinks: SocialLinkView[] = [];
+
+  // Icon mapping for social platforms
+  private readonly platformIcons: Record<string, string> = {
+    github: 'assets/icons/github.svg',
+    linkedin: 'assets/icons/linkedin.svg',
+    twitter: 'assets/icons/x.svg',
+    x: 'assets/icons/x.svg',
+    instagram: 'assets/icons/instagram.svg',
+    youtube: 'assets/icons/youtube.svg',
+  };
+
+  constructor(
+    private contactService: ContactService,
+    private settingsService: SettingsService
+  ) {
+    this.settings$ = this.settingsService.settings$;
+  }
+
+  ngOnInit(): void {
+    this.contactService.getSocialLinks().pipe(
+      map(links => links
+        .filter(l => l.isVisible)
+        .map(l => this.mapToView(l))
+      )
+    ).subscribe(links => {
+      this.socialLinks = links;
+    });
+  }
+
+  private mapToView(link: SocialLink): SocialLinkView {
+    const platform = link.platform.toLowerCase();
+    return {
+      name: link.platform,
+      icon: link.icon || this.platformIcons[platform] || 'assets/icons/link.svg',
+      url: link.url
+    };
+  }
 
   async handleFormSubmit(data: ContactFormData): Promise<void> {
     this.isSubmitting = true;
@@ -42,8 +72,12 @@ export class ContactComponent {
     this.errorMessage = '';
 
     try {
-      // Simulate API call - replace with actual backend integration
-      await this.sendContactEmail(data);
+      await this.contactService.submitContact({
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message
+      }).toPromise();
 
       this.successMessage = "Thanks for reaching out! I'll get back to you within 24-48 hours.";
     } catch {
@@ -51,12 +85,5 @@ export class ContactComponent {
     } finally {
       this.isSubmitting = false;
     }
-  }
-
-  private sendContactEmail(data: ContactFormData): Promise<void> {
-    // Simulate network delay
-    // TODO: Replace with actual email service (e.g., EmailJS, Formspree, or custom API)
-    console.log('Contact form submitted:', data);
-    return new Promise(resolve => setTimeout(resolve, 1500));
   }
 }

@@ -1,24 +1,20 @@
-<section id="hero" aria-labelledby="hero-title">
+<section id="hero" aria-labelledby="hero-title" *ngIf="settings$ | async as settings">
   <div class="hero-surface">
     <div class="hero-content">
-      <span class="hero-eyebrow">
-        <span class="status-dot"></span>
-        Available for new projects
+      <span class="hero-eyebrow" [class.available]="settings.availableForFreelance">
+        <span class="status-dot" [class.on]="settings.availableForFreelance"></span>
+        {{ settings.availableForFreelance ? 'Available for new projects' : 'Currently booked' }}
       </span>
       <h1 id="hero-title" class="hero-title">
-        Full‑stack engineer for TypeScript/Angular products.
+        {{ settings.siteTitle || 'Full‑stack engineer for TypeScript/Angular products.' }}
       </h1>
       <p class="hero-sub">
-        I help startups and scaleups design, build, and ship reliable web apps — fast.
+        {{ settings?.siteDescription || 'I help startups and scaleups design, build, and ship reliable web apps — fast.'
+        }}
       </p>
 
       <div class="hero-buttons">
-        <portfolio-button
-          label="View Projects"
-          variant="primary"
-          size="lg"
-          [routerLink]="'/projects'"
-        >
+        <portfolio-button label="View Projects" variant="primary" size="lg" [routerLink]="'/projects'">
           <span icon class="material-icons">north_east</span>
         </portfolio-button>
         <portfolio-button label="Hire me" variant="tonal" size="lg" [routerLink]="'/career'">
@@ -54,11 +50,8 @@
   </div>
 
   <div class="projects-grid">
-    <a
-      *ngFor="let project of featuredProjects; trackBy: trackByProject"
-      class="project-card"
-      [routerLink]="project.link"
-    >
+    <a *ngFor="let project of projects$ | async; trackBy: trackByProject" class="project-card"
+      [routerLink]="project.link">
       <div class="project-media" [style.background]="project.gradient"></div>
       <div class="project-info">
         <h3 class="project-title">{{ project.title }}</h3>
@@ -69,12 +62,7 @@
   </div>
 
   <div class="section-cta">
-    <portfolio-button
-      label="View All Projects"
-      variant="secondary"
-      size="md"
-      [routerLink]="'/projects'"
-    >
+    <portfolio-button label="View All Projects" variant="secondary" size="md" [routerLink]="'/projects'">
       <span icon class="material-icons">apps</span>
     </portfolio-button>
   </div>
@@ -89,44 +77,14 @@
   </div>
 
   <div class="services-grid">
-    <div class="service-card">
+    <div *ngFor="let service of services$ | async; trackBy: trackByService" class="service-card">
       <div class="service-icon-wrapper">
-        <span class="material-icons service-icon">web</span>
+        <span class="material-icons service-icon">{{ service.icon }}</span>
       </div>
-      <h3 class="service-title">Frontend Development</h3>
-      <p class="service-desc">Responsive, accessible UIs with Angular, React, and modern CSS.</p>
+      <h3 class="service-title">{{ service.title }}</h3>
+      <p class="service-desc">{{ service.description }}</p>
       <div class="service-tags">
-        <span class="service-tag">Angular</span>
-        <span class="service-tag">TypeScript</span>
-        <span class="service-tag">SCSS</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-icon-wrapper">
-        <span class="material-icons service-icon">dns</span>
-      </div>
-      <h3 class="service-title">Backend Development</h3>
-      <p class="service-desc">
-        Scalable APIs and microservices with Java, Spring Boot, and Node.js.
-      </p>
-      <div class="service-tags">
-        <span class="service-tag">Java</span>
-        <span class="service-tag">Spring Boot</span>
-        <span class="service-tag">Node.js</span>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-icon-wrapper">
-        <span class="material-icons service-icon">rocket_launch</span>
-      </div>
-      <h3 class="service-title">Full Product Delivery</h3>
-      <p class="service-desc">From concept to production — CI/CD, testing, and deployment.</p>
-      <div class="service-tags">
-        <span class="service-tag">Git</span>
-        <span class="service-tag">Docker</span>
-        <span class="service-tag">AWS</span>
+        <span *ngFor="let tag of service.tags" class="service-tag">{{ tag }}</span>
       </div>
     </div>
   </div>
@@ -140,8 +98,11 @@
   </div>
 
   <div class="skills-grid">
-    <div *ngFor="let skill of skills; trackBy: trackBySkill" class="skill-chip">
-      <span class="material-icons skill-icon">{{ skill.icon }}</span>
+    <div *ngFor="let skill of skills$ | async; trackBy: trackBySkill" class="skill-chip">
+      <ng-container *ngIf="skill.icon">
+        <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
+        <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
+      </ng-container>
       <span class="skill-name">{{ skill.name }}</span>
     </div>
   </div>
