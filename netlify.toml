@@ -1,7 +1,11 @@
 [build]
-  command = "npm run build"
-  publish = "dist/portfolio/browser"
+  command = "yarn build --configuration=netlify"
+  publish = "dist/browser"
 
+[[plugins]]
+  package = "@netlify/angular-runtime"
+
+# SPA fallback for client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
