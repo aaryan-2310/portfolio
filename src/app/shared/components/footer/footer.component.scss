@@ -172,27 +172,40 @@
       }
 
       .social-icons {
-        color: var(--theme-on-surface);
         display: flex;
-        gap: var(--space-16);
+        gap: var(--space-12);
         margin-top: var(--space-16);
 
-        a,
-        img,
-        svg,
-        mat-icon {
-          color: var(--theme-on-surface);
-          width: 22px;
-          height: 22px;
-          filter: brightness(0.8);
-          transition:
-            filter 0.2s,
-            color 0.2s;
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border-radius: var(--radius-md);
+          background: var(--theme-surface-2);
+          border: 1px solid var(--theme-border);
+          transition: all 0.2s ease;
 
           &:hover {
-            filter: brightness(1.2);
-            color: var(--theme-accent);
+            background: color-mix(in oklab, var(--theme-accent) 15%, var(--theme-surface));
+            border-color: var(--theme-accent);
+            transform: translateY(-2px);
+
+            .social-icon {
+              opacity: 1;
+              filter: brightness(0) saturate(100%) invert(58%) sepia(52%) saturate(522%) hue-rotate(109deg) brightness(95%) contrast(92%);
+            }
           }
+        }
+
+        .social-icon {
+          width: 20px;
+          height: 20px;
+          opacity: 0.7;
+          // Convert to grayscale to match theme
+          filter: brightness(1) invert(0);
+          transition: all 0.2s ease;
         }
       }
     }
@@ -256,5 +269,18 @@
         }
       }
     }
+  }
+}
+
+// Light theme adjustments
+:host-context(.light-theme) {
+  .footer .footer-top .footer-brand .social-icons .social-icon {
+    filter: brightness(0);
+    opacity: 0.6;
+  }
+
+  .footer .footer-top .footer-brand .social-icons a:hover .social-icon {
+    filter: brightness(0) saturate(100%) invert(58%) sepia(52%) saturate(522%) hue-rotate(109deg) brightness(95%) contrast(92%);
+    opacity: 1;
   }
 }
