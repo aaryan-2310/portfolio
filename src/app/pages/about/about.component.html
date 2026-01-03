@@ -20,42 +20,13 @@
   <h2 id="journey-title">My Journey</h2>
   <div class="timeline">
     <div class="timeline-rail" aria-hidden="true"></div>
-    <article class="event">
+    <article class="event" *ngFor="let exp of experiences$ | async; trackBy: trackByExperience">
       <div class="marker" aria-hidden="true"></div>
       <div class="content">
-        <div class="eyebrow">Dec 2024 – Present</div>
-        <h3>🏢 Clarivate — Derwent Innovation (Power Search)</h3>
+        <div class="eyebrow">{{ formatDateRange(exp.startDate, exp.endDate) }}</div>
+        <h3>🏢 {{ exp.company }} — {{ exp.role }}</h3>
         <ul>
-          <li>Working on Derwent Innovation (patent search platform).</li>
-          <li>
-            Enhanced search workflows with query shortcuts and syntax validation (ANTLR +
-            CodeMirror).
-          </li>
-          <li>Built Vega Charts–based data visualizations with entitlement handling.</li>
-          <li>Delivered robust full‑stack features (Java, Spring, Angular, Oracle DB).</li>
-        </ul>
-      </div>
-    </article>
-    <article class="event">
-      <div class="marker" aria-hidden="true"></div>
-      <div class="content">
-        <div class="eyebrow">Dec 2022 – Nov 2024</div>
-        <h3>🏢 Highradius — Software Engineer</h3>
-        <ul>
-          <li>Optimized Java microservices and REST APIs for enterprise clients.</li>
-          <li>Developed automation + UI enhancements (React, Selenium).</li>
-          <li>Improved data accuracy, performance, and delivery timelines.</li>
-        </ul>
-      </div>
-    </article>
-    <article class="event">
-      <div class="marker" aria-hidden="true"></div>
-      <div class="content">
-        <div class="eyebrow">Aug 2021 – Nov 2022</div>
-        <h3>🏢 Highradius — Internship</h3>
-        <ul>
-          <li>Delivered 25+ RPA/automation solutions with Java + Selenium.</li>
-          <li>Contributed to scalable microservices for inter-service communication.</li>
+          <li *ngFor="let bullet of exp.description">{{ bullet }}</li>
         </ul>
       </div>
     </article>
@@ -65,39 +36,13 @@
 <section class="skills section" revealOnScroll aria-labelledby="skills-title">
   <h2 id="skills-title" class="section-header">What I Do Best</h2>
   <div class="skills-grid">
-    <article class="skill-card" tabindex="0">
-      <div class="skill-icon" aria-hidden="true">🔎</div>
-      <div class="skill-content">
-        <h3>Search & Data UX</h3>
-        <p>Simplifying complex queries, building error‑resistant workflows.</p>
+    <article class="skill-card" tabindex="0" *ngFor="let service of services$ | async; trackBy: trackByService">
+      <div class="skill-icon" aria-hidden="true">
+        <span class="material-icons">{{ service.icon }}</span>
       </div>
-    </article>
-    <article class="skill-card" tabindex="0">
-      <div class="skill-icon" aria-hidden="true">🎨</div>
       <div class="skill-content">
-        <h3>Frontend Development</h3>
-        <p>React.js, Angular, Redux, responsive UIs.</p>
-      </div>
-    </article>
-    <article class="skill-card" tabindex="0">
-      <div class="skill-icon" aria-hidden="true">⚙️</div>
-      <div class="skill-content">
-        <h3>Backend & Microservices</h3>
-        <p>Java, Spring, REST APIs, Oracle DB, PostgreSQL, MySQL.</p>
-      </div>
-    </article>
-    <article class="skill-card" tabindex="0">
-      <div class="skill-icon" aria-hidden="true">🧪</div>
-      <div class="skill-content">
-        <h3>Automation</h3>
-        <p>Selenium‑based testing and workflow automation.</p>
-      </div>
-    </article>
-    <article class="skill-card" tabindex="0">
-      <div class="skill-icon" aria-hidden="true">☁️</div>
-      <div class="skill-content">
-        <h3>Cloud & Deployment</h3>
-        <p>Azure, AWS, GCP, Docker.</p>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.tags.join(', ') }}</p>
       </div>
     </article>
   </div>
@@ -122,7 +67,7 @@
   </div>
 </section>
 
-<section class="facts section" revealOnScroll aria-labelledby="facts-title">
+<section class="facts section" revealOnScroll aria-labelledby="facts-title" *ngIf="settings$ | async as settings">
   <h2 id="facts-title">Quick Facts</h2>
   <div class="facts-grid">
     <div class="fact">
@@ -130,28 +75,30 @@
         <span class="material-icons">place</span>
         <span>Based in</span>
       </div>
-      <strong>Bengaluru, India</strong>
+      <strong>{{ settings.location || 'Bengaluru, India' }}</strong>
     </div>
     <div class="fact">
       <div class="label">
-        <span class="material-icons">work</span>
-        <span>Experience</span>
+        <span class="material-icons">schedule</span>
+        <span>Response Time</span>
       </div>
-      <strong>3+ years (Clarivate + Highradius)</strong>
+      <strong>{{ settings.responseTime || 'Within 24 hours' }}</strong>
     </div>
     <div class="fact">
       <div class="label">
         <span class="material-icons">code</span>
         <span>Tech Stack</span>
       </div>
-      <strong>Java, Spring, React, Angular, Oracle DB, PostgreSQL, Docker, Azure, AWS</strong>
+      <ng-container *ngIf="skillNames$ | async as skillNames">
+        <strong>{{ skillNames }}</strong>
+      </ng-container>
     </div>
     <div class="fact">
       <div class="label">
-        <span class="material-icons">school</span>
-        <span>Upskilling</span>
+        <span class="material-icons">mail</span>
+        <span>Contact</span>
       </div>
-      <strong>AI/ML + modern product design</strong>
+      <strong>{{ settings.email || 'contact@aryanmishra.work' }}</strong>
     </div>
   </div>
 </section>

@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable, map } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
+import { Project, ProjectService } from '../../core/services/project.service';
+import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 
 type ProjectLink = { label: string; href: string; kind: 'repo' | 'live' };
-type Project = {
+type ProjectView = {
   title: string;
   description: string;
   tech: string[];
-  image?: string; // optional screenshot path
-  gradient?: string; // fallback gradient bg
+  image?: string;
+  gradient?: string;
   links: ProjectLink[];
 };
 
@@ -22,45 +25,57 @@ type Project = {
 export class ProjectsComponent {
   header = {
     title: 'Projects',
-    subtitle: 'A curated selection of things I’ve designed, built, and shipped.',
+    subtitle: "A curated selection of things I've designed, built, and shipped.",
   };
 
-  projects: Project[] = [
-    {
-      title: 'Portfolio Site',
-      description:
-        'My personal site built with Angular standalone components, theming, and smooth interactions.',
-      tech: ['Angular', 'TypeScript', 'SCSS'],
-      gradient: 'linear-gradient(135deg, #34D399 0%, #10B981 100%)',
-      links: [
-        { label: 'View Repo', href: 'https://github.com/', kind: 'repo' },
-        { label: 'Live Demo', href: '#', kind: 'live' },
-      ],
-    },
-    {
-      title: 'Job Hunt',
-      description:
-        'Find the job which matches you the best and Use the automatic application feature to autonomously apply to jobs',
-      tech: ['React', 'Spring Boot', 'Gemini'],
-      gradient: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
-      links: [
-        // {label: 'View Repo', href: 'https://github.com/', kind: 'repo'},
-        { label: 'Live Demo', href: 'https://job-hunt-frontend-j3nh.onrender.com/', kind: 'live' },
-      ],
-    },
-    {
-      title: 'API Explorer',
-      description: 'Explore REST endpoints with a slick UI and persistent collections.',
-      tech: ['Angular', 'Material', 'Node.js'],
-      gradient: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
-      links: [
-        { label: 'View Repo', href: 'https://github.com/', kind: 'repo' },
-        { label: 'Live Demo', href: '#', kind: 'live' },
-      ],
-    },
+  projects$: Observable<ProjectView[]>;
+  settings$: Observable<SiteSettings | null>;
+
+  private gradients = [
+    'linear-gradient(135deg, #34D399 0%, #10B981 100%)',
+    'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
+    'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+    'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
+    'linear-gradient(135deg, #EC4899 0%, #BE185D 100%)',
   ];
 
-  trackByProject = (_: number, p: Project) => p.title;
+  constructor(
+    private projectService: ProjectService,
+    private settingsService: SettingsService
+  ) {
+    this.projects$ = this.projectService.getAll().pipe(
+      map(projects => projects
+        .filter(p => p.status === 'PUBLISHED')
+        .map((p, i) => this.mapToView(p, i))
+      )
+    );
+    this.settings$ = this.settingsService.settings$;
+  }
+
+
+
+  private mapToView(project: Project, index: number): ProjectView {
+    const links: ProjectLink[] = [];
+
+    if (project.repoUrl) {
+      links.push({ label: 'View Repo', href: project.repoUrl, kind: 'repo' });
+    }
+    if (project.demoUrl) {
+      links.push({ label: 'Live Demo', href: project.demoUrl, kind: 'live' });
+    }
+
+    return {
+      title: project.title,
+      description: project.description,
+      tech: project.tags || [],
+      image: project.imageUrl,
+      gradient: this.gradients[index % this.gradients.length],
+      links
+    };
+  }
+
+  trackByProject = (_: number, p: ProjectView) => p.title;
   trackByTech = (_: number, t: string) => t;
   trackByLink = (_: number, l: ProjectLink) => `${l.kind}:${l.href}`;
 }
+
