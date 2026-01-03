@@ -525,6 +525,12 @@
 .skill-icon {
   font-size: 22px;
   color: var(--theme-accent);
+
+  &.custom {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+  }
 }
 
 .skill-name {

@@ -67,26 +67,7 @@
     </div>
 
     <!-- Contact Info Sidebar -->
-    <aside class="contact-sidebar">
-      <!-- Availability Card -->
-      <div class="info-card info-card--availability">
-        <div class="availability-header">
-          <div class="availability-indicator">
-            <span class="availability-dot"></span>
-          </div>
-          <div class="availability-info">
-            <span class="availability-status">Available for work</span>
-            <span class="availability-desc">Open to new opportunities</span>
-          </div>
-        </div>
-        <div class="availability-cta">
-          <a href="mailto:contact@aryanmishra.work" class="availability-email">
-            <span class="material-icons">mail</span>
-            contact&#64;aryanmishra.work
-          </a>
-        </div>
-      </div>
-
+    <aside class="contact-sidebar" *ngIf="settings$ | async as settings">
       <!-- Direct Contact -->
       <div class="info-card">
         <h3 class="info-title">
@@ -95,49 +76,48 @@
         </h3>
         <ul class="info-list">
           <li class="info-item">
-            <div class="info-item-icon">
-              <span class="material-icons">location_on</span>
-            </div>
-            <div class="info-item-content">
-              <span class="info-label">Location</span>
-              <span class="info-value">Bangalore, India</span>
-            </div>
+            <span class="material-icons info-icon">mail</span>
+            <a [href]="'mailto:' + (settings.email || 'hello@aaryan.dev')" class="info-link">
+              {{ settings.email || 'hello@aaryan.dev' }}
+            </a>
           </li>
           <li class="info-item">
-            <div class="info-item-icon">
-              <span class="material-icons">schedule</span>
-            </div>
-            <div class="info-item-content">
-              <span class="info-label">Response Time</span>
-              <span class="info-value">Within 24 hours</span>
-            </div>
+            <span class="material-icons info-icon">location_on</span>
+            <span class="info-text">{{ settings.location || 'Bangalore, India' }}</span>
           </li>
           <li class="info-item">
-            <div class="info-item-icon">
-              <span class="material-icons">language</span>
-            </div>
-            <div class="info-item-content">
-              <span class="info-label">Timezone</span>
-              <span class="info-value">IST (UTC+5:30)</span>
-            </div>
+            <span class="material-icons info-icon">schedule</span>
+            <span class="info-text">{{ settings.responseTime || 'Usually responds within 24h' }}</span>
           </li>
         </ul>
       </div>
 
       <!-- Social Links -->
       <div class="info-card">
-        <h3 class="info-title">
-          <span class="material-icons info-title-icon">share</span>
-          Connect
-        </h3>
-        <div class="social-grid">
+        <h3 class="info-title">Connect</h3>
+        <div class="social-links">
           <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" rel="noopener noreferrer"
-            class="social-link" [attr.aria-label]="'Follow me on ' + social.name">
-            <img [src]="social.icon" [alt]="social.name" [title]="social.name" class="social-icon" />
+            class="social-link" [attr.aria-label]="social.name">
+            <img [src]="social.icon" [alt]="social.name" class="social-icon" />
             <span class="social-name">{{ social.name }}</span>
             <span class="material-icons social-arrow">arrow_forward</span>
           </a>
         </div>
+      </div>
+
+      <!-- Availability -->
+      <div class="info-card info-card--highlight">
+        <div class="availability-badge" [class.available]="settings.availableForFreelance">
+          <span class="availability-dot" [class.active]="settings.availableForFreelance"></span>
+          <span class="availability-text">
+            {{ settings.availableForFreelance ? 'Available for work' : 'Currently unavailable' }}
+          </span>
+        </div>
+        <p class="availability-desc">
+          {{ settings.availableForFreelance
+          ? 'Currently accepting new projects and freelance opportunities.'
+          : 'Not taking on new projects at the moment. Feel free to reach out for future opportunities.' }}
+        </p>
       </div>
     </aside>
   </div>

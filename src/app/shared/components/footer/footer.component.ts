@@ -6,8 +6,9 @@ import { ButtonComponent } from '../../button/button.component';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { WaitlistDialogComponent } from '../waitlist-dialog/waitlist-dialog.component';
-import { AvailabilityService } from '../../../availability.service';
+import { SettingsService } from '../../../core/services/settings.service';
 
+// Footer Component
 @Component({
   selector: 'portfolio-footer',
   standalone: true,
@@ -17,33 +18,27 @@ import { AvailabilityService } from '../../../availability.service';
 })
 export class FooterComponent implements OnInit {
   year = new Date().getFullYear();
-  availableForFreelance = true;
-  readonly calendlyUrl = 'https://calendly.com/mishra-ary';
+  availableForFreelance = false;
+  calendlyUrl = '';
+  email = '';
 
   constructor(
-    private availability: AvailabilityService,
+    private settingsService: SettingsService,
     private snack: MatSnackBar,
     private dialog: MatDialog,
     private destroyRef: DestroyRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.availableForFreelance = this.availability.value;
-    this.availability.available$
+    this.settingsService.settings$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(v => (this.availableForFreelance = v));
-  }
-
-  toggleAvailability(): void {
-    if (!this.availability.isOwner) {
-      this.snack.open('Only the owner can toggle availability.', 'OK', { duration: 2000 });
-      return;
-    }
-    this.availability.toggle();
-    const msg = this.availability.value
-      ? 'Availability set to: Available'
-      : 'Availability set to: Booked';
-    this.snack.open(msg, 'OK', { duration: 2000 });
+      .subscribe(settings => {
+        if (settings) {
+          this.availableForFreelance = settings.availableForFreelance;
+          this.calendlyUrl = settings.calendlyUrl;
+          this.email = settings.email || 'contact@aryanmishra.work';
+        }
+      });
   }
 
   onPrimaryClick() {
@@ -55,3 +50,4 @@ export class FooterComponent implements OnInit {
     }
   }
 }
+
