@@ -203,8 +203,7 @@
           width: 20px;
           height: 20px;
           opacity: 0.7;
-          // Convert to grayscale to match theme
-          filter: brightness(1) invert(0);
+          // Base state: keep original icon colors; theme-specific filters are applied on hover / in light theme overrides.
           transition: all 0.2s ease;
         }
       }
