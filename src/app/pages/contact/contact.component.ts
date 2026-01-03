@@ -49,7 +49,7 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     this.contactService.getSocialLinks().pipe(
       map(links => links
-        .filter(l => l.isVisible)
+        .filter(l => l.showInContact)
         .map(l => this.mapToView(l))
       )
     ).subscribe(links => {
@@ -58,10 +58,9 @@ export class ContactComponent implements OnInit {
   }
 
   private mapToView(link: SocialLink): SocialLinkView {
-    const platform = link.platform.toLowerCase();
     return {
-      name: link.platform,
-      icon: link.icon || this.platformIcons[platform] || 'assets/icons/link.svg',
+      name: link.name,
+      icon: link.icon,
       url: link.url
     };
   }
