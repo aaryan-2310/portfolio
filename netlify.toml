@@ -1,6 +1,6 @@
 [build]
   command = "yarn build --configuration=production"
-  publish = "dist/portfolio/browser"
+  publish = "dist/browser"
 
 [[plugins]]
   package = "@netlify/angular-runtime"
