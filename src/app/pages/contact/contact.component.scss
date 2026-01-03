@@ -12,7 +12,9 @@
 // ============================================
 .contact-hero {
   position: relative;
-  height: calc(100dvh - 56px - 50.6px - 96px);
+  // Height calculation accounts for app header (56px), contact toolbar (50.6px), and footer (96px)
+  --contact-toolbar-height: 50.6px;
+  height: calc(100dvh - 56px - var(--contact-toolbar-height) - 96px);
   display: flex;
   flex-direction: column;
   align-items: center;
