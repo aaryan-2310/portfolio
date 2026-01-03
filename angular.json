@@ -59,7 +59,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/portfolio/"
+              "baseHref": "/"
             },
             "netlify": {
               "budgets": [
