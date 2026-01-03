@@ -42,5 +42,4 @@ testem.log
 Thumbs.db
 .yarn/
 .pnp.*
-# Environment files
-src/environments/environment.prod.ts
+

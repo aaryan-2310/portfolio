@@ -285,25 +285,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/platform-server@^19.2.14":
-  version "19.2.14"
-  resolved "https://registry.npmjs.org/@angular/platform-server/-/platform-server-19.2.14.tgz"
-  integrity sha512-vmnRTDhlhahna6HbmzJh+qelXkyy1wBiJrOhnLR3UVeoBMBOTTjnTKtInfVrgZTMYcV9H8us480cvtSWzYsddA==
-  dependencies:
-    tslib "^2.3.0"
-    xhr2 "^0.2.0"
-
 "@angular/router@^19.2.14":
   version "19.2.14"
   resolved "https://registry.npmjs.org/@angular/router/-/router-19.2.14.tgz"
   integrity sha512-cBTWY9Jx7YhbmDYDb7Hqz4Q7UNIMlKTkdKToJd2pbhIXyoS+kHVQrySmyca+jgvYMjWnIjsAEa3dpje12D4mFw==
-  dependencies:
-    tslib "^2.3.0"
-
-"@angular/ssr@^19.2.14":
-  version "19.2.14"
-  resolved "https://registry.npmjs.org/@angular/ssr/-/ssr-19.2.14.tgz"
-  integrity sha512-GV7IUSBhJXbz+pDq28xGRT7TT08M1egPn7/5vziesZOW/PF1FMCAbDV8OqQu8phSYa2D4F4ePkE9f55tRgUp3g==
   dependencies:
     tslib "^2.3.0"
 
@@ -1728,14 +1713,6 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@netlify/angular-runtime@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@netlify/angular-runtime/-/angular-runtime-3.0.1.tgz#2b43f1e2de8096309383a8c60a7578e12e5f450b"
-  integrity sha512-YNUkX7uY5ENNnoZu5Vlk9LAIqRUBsgp9md2InGMbRLUg8CKjMrOCwm2ZXYfuCWITwI9slE2EBQtN+len/C7wdA==
-  dependencies:
-    fs-extra "^11.1.1"
-    semver "^7.5.4"
-
 "@ngtools/webpack@19.2.14":
   version "19.2.14"
   resolved "https://registry.npmjs.org/@ngtools/webpack/-/webpack-19.2.14.tgz"
@@ -2179,7 +2156,7 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@*", "@types/express@^4.17.17", "@types/express@^4.17.21":
+"@types/express@*", "@types/express@^4.17.21":
   version "4.17.23"
   resolved "https://registry.npmjs.org/@types/express/-/express-4.17.23.tgz"
   integrity sha512-Crp6WY9aTYP3qPi2wGDo9iUe/rceX01UMhnF1jmwDcKCFM6cx7YhGP/Mpr3y9AASpfHixIG0E6azCcL5OcDHsQ==
@@ -3735,7 +3712,7 @@ exponential-backoff@^3.1.1:
   resolved "https://registry.npmjs.org/exponential-backoff/-/exponential-backoff-3.1.2.tgz"
   integrity sha512-8QxYTVXUkuy7fIIoitQkPwGonB8F3Zj8eEO8Sqg9Zv/bkI7RJAzowee4gr81Hak/dUTpA2Z7VfQgoijjPNlUZA==
 
-express@^4.18.2, express@^4.21.2:
+express@^4.21.2:
   version "4.21.2"
   resolved "https://registry.npmjs.org/express/-/express-4.21.2.tgz"
   integrity sha512-28HqgMZAmih1Czt9ny7qr6ek2qddF4FclbMzwhCREB6OFfH+rXAnuNCwo1/wFvrtbgsQDb4kSbX9de9lFbrXnA==
@@ -3946,15 +3923,6 @@ fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz"
   integrity sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==
-
-fs-extra@^11.1.1:
-  version "11.3.3"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.3.3.tgz#a27da23b72524e81ac6c3815cc0179b8c74c59ee"
-  integrity sha512-VWSRii4t0AFm6ixFFmLLx1t7wS1gh+ckoa84aOeapGum0h+EZd1EhEumSB+ZdDLnEPuucsVB9oB7cxJHap6Afg==
-  dependencies:
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
 
 fs-extra@^8.1.0:
   version "8.1.0"
@@ -4708,15 +4676,6 @@ jsonfile@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/jsonfile/-/jsonfile-4.0.0.tgz"
   integrity sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==
-  optionalDependencies:
-    graceful-fs "^4.1.6"
-
-jsonfile@^6.0.1:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.2.0.tgz#7c265bd1b65de6977478300087c99f1c84383f62"
-  integrity sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==
-  dependencies:
-    universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
 
@@ -6922,11 +6881,6 @@ universalify@^0.1.0:
   resolved "https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
-universalify@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.1.tgz#168efc2180964e6386d061e094df61afe239b18d"
-  integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
-
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz"
@@ -7222,11 +7176,6 @@ ws@~8.17.1:
   version "8.17.1"
   resolved "https://registry.npmjs.org/ws/-/ws-8.17.1.tgz"
   integrity sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==
-
-xhr2@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/xhr2/-/xhr2-0.2.1.tgz"
-  integrity sha512-sID0rrVCqkVNUn8t6xuv9+6FViXjUVXq8H5rWOH2rz9fDNQEd4g0EA2XlcEdJXRz5BMEn4O1pJFdT+z4YHhoWw==
 
 y18n@^5.0.5:
   version "5.0.8"
