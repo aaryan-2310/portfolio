@@ -1,85 +1,162 @@
+<!-- Hero Section -->
 <section class="contact-hero" aria-labelledby="contact-title">
+  <div class="hero-backdrop" aria-hidden="true"></div>
   <div class="hero-content">
-    <span class="hero-eyebrow">
+    <div class="hero-badge">
       <span class="status-dot"></span>
-      Let's Connect
-    </span>
-    <h1 id="contact-title" class="hero-title">Get in Touch</h1>
+      <span class="badge-text">Available for Projects</span>
+    </div>
+    <h1 id="contact-title" class="hero-title">
+      <span class="title-line">Let's Work</span>
+      <span class="title-line accent">Together</span>
+    </h1>
     <p class="hero-sub">
       Have a project in mind? Looking for a developer? Or just want to say hi? I'd love to hear from
       you.
     </p>
+    <div class="hero-quick-actions">
+      <a href="mailto:contact@aryanmishra.work" class="quick-action-btn primary">
+        <span class="material-icons">mail</span>
+        <span>contact&#64;aryanmishra.work</span>
+      </a>
+      <span class="action-divider">or</span>
+      <span class="action-hint">fill out the form below</span>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span class="material-icons">expand_more</span>
   </div>
 </section>
 
-<section class="contact-section">
+<!-- Mobile Quick Info Bar -->
+<section class="mobile-info-bar">
+  <div class="info-bar-content">
+    <div class="info-bar-item">
+      <span class="material-icons">location_on</span>
+      <span>Bangalore, India</span>
+    </div>
+    <div class="info-bar-divider"></div>
+    <div class="info-bar-item">
+      <span class="material-icons">schedule</span>
+      <span>Responds in 24h</span>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section" aria-label="Contact Form">
   <div class="contact-container">
     <!-- Contact Form -->
     <div class="contact-form-wrapper">
       <div class="form-card">
-        <h2 class="form-title">Send a Message</h2>
-        <p class="form-subtitle">
-          Fill out the form below and I'll get back to you as soon as possible.
-        </p>
+        <div class="form-header">
+          <div class="form-icon">
+            <span class="material-icons">edit_note</span>
+          </div>
+          <div class="form-header-text">
+            <h2 class="form-title">Send a Message</h2>
+            <p class="form-subtitle">
+              Fill out the form and I'll get back to you as soon as possible.
+            </p>
+          </div>
+        </div>
 
-        <portfolio-contact-form
-          (formSubmit)="handleFormSubmit($event)"
-          [loading]="isSubmitting"
-          [successMessage]="successMessage"
-          [errorMessage]="errorMessage"
-        ></portfolio-contact-form>
+        <portfolio-contact-form (formSubmit)="handleFormSubmit($event)" [loading]="isSubmitting"
+          [successMessage]="successMessage" [errorMessage]="errorMessage"></portfolio-contact-form>
       </div>
     </div>
 
     <!-- Contact Info Sidebar -->
     <aside class="contact-sidebar">
+      <!-- Availability Card -->
+      <div class="info-card info-card--availability">
+        <div class="availability-header">
+          <div class="availability-indicator">
+            <span class="availability-dot"></span>
+          </div>
+          <div class="availability-info">
+            <span class="availability-status">Available for work</span>
+            <span class="availability-desc">Open to new opportunities</span>
+          </div>
+        </div>
+        <div class="availability-cta">
+          <a href="mailto:contact@aryanmishra.work" class="availability-email">
+            <span class="material-icons">mail</span>
+            contact&#64;aryanmishra.work
+          </a>
+        </div>
+      </div>
+
       <!-- Direct Contact -->
       <div class="info-card">
-        <h3 class="info-title">Direct Contact</h3>
+        <h3 class="info-title">
+          <span class="material-icons info-title-icon">contact_mail</span>
+          Contact Info
+        </h3>
         <ul class="info-list">
           <li class="info-item">
-            <span class="material-icons info-icon">mail</span>
-            <a href="mailto:hello@aaryan.dev" class="info-link"> hello&#64;aaryan.dev </a>
+            <div class="info-item-icon">
+              <span class="material-icons">location_on</span>
+            </div>
+            <div class="info-item-content">
+              <span class="info-label">Location</span>
+              <span class="info-value">Bangalore, India</span>
+            </div>
           </li>
           <li class="info-item">
-            <span class="material-icons info-icon">location_on</span>
-            <span class="info-text">Bangalore, India</span>
+            <div class="info-item-icon">
+              <span class="material-icons">schedule</span>
+            </div>
+            <div class="info-item-content">
+              <span class="info-label">Response Time</span>
+              <span class="info-value">Within 24 hours</span>
+            </div>
           </li>
           <li class="info-item">
-            <span class="material-icons info-icon">schedule</span>
-            <span class="info-text">Usually responds within 24h</span>
+            <div class="info-item-icon">
+              <span class="material-icons">language</span>
+            </div>
+            <div class="info-item-content">
+              <span class="info-label">Timezone</span>
+              <span class="info-value">IST (UTC+5:30)</span>
+            </div>
           </li>
         </ul>
       </div>
 
       <!-- Social Links -->
       <div class="info-card">
-        <h3 class="info-title">Connect</h3>
-        <div class="social-links">
-          <a
-            *ngFor="let social of socialLinks"
-            [href]="social.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            [attr.aria-label]="social.name"
-          >
-            <img [src]="social.icon" [alt]="social.name" class="social-icon" />
+        <h3 class="info-title">
+          <span class="material-icons info-title-icon">share</span>
+          Connect
+        </h3>
+        <div class="social-grid">
+          <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" rel="noopener noreferrer"
+            class="social-link" [attr.aria-label]="'Follow me on ' + social.name">
+            <img [src]="social.icon" [alt]="social.name" [title]="social.name" class="social-icon" />
             <span class="social-name">{{ social.name }}</span>
+            <span class="material-icons social-arrow">arrow_forward</span>
           </a>
         </div>
       </div>
-
-      <!-- Availability -->
-      <div class="info-card info-card--highlight">
-        <div class="availability-badge">
-          <span class="availability-dot"></span>
-          <span class="availability-text">Available for work</span>
-        </div>
-        <p class="availability-desc">
-          Currently accepting new projects and freelance opportunities.
-        </p>
-      </div>
     </aside>
+  </div>
+</section>
+
+<!-- Footer CTA -->
+<section class="footer-cta" aria-label="Alternative Contact">
+  <div class="cta-content">
+    <span class="material-icons cta-icon">forum</span>
+    <p class="cta-text">Prefer a quick chat? Find me on social media or schedule a call.</p>
+    <div class="cta-links">
+      <a href="https://linkedin.com/in/aaryan-2310" target="_blank" rel="noopener noreferrer" class="cta-link">
+        <span class="material-icons">open_in_new</span>
+        LinkedIn
+      </a>
+      <a href="https://x.com/aaryan_2310" target="_blank" rel="noopener noreferrer" class="cta-link">
+        <span class="material-icons">open_in_new</span>
+        X (Twitter)
+      </a>
+    </div>
   </div>
 </section>

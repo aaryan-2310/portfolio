@@ -28,7 +28,7 @@ export class WaitlistDialogComponent {
     private fb: FormBuilder,
     private ref: MatDialogRef<WaitlistDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: WaitlistDialogData,
-  ) {}
+  ) { }
 
   private _buildForm() {
     return this.fb.group({
@@ -43,7 +43,7 @@ export class WaitlistDialogComponent {
     const v = this.form.value;
     const subject = encodeURIComponent('Waitlist request');
     const body = encodeURIComponent(`Name: ${v.name}\nEmail: ${v.email}\n\n${v.message}`);
-    window.location.href = `mailto:contact@example.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:contact@aryanmishra.work?subject=${subject}&body=${body}`;
     this.ref.close(true);
   }
 }
