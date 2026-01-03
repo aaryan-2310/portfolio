@@ -45,7 +45,7 @@
 
   <!-- Mobile Timeline (Cards Layout) -->
   <div class="mobile-timeline">
-    @for (exp of experiences; track exp.company; let i = $index; let isLast = $last) {
+    @for (exp of experiences; track exp.id; let i = $index; let isLast = $last) {
     <div class="timeline-item" [class.reveal-active]="revealActive">
       <div class="timeline-connector" [class.last]="isLast">
         <div class="connector-dot">
@@ -100,7 +100,7 @@
   <div class="desktop-stepper">
     <mat-vertical-stepper #stepper class="custom-stepper" [linear]="false" [class.reveal-active]="revealActive"
       (selectionChange)="replayReveal()">
-      @for (exp of experiences; track exp.company; let i = $index) {
+      @for (exp of experiences; track exp.id; let i = $index) {
       <mat-step [label]="exp.company" [state]="exp.state || ''">
         <div class="work-experience-container">
           <portfolio-experience-card [experience]="exp" [index]="i" />
