@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    // Use relative URL so proxy works in dev and absolute URL works in prod
-    private readonly BASE_URL = '/api/public';
+    // Use environment-specific URL
+    private readonly BASE_URL = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
