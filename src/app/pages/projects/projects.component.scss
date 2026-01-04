@@ -27,7 +27,8 @@
 
   .projects__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    // Use auto-fill to prevent cards from stretching too wide on large screens
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: var(--space-24);
 
     @media (max-width: 599px) {
@@ -38,6 +39,7 @@
 }
 
 .project-card {
+  height: 100%;
   background: var(--theme-surface-1);
   border: 1px solid var(--theme-border);
   border-radius: var(--radius-lg);
@@ -72,10 +74,10 @@
   }
 
   .project-card__body {
-    padding: var(--space-24);
+    padding: var(--space-24); // Reverted to standard spacing variable
     display: flex;
     flex-direction: column;
-    gap: var(--space-16);
+    gap: var(--space-16); // Reverted to standard spacing variable
     flex: 1;
   }
 
