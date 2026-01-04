@@ -1,0 +1,1 @@
+import{a as e}from"./chunk-GOTLCCYB.js";import{J as r,M as o}from"./chunk-WKZAFMFV.js";var n=class i{constructor(t){this.api=t}submitContact(t){return this.api.post("/contact",t)}getSocialLinks(){return this.api.get("/social-links")}static \u0275fac=function(a){return new(a||i)(o(e))};static \u0275prov=r({token:i,factory:i.\u0275fac,providedIn:"root"})};export{n as a};
