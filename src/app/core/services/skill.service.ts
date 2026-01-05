@@ -1,16 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { Skill } from '../../shared/models';
 
-export interface Skill {
-    id: string;
-    name: string;
-    category: string;
-    icon?: string; // Material icon name or URL for custom icons
-    isCustomIcon?: boolean;
-    proficiency: number;
-    displayOrder: number;
-}
+// Re-export for backward compatibility
+export type { Skill } from '../../shared/models';
 
 @Injectable({
     providedIn: 'root'

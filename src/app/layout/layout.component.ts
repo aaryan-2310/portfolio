@@ -1,6 +1,6 @@
 import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ThemeService } from '../theme.service';
+import { ThemeService } from '../core/services/theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

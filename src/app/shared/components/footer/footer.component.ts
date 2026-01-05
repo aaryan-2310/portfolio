@@ -8,6 +8,7 @@ import { WaitlistDialogComponent } from '../waitlist-dialog/waitlist-dialog.comp
 import { SettingsService } from '../../../core/services/settings.service';
 import { ContactService, SocialLink } from '../../../core/services/contact.service';
 import { RouterModule } from '@angular/router';
+import { getIconViewBox, getIconSvg } from '../../utils';
 
 // Footer Component
 @Component({
@@ -45,7 +46,6 @@ export class FooterComponent implements OnInit {
       .subscribe(links => {
         this.socialLinks = links.filter(link => link.showInFooter)
           .sort((a, b) => a.displayOrder - b.displayOrder);
-        console.log('Social links loaded:', this.socialLinks);
       });
   }
 
@@ -57,4 +57,9 @@ export class FooterComponent implements OnInit {
       });
     }
   }
+
+  // Icon utility wrappers for template
+  getIconViewBox = getIconViewBox;
+  getIconSvg = getIconSvg;
 }
+

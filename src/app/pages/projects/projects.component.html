@@ -5,28 +5,35 @@
   </header>
 
   <div class="projects__grid">
-    <article class="project-card" *ngFor="let p of projects$ | async; trackBy: trackByProject">
-      <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient"></div>
-      <div class="project-card__body">
-        <h2 class="project-card__title">{{ p.title }}</h2>
-        <p class="project-card__desc">{{ p.description }}</p>
+    <!-- Loading State -->
+    <ng-container *ngIf="isLoading">
+      <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card" height="350px"></portfolio-skeleton>
+    </ng-container>
 
-        <div class="skills-container" role="list">
-          <div class="skill-chip" role="listitem" *ngFor="let t of p.tech; trackBy: trackByTech">
-            <span class="skill-name">{{ t }}</span>
+    <ng-container *ngIf="!isLoading">
+      <article class="project-card" *ngFor="let p of projects$ | async; trackBy: trackByProject">
+        <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient"></div>
+        <div class="project-card__body">
+          <h2 class="project-card__title">{{ p.title }}</h2>
+          <p class="project-card__desc">{{ p.description }}</p>
+
+          <div class="skills-container" role="list">
+            <div class="skill-chip" role="listitem" *ngFor="let t of p.tech; trackBy: trackByTech">
+              <span class="skill-name">{{ t }}</span>
+            </div>
+          </div>
+
+          <div class="project-card__actions">
+            <portfolio-button *ngFor="let link of p.links; trackBy: trackByLink" [label]="link.label" [href]="link.href"
+              target="_blank" rel="noopener noreferrer" [variant]="link.kind === 'live' ? 'primary' : 'tonal'">
+              <span icon class="material-icons">{{
+                link.kind === 'live' ? 'open_in_new' : 'code'
+                }}</span>
+            </portfolio-button>
           </div>
         </div>
-
-        <div class="project-card__actions">
-          <portfolio-button *ngFor="let link of p.links; trackBy: trackByLink" [label]="link.label" [href]="link.href"
-            target="_blank" rel="noopener noreferrer" [variant]="link.kind === 'live' ? 'primary' : 'tonal'">
-            <span icon class="material-icons">{{
-              link.kind === 'live' ? 'open_in_new' : 'code'
-              }}</span>
-          </portfolio-button>
-        </div>
-      </div>
-    </article>
+      </article>
+    </ng-container>
   </div>
 
   <footer class="projects__footer" aria-label="Projects footer">

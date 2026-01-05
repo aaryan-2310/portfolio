@@ -1,4 +1,18 @@
-<article class="blog-detail" *ngIf="post$ | async as post">
+<!-- Loading State -->
+<article class="blog-detail" *ngIf="isLoading">
+    <header class="blog-detail__hero">
+        <div class="hero-content">
+            <portfolio-skeleton variant="text" width="100px" style="margin-bottom: 2rem"></portfolio-skeleton>
+            <portfolio-skeleton variant="text" width="200px" style="margin-bottom: 1rem"></portfolio-skeleton>
+            <portfolio-skeleton variant="text" height="60px" width="80%"></portfolio-skeleton>
+        </div>
+    </header>
+    <div class="blog-detail__content-wrapper">
+        <portfolio-skeleton variant="text" [lines]="10"></portfolio-skeleton>
+    </div>
+</article>
+
+<article class="blog-detail" *ngIf="!isLoading && post">
     <!-- Hero Cover -->
     <header class="blog-detail__hero" [class.has-image]="post.coverImage">
         <div class="hero-background" *ngIf="post.coverImage" [style.background-image]="'url(' + post.coverImage + ')'">
@@ -33,7 +47,7 @@
 
     <!-- Content -->
     <div class="blog-detail__content-wrapper">
-        <div class="blog-detail__content prose" [innerHTML]="renderedContent$ | async"></div>
+        <div class="blog-detail__content prose" [innerHTML]="renderedContent"></div>
 
         <!-- Footer -->
         <footer class="blog-detail__footer">
