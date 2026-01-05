@@ -8,6 +8,7 @@ import { ServiceOffering, ServiceOfferingService } from '../../core/services/ser
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { Observable, map } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
+import { formatDate } from '../../shared/utils';
 
 // Adapters for view
 interface FeaturedProjectView {
@@ -72,11 +73,5 @@ export class HomeComponent {
   trackByService = (_: number, s: ServiceOffering) => s.title;
   trackByPost = (_: number, p: BlogPostView) => p.id;
 
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-  }
+  formatDate = formatDate;
 }

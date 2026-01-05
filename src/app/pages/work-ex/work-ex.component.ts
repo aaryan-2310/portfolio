@@ -3,7 +3,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
-import { WorkExperience, Skill as WorkSkill } from '../../shared/models/work-experience.interface';
+import { WorkExperience, WorkExperienceSkill as WorkSkill } from '../../shared/models/work-experience.interface';
 import { ExperienceCardComponent } from '../../shared/components/experience-card/experience-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';

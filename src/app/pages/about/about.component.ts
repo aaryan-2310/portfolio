@@ -8,6 +8,7 @@ import { Skill, SkillService } from '../../core/services/skill.service';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { Experience, ExperienceService } from '../../core/services/experience.service';
+import { formatDateRange } from '../../shared/utils';
 
 @Component({
   selector: 'app-about',
@@ -38,14 +39,7 @@ export class AboutComponent {
     this.services$ = this.serviceOfferingService.getServices();
   }
 
-  formatDateRange(start: string, end?: string | null): string {
-    const startDate = new Date(start);
-    const startStr = startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    if (!end) return `${startStr} – Present`;
-    const endDate = new Date(end);
-    const endStr = endDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    return `${startStr} – ${endStr}`;
-  }
+  formatDateRange = formatDateRange;
 
   trackByExperience = (_: number, e: Experience) => e.id;
   trackByService = (_: number, s: ServiceOffering) => s.title;

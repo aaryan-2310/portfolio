@@ -8,6 +8,7 @@ import { WaitlistDialogComponent } from '../waitlist-dialog/waitlist-dialog.comp
 import { SettingsService } from '../../../core/services/settings.service';
 import { ContactService, SocialLink } from '../../../core/services/contact.service';
 import { RouterModule } from '@angular/router';
+import { getIconViewBox, getIconSvg } from '../../utils';
 
 // Footer Component
 @Component({
@@ -57,4 +58,9 @@ export class FooterComponent implements OnInit {
       });
     }
   }
+
+  // Icon utility wrappers for template
+  getIconViewBox = getIconViewBox;
+  getIconSvg = getIconSvg;
 }
+
