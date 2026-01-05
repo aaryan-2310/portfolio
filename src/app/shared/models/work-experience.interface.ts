@@ -5,13 +5,14 @@ export interface Skill {
 }
 
 export interface WorkExperience {
+  id: string;
   company: string;
-  logoUrl: string;
+  logoUrl?: string;
   role: string;
   startDate: Date;
   endDate: Date | null;
+  location?: string;
   description: string[];
   skills: Skill[];
-  location?: string;
-  state?: string; // For Material Stepper state
+  state?: 'current' | 'past';
 }

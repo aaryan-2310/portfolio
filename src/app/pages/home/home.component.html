@@ -107,3 +107,34 @@
     </div>
   </div>
 </section>
+
+<!-- Latest Posts Section -->
+<section id="latest-posts" class="section" aria-labelledby="posts-title" *ngIf="(latestPosts$ | async)?.length">
+  <div class="section-header">
+    <span class="section-eyebrow">Blog</span>
+    <h2 id="posts-title" class="section-title">Latest Posts</h2>
+    <p class="section-sub">Articles and insights on software development.</p>
+  </div>
+
+  <div class="posts-grid">
+    <a *ngFor="let post of latestPosts$ | async; trackBy: trackByPost" class="post-card"
+      [routerLink]="['/blogs', post.slug]">
+      <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
+        [class.no-image]="!post.coverImage"></div>
+      <div class="post-card__body">
+        <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
+        <h3 class="post-card__title">{{ post.title }}</h3>
+        <p class="post-card__excerpt">{{ post.excerpt }}</p>
+        <span class="post-card__cta">
+          Read article <span class="material-icons">arrow_forward</span>
+        </span>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-cta">
+    <portfolio-button label="View All Posts" variant="secondary" size="md" [routerLink]="'/blogs'">
+      <span icon class="material-icons">article</span>
+    </portfolio-button>
+  </div>
+</section>

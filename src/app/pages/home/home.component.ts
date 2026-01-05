@@ -5,6 +5,7 @@ import { ButtonComponent } from '../../shared/button/button.component';
 import { ProjectService } from '../../core/services/project.service';
 import { Skill, SkillService } from '../../core/services/skill.service';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
+import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { Observable, map } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 
@@ -28,12 +29,14 @@ export class HomeComponent {
   skills$: Observable<Skill[]>;
   services$: Observable<ServiceOffering[]>;
   settings$: Observable<SiteSettings | null>;
+  latestPosts$: Observable<BlogPostView[]>;
 
   constructor(
     private projectService: ProjectService,
     private skillService: SkillService,
     private serviceOfferingService: ServiceOfferingService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private blogService: BlogService
   ) {
     this.projects$ = this.projectService.getFeatured().pipe(
       map(projects => projects.slice(0, 3).map((p, i) => ({
@@ -47,6 +50,10 @@ export class HomeComponent {
     this.skills$ = this.skillService.getAll();
     this.services$ = this.serviceOfferingService.getServices();
     this.settings$ = this.settingsService.settings$;
+
+    this.latestPosts$ = this.blogService.getAll().pipe(
+      map(posts => posts.slice(0, 3).map(p => BlogService.toView(p)))
+    );
   }
 
 
@@ -63,4 +70,13 @@ export class HomeComponent {
   trackByProject = (_: number, p: FeaturedProjectView) => p.title;
   trackBySkill = (_: number, s: Skill) => s.id;
   trackByService = (_: number, s: ServiceOffering) => s.title;
+  trackByPost = (_: number, p: BlogPostView) => p.id;
+
+  formatDate(date: Date): string {
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
 }

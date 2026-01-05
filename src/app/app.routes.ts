@@ -45,6 +45,19 @@ export const routes: Routes = [
           import('./pages/contact/contact.component').then(m => m.ContactComponent),
       },
       {
+        path: 'blogs',
+        title: 'Blog',
+        data: { description: 'Articles and insights on software development.' },
+        loadComponent: () =>
+          import('./pages/blogs/blogs.component').then(m => m.BlogsComponent),
+      },
+      {
+        path: 'blogs/:slug',
+        title: 'Blog Post',
+        loadComponent: () =>
+          import('./pages/blog-detail/blog-detail.component').then(m => m.BlogDetailComponent),
+      },
+      {
         path: '**',
         title: 'Page not found',
         data: { description: 'The page you are looking for does not exist.' },

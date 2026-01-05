@@ -1,0 +1,55 @@
+<article class="blog-detail" *ngIf="post$ | async as post">
+    <!-- Hero Cover -->
+    <header class="blog-detail__hero" [class.has-image]="post.coverImage">
+        <div class="hero-background" *ngIf="post.coverImage" [style.background-image]="'url(' + post.coverImage + ')'">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <portfolio-button label="Back to Blog" variant="tonal" size="sm" (click)="goBack()" class="back-button">
+                <span icon class="material-icons">arrow_back</span>
+            </portfolio-button>
+
+            <div class="blog-detail__meta">
+                <span class="meta-item">
+                    <span class="material-icons">calendar_today</span>
+                    {{ formatDate(post.publishedAt) }}
+                </span>
+                <span class="meta-divider">•</span>
+                <span class="meta-item">
+                    <span class="material-icons">schedule</span>
+                    {{ post.readTime }} min read
+                </span>
+            </div>
+
+            <h1 class="blog-detail__title">{{ post.title }}</h1>
+
+            <div class="blog-detail__tags">
+                <span *ngFor="let tag of post.tags; trackBy: trackByTag" class="tag-chip">
+                    {{ tag }}
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="blog-detail__content-wrapper">
+        <div class="blog-detail__content prose" [innerHTML]="renderedContent$ | async"></div>
+
+        <!-- Footer -->
+        <footer class="blog-detail__footer">
+            <portfolio-button label="Back to all posts" variant="secondary" size="md" (click)="goBack()">
+                <span icon class="material-icons">arrow_back</span>
+            </portfolio-button>
+        </footer>
+    </div>
+</article>
+
+<!-- Not Found State -->
+<div class="blog-not-found" *ngIf="notFound">
+    <span class="material-icons not-found-icon">article</span>
+    <h2>Post not found</h2>
+    <p>The blog post you're looking for doesn't exist or has been removed.</p>
+    <portfolio-button label="Back to Blog" variant="primary" size="md" (click)="goBack()">
+        <span icon class="material-icons">arrow_back</span>
+    </portfolio-button>
+</div>
