@@ -11,11 +11,13 @@ export interface ContactSubmission {
 
 export interface SocialLink {
     id: string;
-    platform: string;
+    name: string;
     url: string;
     icon?: string;
-    isVisible: boolean;
+    logoUrl?: string;
     displayOrder: number;
+    showInFooter: boolean;
+    showInContact: boolean;
 }
 
 @Injectable({

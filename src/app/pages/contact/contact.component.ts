@@ -8,12 +8,6 @@ import {
 import { ContactService, SocialLink } from '../../core/services/contact.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 
-interface SocialLinkView {
-  name: string;
-  icon: string;
-  url: string;
-}
-
 @Component({
   selector: 'portfolio-contact',
   standalone: true,
@@ -27,17 +21,7 @@ export class ContactComponent implements OnInit {
   errorMessage = '';
 
   settings$: Observable<SiteSettings | null>;
-  socialLinks: SocialLinkView[] = [];
-
-  // Icon mapping for social platforms
-  private readonly platformIcons: Record<string, string> = {
-    github: 'assets/icons/github.svg',
-    linkedin: 'assets/icons/linkedin.svg',
-    twitter: 'assets/icons/x.svg',
-    x: 'assets/icons/x.svg',
-    instagram: 'assets/icons/instagram.svg',
-    youtube: 'assets/icons/youtube.svg',
-  };
+  socialLinks: SocialLink[] = [];
 
   constructor(
     private contactService: ContactService,
@@ -49,21 +33,11 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     this.contactService.getSocialLinks().pipe(
       map(links => links
-        .filter(l => l.isVisible)
-        .map(l => this.mapToView(l))
+        .filter(l => l.showInContact)
       )
     ).subscribe(links => {
       this.socialLinks = links;
     });
-  }
-
-  private mapToView(link: SocialLink): SocialLinkView {
-    const platform = link.platform.toLowerCase();
-    return {
-      name: link.platform,
-      icon: link.icon || this.platformIcons[platform] || 'assets/icons/link.svg',
-      url: link.url
-    };
   }
 
   async handleFormSubmit(data: ContactFormData): Promise<void> {
