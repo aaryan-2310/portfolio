@@ -98,7 +98,7 @@
         <div class="social-links">
           <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" rel="noopener noreferrer"
             class="social-link" [attr.aria-label]="social.name">
-            <img [src]="social.icon" [alt]="social.name" class="social-icon" />
+            <img [src]="social.logoUrl" [alt]="social.name" class="social-icon" />
             <span class="social-name">{{ social.name }}</span>
             <span class="material-icons social-arrow">arrow_forward</span>
           </a>
