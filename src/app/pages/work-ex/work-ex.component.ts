@@ -57,20 +57,29 @@ export class WorkExComponent implements AfterViewInit, OnInit {
   }
 
   private mapToWorkExperience(exp: Experience, index: number): WorkExperience {
+    // Parse description from JSON string
+    let descriptionArray: string[] = [];
+    try {
+      descriptionArray = JSON.parse(exp.description);
+    } catch {
+      descriptionArray = [exp.description]; // Fallback if not JSON
+    }
+
     const skills: WorkSkill[] = exp.skills?.map(s => ({
       name: s.name,
-      icon: 'code',
-      isCustomIcon: false
+      icon: s.icon || 'code',
+      isCustomIcon: s.isCustomIcon || false
     })) || [];
 
     return {
+      id: exp.id,
       company: exp.company,
-      logoUrl: '',
+      logoUrl: exp.logoUrl || '',
       role: exp.role,
       startDate: new Date(exp.startDate),
       endDate: exp.endDate ? new Date(exp.endDate) : null,
       location: exp.location,
-      description: exp.description || [],
+      description: descriptionArray,
       skills,
       state: index === 0 ? 'current' : 'past'
     };

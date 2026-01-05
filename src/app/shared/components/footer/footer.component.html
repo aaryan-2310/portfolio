@@ -40,13 +40,17 @@
       </p>
 
       <div class="social-icons">
-        @for (link of socialLinks; track link.id) {
-        <a [href]="link.url" [attr.aria-label]="link.name" target="_blank" rel="noopener noreferrer">
-          @if (link.logoUrl) {
-          <img [ngSrc]="link.logoUrl" [alt]="link.name" width="20" height="20" />
-          } @else {
-          <mat-icon>link</mat-icon>
-          }
+        @for (social of socialLinks; track social.id) {
+        <a [href]="social.url" [attr.aria-label]="social.name" target="_blank" rel="noopener noreferrer">
+          <mat-icon>
+            @if (social.logoUrl) {
+            <img [src]="social.logoUrl" [alt]="social.name" style="width: 100%; height: 100%; object-fit: contain;" />
+            } @else {
+            <svg [attr.viewBox]="getIconViewBox(social.icon)" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path [attr.d]="getIconSvg(social.icon)" fill="currentColor" />
+            </svg>
+            }
+          </mat-icon>
         </a>
         }
       </div>
