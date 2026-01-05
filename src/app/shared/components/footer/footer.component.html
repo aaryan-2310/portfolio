@@ -45,10 +45,6 @@
           <mat-icon>
             @if (social.logoUrl) {
             <img [src]="social.logoUrl" [alt]="social.name" style="width: 100%; height: 100%; object-fit: contain;" />
-            } @else {
-            <svg [attr.viewBox]="getIconViewBox(social.icon)" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path [attr.d]="getIconSvg(social.icon)" fill="currentColor" />
-            </svg>
             }
           </mat-icon>
         </a>
