@@ -450,10 +450,12 @@
   background: var(--theme-surface-2);
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
+  margin: var(--space-8);
 
   &:hover {
     background: color-mix(in oklab, var(--theme-accent) 12%, var(--theme-surface));
     transform: translateX(4px);
+    color: var(--theme-accent);
 
     .social-arrow {
       opacity: 1;

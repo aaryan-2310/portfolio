@@ -5,7 +5,7 @@
       <img [ngSrc]="experience.logoUrl" width="48" height="48" [alt]="experience.company" decoding="async"
         loading="lazy" [matTooltip]="experience.company" [title]="experience.company" />
       } @else {
-      <mat-icon class="company-placeholder-icon">work</mat-icon>
+      <mat-icon class="fallback-logo" [matTooltip]="experience.company">business</mat-icon>
       }
     </div>
     <div class="header-content">
@@ -29,7 +29,7 @@
   <mat-card-content>
     <div class="description">
       <ul class="points">
-        @for (point of experience.description; track $index) {
+        @for (point of experience.description; track point) {
         <li>
           <mat-icon aria-hidden="true" class="point-icon">check_circle</mat-icon>
           <span class="point-text" [innerHTML]="emphasize(point)"></span>

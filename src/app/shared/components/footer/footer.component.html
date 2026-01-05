@@ -45,10 +45,6 @@
           <mat-icon>
             @if (social.logoUrl) {
             <img [src]="social.logoUrl" [alt]="social.name" style="width: 100%; height: 100%; object-fit: contain;" />
-            } @else {
-            <svg [attr.viewBox]="getIconViewBox(social.icon)" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path [attr.d]="getIconSvg(social.icon)" fill="currentColor" />
-            </svg>
             }
           </mat-icon>
         </a>
@@ -65,15 +61,15 @@
       </div>
       <div>
         <h4>Resources</h4>
-        <a href="#">Blog</a>
-        <a href="#">Articles</a>
-        <a href="#">Support</a>
+        <a routerLink="/blogs">Blog</a>
+        <a routerLink="/articles">Articles</a>
+        <a routerLink="/support">Support</a>
       </div>
       <div>
         <h4>Company</h4>
         <a routerLink="/about">About</a>
-        <a href="mailto:contact@aryanmishra.work">Contact</a>
-        <a href="#">Freelance Services</a>
+        <a routerLink="/contact">Contact</a>
+        <a routerLink="/freelance">Freelance Services</a>
       </div>
     </div>
   </div>

@@ -333,7 +333,7 @@
 // CTA SECTION
 // ============================================
 .cta-section {
-  padding: var(--space-64) var(--space-16);
+  padding: var(--space-64) var(--space-32);
   background:
     radial-gradient(ellipse 60% 40% at 50% 100%,
       color-mix(in oklab, var(--theme-accent) 10%, transparent),
@@ -538,7 +538,7 @@
 
   // CTA Desktop
   .cta-section {
-    padding: var(--space-96) var(--space-32);
+    padding: var(--space-64) var(--space-32);
 
     .cta-buttons {
       flex-direction: row;
