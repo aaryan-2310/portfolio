@@ -7,11 +7,12 @@ import {
 } from '../../shared/components/contact-form/contact-form.component';
 import { ContactService, SocialLink } from '../../core/services/contact.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
 @Component({
   selector: 'portfolio-contact',
   standalone: true,
-  imports: [CommonModule, ContactFormComponent],
+  imports: [CommonModule, ContactFormComponent, SkeletonComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
@@ -22,6 +23,7 @@ export class ContactComponent implements OnInit {
 
   settings$: Observable<SiteSettings | null>;
   socialLinks: SocialLink[] = [];
+  isLoading = true;
 
   constructor(
     private contactService: ContactService,
@@ -37,6 +39,7 @@ export class ContactComponent implements OnInit {
       )
     ).subscribe(links => {
       this.socialLinks = links;
+      this.isLoading = false;
     });
   }
 

@@ -46,7 +46,6 @@ export class FooterComponent implements OnInit {
       .subscribe(links => {
         this.socialLinks = links.filter(link => link.showInFooter)
           .sort((a, b) => a.displayOrder - b.displayOrder);
-        console.log('Social links loaded:', this.socialLinks);
       });
   }
 

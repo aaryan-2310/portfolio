@@ -4,6 +4,9 @@ import { Observable, map } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
+import { trackByTitle, trackByValue } from '../../shared/utils';
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+import { tap } from 'rxjs';
 
 type ProjectLink = { label: string; href: string; kind: 'repo' | 'live' };
 type ProjectView = {
@@ -18,7 +21,7 @@ type ProjectView = {
 @Component({
   selector: 'portfolio-projects',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, SkeletonComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
@@ -30,6 +33,7 @@ export class ProjectsComponent {
 
   projects$: Observable<ProjectView[]>;
   settings$: Observable<SiteSettings | null>;
+  isLoading = true;
 
   private gradients = [
     'linear-gradient(135deg, #34D399 0%, #10B981 100%)',
@@ -47,7 +51,8 @@ export class ProjectsComponent {
       map(projects => projects
         .filter(p => p.status === 'PUBLISHED')
         .map((p, i) => this.mapToView(p, i))
-      )
+      ),
+      tap(() => this.isLoading = false)
     );
     this.settings$ = this.settingsService.settings$;
   }
@@ -74,8 +79,8 @@ export class ProjectsComponent {
     };
   }
 
-  trackByProject = (_: number, p: ProjectView) => p.title;
-  trackByTech = (_: number, t: string) => t;
+  trackByProject = trackByTitle;
+  trackByTech = trackByValue;
   trackByLink = (_: number, l: ProjectLink) => `${l.kind}:${l.href}`;
 }
 

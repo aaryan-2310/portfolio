@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -6,9 +6,10 @@ import { ProjectService } from '../../core/services/project.service';
 import { Skill, SkillService } from '../../core/services/skill.service';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
-import { Observable, map } from 'rxjs';
+import { forkJoin, map, filter, take } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
-import { formatDate } from '../../shared/utils';
+import { formatDate, trackById, trackByTitle } from '../../shared/utils';
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
 // Adapters for view
 interface FeaturedProjectView {
@@ -21,16 +22,17 @@ interface FeaturedProjectView {
 @Component({
   selector: 'portfolio-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
-  projects$: Observable<FeaturedProjectView[]>;
-  skills$: Observable<Skill[]>;
-  services$: Observable<ServiceOffering[]>;
-  settings$: Observable<SiteSettings | null>;
-  latestPosts$: Observable<BlogPostView[]>;
+export class HomeComponent implements OnInit {
+  projects: FeaturedProjectView[] = [];
+  skills: Skill[] = [];
+  services: ServiceOffering[] = [];
+  settings: SiteSettings | null = null;
+  latestPosts: BlogPostView[] = [];
+  isLoading = true;
 
   constructor(
     private projectService: ProjectService,
@@ -38,23 +40,35 @@ export class HomeComponent {
     private serviceOfferingService: ServiceOfferingService,
     private settingsService: SettingsService,
     private blogService: BlogService
-  ) {
-    this.projects$ = this.projectService.getFeatured().pipe(
-      map(projects => projects.slice(0, 3).map((p, i) => ({
-        title: p.title,
-        description: p.description,
-        gradient: this.getGradient(i),
-        link: p.demoUrl || '/projects'
-      })))
-    );
+  ) { }
 
-    this.skills$ = this.skillService.getAll();
-    this.services$ = this.serviceOfferingService.getServices();
-    this.settings$ = this.settingsService.settings$;
-
-    this.latestPosts$ = this.blogService.getAll().pipe(
-      map(posts => posts.slice(0, 3).map(p => BlogService.toView(p)))
-    );
+  ngOnInit(): void {
+    forkJoin({
+      projects: this.projectService.getFeatured().pipe(
+        map(projects => projects.slice(0, 3).map((p, i) => ({
+          title: p.title,
+          description: p.description,
+          gradient: this.getGradient(i),
+          link: p.demoUrl || '/projects'
+        })))
+      ),
+      skills: this.skillService.getAll(),
+      services: this.serviceOfferingService.getServices(),
+      settings: this.settingsService.settings$.pipe(
+        filter(s => !!s),
+        take(1)
+      ),
+      posts: this.blogService.getAll().pipe(
+        map(posts => posts.slice(0, 3).map(p => BlogService.toView(p)))
+      )
+    }).subscribe(({ projects, skills, services, settings, posts }) => {
+      this.projects = projects;
+      this.skills = skills;
+      this.services = services;
+      this.settings = settings;
+      this.latestPosts = posts;
+      this.isLoading = false;
+    });
   }
 
 
@@ -68,10 +82,10 @@ export class HomeComponent {
     return gradients[index % gradients.length];
   }
 
-  trackByProject = (_: number, p: FeaturedProjectView) => p.title;
-  trackBySkill = (_: number, s: Skill) => s.id;
-  trackByService = (_: number, s: ServiceOffering) => s.title;
-  trackByPost = (_: number, p: BlogPostView) => p.id;
+  trackByProject = trackByTitle;
+  trackBySkill = trackById;
+  trackByService = trackByTitle;
+  trackByPost = trackById;
 
   formatDate = formatDate;
 }

@@ -25,8 +25,13 @@
   </div>
 
   <div class="blogs__grid">
+    <!-- Loading State -->
+    <ng-container *ngIf="isLoading">
+      <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card" height="380px"></portfolio-skeleton>
+    </ng-container>
+
     <ng-container *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost">
-      <article class="blog-card" [routerLink]="['/blogs', post.slug]">
+      <article class="blog-card" [routerLink]="['/blogs', post.slug]" *ngIf="!isLoading">
         <div class="blog-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
           [class.no-image]="!post.coverImage">
           <span class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
