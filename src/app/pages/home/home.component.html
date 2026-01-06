@@ -139,7 +139,7 @@
 </section>
 
 <!-- Latest Posts Section -->
-<section id="latest-posts" class="section" aria-labelledby="posts-title" *ngIf="isLoading || latestPosts.length">
+<section id="latest-posts" class="section" aria-labelledby="posts-title" *ngIf="isLoading || recentPosts.length">
   <div class="section-header">
     <span class="section-eyebrow">Blog</span>
     <h2 id="posts-title" class="section-title">Latest Posts</h2>
@@ -153,7 +153,7 @@
     </ng-container>
 
     <ng-container *ngIf="!isLoading">
-      <a *ngFor="let post of latestPosts; trackBy: trackByPost" class="post-card" [routerLink]="['/blogs', post.slug]">
+      <a *ngFor="let post of recentPosts; trackBy: trackByPost" class="post-card" [routerLink]="['/blogs', post.slug]">
         <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
           [class.no-image]="!post.coverImage"></div>
         <div class="post-card__body">

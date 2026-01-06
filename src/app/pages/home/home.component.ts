@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   skills: Skill[] = [];
   services: ServiceOffering[] = [];
   settings: SiteSettings | null = null;
-  latestPosts: BlogPostView[] = [];
+  recentPosts: BlogPostView[] = [];
   isLoading = true;
 
   constructor(
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
       this.skills = skills;
       this.services = services;
       this.settings = settings;
-      this.latestPosts = posts;
+      this.recentPosts = posts;
       this.isLoading = false;
     });
   }
