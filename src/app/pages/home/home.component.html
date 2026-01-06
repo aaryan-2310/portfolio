@@ -1,3 +1,25 @@
+<!-- Hero Loading State -->
+<section id="hero" aria-labelledby="hero-title" *ngIf="(settings$ | async) === null">
+  <div class="hero-surface">
+    <div class="hero-content">
+      <portfolio-skeleton variant="text" width="90%" height="48px" style="margin-top: 1rem;"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="70%" height="48px" style="margin-top: 0.5rem;"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="60%" height="20px" style="margin-top: 1.5rem;"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="50%" height="20px" style="margin-top: 0.5rem;"></portfolio-skeleton>
+      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        <portfolio-skeleton variant="rect" width="160px" height="48px" borderRadius="8px"></portfolio-skeleton>
+        <portfolio-skeleton variant="rect" width="120px" height="48px" borderRadius="8px"></portfolio-skeleton>
+      </div>
+      <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
+        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
+        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hero Loaded State -->
 <section id="hero" aria-labelledby="hero-title" *ngIf="settings$ | async as settings">
   <div class="hero-surface">
     <div class="hero-content">
@@ -46,6 +68,12 @@
   </div>
 
   <div class="projects-grid">
+    <!-- Loading State -->
+    <ng-container *ngIf="(projects$ | async) === null">
+      <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="300px"></portfolio-skeleton>
+    </ng-container>
+
+    <!-- Loaded State -->
     <a *ngFor="let project of projects$ | async; trackBy: trackByProject" class="project-card"
       [routerLink]="project.link">
       <div class="project-media" [style.background]="project.gradient"></div>
@@ -73,6 +101,12 @@
   </div>
 
   <div class="services-grid">
+    <!-- Loading State -->
+    <ng-container *ngIf="(services$ | async) === null">
+      <portfolio-skeleton *ngFor="let i of [1,2,3,4]" variant="card" height="250px"></portfolio-skeleton>
+    </ng-container>
+
+    <!-- Loaded State -->
     <div *ngFor="let service of services$ | async; trackBy: trackByService" class="service-card">
       <div class="service-icon-wrapper">
         <span class="material-icons service-icon">{{ service.icon }}</span>
@@ -94,6 +128,13 @@
   </div>
 
   <div class="skills-grid">
+    <!-- Loading State -->
+    <ng-container *ngIf="(skills$ | async) === null">
+      <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6,7,8]" variant="rect" width="120px" height="40px"
+        borderRadius="20px"></portfolio-skeleton>
+    </ng-container>
+
+    <!-- Loaded State -->
     <div *ngFor="let skill of skills$ | async; trackBy: trackBySkill" class="skill-chip">
       <ng-container *ngIf="skill.icon">
         <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
@@ -105,7 +146,7 @@
 </section>
 
 <!-- Latest Posts Section -->
-<section id="latest-posts" class="section" aria-labelledby="posts-title" *ngIf="(latestPosts$ | async)?.length">
+<section id="latest-posts" class="section" aria-labelledby="posts-title">
   <div class="section-header">
     <span class="section-eyebrow">Blog</span>
     <h2 id="posts-title" class="section-title">Latest Posts</h2>
@@ -113,6 +154,12 @@
   </div>
 
   <div class="posts-grid">
+    <!-- Loading State -->
+    <ng-container *ngIf="(latestPosts$ | async) === null">
+      <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="350px"></portfolio-skeleton>
+    </ng-container>
+
+    <!-- Loaded State -->
     <a *ngFor="let post of latestPosts$ | async; trackBy: trackByPost" class="post-card"
       [routerLink]="['/blogs', post.slug]">
       <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
