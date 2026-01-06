@@ -45,55 +45,72 @@
 
   <!-- Mobile Timeline (Cards Layout) -->
   <div class="mobile-timeline">
-    @for (exp of experiences; track exp.id; let i = $index; let isLast = $last) {
-    <div class="timeline-item" [class.reveal-active]="revealActive">
-      <div class="timeline-connector" [class.last]="isLast">
-        <div class="connector-dot">
-          @if (exp.logoUrl) {
-          <img [src]="exp.logoUrl" [alt]="exp.company" [title]="exp.company + ' logo'" class="connector-logo" />
-          } @else {
-          <span class="material-icons">work</span>
+    <!-- Loading State -->
+    <ng-container *ngIf="isLoading">
+      <div class="timeline-item" *ngFor="let i of [1,2,3]">
+        <div class="timeline-connector">
+          <div class="connector-dot">
+            <portfolio-skeleton variant="circle" width="100%"></portfolio-skeleton>
+          </div>
+          <div class="connector-line"></div>
+        </div>
+        <div class="timeline-content">
+          <portfolio-skeleton variant="card" height="200px"></portfolio-skeleton>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading">
+      @for (exp of experiences; track exp.id; let i = $index; let isLast = $last) {
+      <div class="timeline-item" [class.reveal-active]="revealActive">
+        <div class="timeline-connector" [class.last]="isLast">
+          <div class="connector-dot">
+            @if (exp.logoUrl) {
+            <img [src]="exp.logoUrl" [alt]="exp.company" [title]="exp.company + ' logo'" class="connector-logo" />
+            } @else {
+            <span class="material-icons">work</span>
+            }
+          </div>
+          @if (!isLast) {
+          <div class="connector-line"></div>
           }
         </div>
-        @if (!isLast) {
-        <div class="connector-line"></div>
-        }
+        <div class="timeline-content">
+          <portfolio-experience-card [experience]="exp" [index]="i" />
+        </div>
       </div>
-      <div class="timeline-content">
-        <portfolio-experience-card [experience]="exp" [index]="i" />
-      </div>
-    </div>
-    }
+      }
 
-    <!-- Connect Card -->
-    <div class="timeline-item connect-item">
-      <div class="timeline-connector last">
-        <div class="connector-dot connect-dot">
-          <span class="material-icons">handshake</span>
-        </div>
-      </div>
-      <div class="timeline-content">
-        <div class="connect-card">
-          <div class="connect-header">
-            <div class="connect-icon" aria-hidden="true">
-              <span class="material-icons">rocket_launch</span>
-            </div>
-            <div class="connect-text">
-              <h3>Ready to Work Together?</h3>
-              <p>Let's discuss how I can contribute to your team.</p>
-            </div>
-          </div>
-          <div class="connect-actions">
-            <portfolio-button label="GitHub" variant="tonal" [href]="githubUrl" target="_blank">
-              <span icon class="material-icons">code</span>
-            </portfolio-button>
-            <portfolio-button label="LinkedIn" variant="primary" [href]="linkedinUrl" target="_blank">
-              <span icon class="material-icons">link</span>
-            </portfolio-button>
+      <!-- Connect Card -->
+      <div class="timeline-item connect-item">
+        <div class="timeline-connector last">
+          <div class="connector-dot connect-dot">
+            <span class="material-icons">handshake</span>
           </div>
         </div>
+        <div class="timeline-content">
+          <div class="connect-card">
+            <div class="connect-header">
+              <div class="connect-icon" aria-hidden="true">
+                <span class="material-icons">rocket_launch</span>
+              </div>
+              <div class="connect-text">
+                <h3>Ready to Work Together?</h3>
+                <p>Let's discuss how I can contribute to your team.</p>
+              </div>
+            </div>
+            <div class="connect-actions">
+              <portfolio-button label="GitHub" variant="tonal" [href]="githubUrl" target="_blank">
+                <span icon class="material-icons">code</span>
+              </portfolio-button>
+              <portfolio-button label="LinkedIn" variant="primary" [href]="linkedinUrl" target="_blank">
+                <span icon class="material-icons">link</span>
+              </portfolio-button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 
   <!-- Desktop Stepper -->

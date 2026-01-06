@@ -1,20 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { Project } from '../../shared/models';
 
-export interface Project {
-    id: string;
-    title: string;
-    slug: string;
-    description: string;
-    content?: string;
-    imageUrl?: string;
-    demoUrl?: string;
-    repoUrl?: string;
-    tags: string[];
-    status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
-    displayOrder: number;
-}
+// Re-export for backward compatibility
+export type { Project } from '../../shared/models';
 
 @Injectable({
     providedIn: 'root'

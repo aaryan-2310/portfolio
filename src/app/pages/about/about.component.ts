@@ -1,54 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { forkJoin, filter, take } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 import { Skill, SkillService } from '../../core/services/skill.service';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { Experience, ExperienceService } from '../../core/services/experience.service';
+import { formatDateRange, trackById, trackByTitle } from '../../shared/utils';
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, RouterModule, ButtonComponent, RevealOnScrollDirective],
+  imports: [CommonModule, NgOptimizedImage, RouterModule, ButtonComponent, RevealOnScrollDirective, SkeletonComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })
-export class AboutComponent {
-  experiences$: Observable<Experience[]>;
-  settings$: Observable<SiteSettings | null>;
-  skills$: Observable<Skill[]>;
-  skillNames$: Observable<string>;
-  services$: Observable<ServiceOffering[]>;
+export class AboutComponent implements OnInit {
+  experiences: Experience[] = [];
+  settings: SiteSettings | null = null;
+  skills: Skill[] = [];
+  skillNames = '';
+  services: ServiceOffering[] = [];
+  isLoading = true;
 
   constructor(
     private experienceService: ExperienceService,
     private settingsService: SettingsService,
     private skillService: SkillService,
     private serviceOfferingService: ServiceOfferingService
-  ) {
-    this.experiences$ = this.experienceService.getAll();
-    this.settings$ = this.settingsService.settings$;
-    this.skills$ = this.skillService.getAll();
-    this.skillNames$ = this.skills$.pipe(
-      map(skills => skills.slice(0, 6).map(s => s.name).join(', '))
-    );
-    this.services$ = this.serviceOfferingService.getServices();
+  ) { }
+
+  ngOnInit(): void {
+    forkJoin({
+      experiences: this.experienceService.getAll(),
+      settings: this.settingsService.settings$.pipe(
+        filter(s => !!s),
+        take(1)
+      ),
+      skills: this.skillService.getAll(),
+      services: this.serviceOfferingService.getServices()
+    }).subscribe(({ experiences, settings, skills, services }) => {
+      this.experiences = experiences;
+      this.settings = settings;
+      this.skills = skills;
+      this.skillNames = skills.slice(0, 6).map(s => s.name).join(', ');
+      this.services = services;
+      this.isLoading = false;
+    });
   }
 
-  formatDateRange(start: string, end?: string | null): string {
-    const startDate = new Date(start);
-    const startStr = startDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    if (!end) return `${startStr} – Present`;
-    const endDate = new Date(end);
-    const endStr = endDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    return `${startStr} – ${endStr}`;
-  }
+  formatDateRange = formatDateRange;
 
-  trackByExperience = (_: number, e: Experience) => e.id;
-  trackByService = (_: number, s: ServiceOffering) => s.title;
-  trackBySkill = (_: number, s: Skill) => s.id;
+  trackByExperience = trackById;
+  trackByService = trackByTitle;
+  trackBySkill = trackById;
 }
 

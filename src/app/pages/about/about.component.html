@@ -20,31 +20,61 @@
   <h2 id="journey-title">My Journey</h2>
   <div class="timeline">
     <div class="timeline-rail" aria-hidden="true"></div>
-    <article class="event" *ngFor="let exp of experiences$ | async; trackBy: trackByExperience">
-      <div class="marker" aria-hidden="true"></div>
-      <div class="content">
-        <div class="eyebrow">{{ formatDateRange(exp.startDate, exp.endDate) }}</div>
-        <h3>🏢 {{ exp.company }} — {{ exp.role }}</h3>
-        <ul>
-          <li *ngFor="let bullet of exp.description">{{ bullet }}</li>
-        </ul>
+
+    <!-- Loading State -->
+    <ng-container *ngIf="isLoading">
+      <div class="event" *ngFor="let i of [1,2,3]">
+        <div class="marker" aria-hidden="true"></div>
+        <div class="content">
+          <portfolio-skeleton variant="text" width="150px"></portfolio-skeleton>
+          <portfolio-skeleton variant="text" height="24px" width="80%"></portfolio-skeleton>
+          <portfolio-skeleton variant="text" [lines]="3"></portfolio-skeleton>
+        </div>
       </div>
-    </article>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading">
+      <article class="event" *ngFor="let exp of experiences; trackBy: trackByExperience">
+        <div class="marker" aria-hidden="true"></div>
+        <div class="content">
+          <div class="eyebrow">{{ formatDateRange(exp.startDate, exp.endDate) }}</div>
+          <h3>🏢 {{ exp.company }} — {{ exp.role }}</h3>
+          <ul>
+            <li *ngFor="let bullet of exp.description">{{ bullet }}</li>
+          </ul>
+        </div>
+      </article>
+    </ng-container>
   </div>
 </section>
 
 <section class="skills section" revealOnScroll aria-labelledby="skills-title">
   <h2 id="skills-title" class="section-header">What I Do Best</h2>
   <div class="skills-grid">
-    <article class="skill-card" tabindex="0" *ngFor="let service of services$ | async; trackBy: trackByService">
-      <div class="skill-icon" aria-hidden="true">
-        <span class="material-icons">{{ service.icon }}</span>
-      </div>
-      <div class="skill-content">
-        <h3>{{ service.title }}</h3>
-        <p>{{ service.tags.join(', ') }}</p>
-      </div>
-    </article>
+    <!-- Loading State -->
+    <ng-container *ngIf="isLoading">
+      <article class="skill-card" *ngFor="let i of [1,2,3,4]">
+        <div class="skill-icon">
+          <portfolio-skeleton variant="circle" width="48px" height="48px"></portfolio-skeleton>
+        </div>
+        <div class="skill-content" style="width: 100%">
+          <portfolio-skeleton variant="text" width="100%"></portfolio-skeleton>
+          <portfolio-skeleton variant="text" width="60%"></portfolio-skeleton>
+        </div>
+      </article>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading">
+      <article class="skill-card" tabindex="0" *ngFor="let service of services; trackBy: trackByService">
+        <div class="skill-icon" aria-hidden="true">
+          <span class="material-icons">{{ service.icon }}</span>
+        </div>
+        <div class="skill-content">
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.tags.join(', ') }}</p>
+        </div>
+      </article>
+    </ng-container>
   </div>
 </section>
 
@@ -67,39 +97,51 @@
   </div>
 </section>
 
-<section class="facts section" revealOnScroll aria-labelledby="facts-title" *ngIf="settings$ | async as settings">
+<section class="facts section" revealOnScroll aria-labelledby="facts-title">
   <h2 id="facts-title">Quick Facts</h2>
   <div class="facts-grid">
-    <div class="fact">
-      <div class="label">
-        <span class="material-icons">place</span>
-        <span>Based in</span>
+    <!-- Loading State for Facts is implicit or can be explicit if fetching settings takes time -->
+    <ng-container *ngIf="isLoading">
+      <div class="fact" *ngFor="let i of [1,2,3,4]">
+        <div class="label">
+          <portfolio-skeleton variant="text" width="80px"></portfolio-skeleton>
+        </div>
+        <portfolio-skeleton variant="text" width="120px"></portfolio-skeleton>
       </div>
-      <strong>{{ settings.location || 'Bengaluru, India' }}</strong>
-    </div>
-    <div class="fact">
-      <div class="label">
-        <span class="material-icons">schedule</span>
-        <span>Response Time</span>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading && settings">
+      <div class="fact">
+        <div class="label">
+          <span class="material-icons">place</span>
+          <span>Based in</span>
+        </div>
+        <strong>{{ settings.location || 'Bengaluru, India' }}</strong>
       </div>
-      <strong>{{ settings.responseTime || 'Within 24 hours' }}</strong>
-    </div>
-    <div class="fact">
-      <div class="label">
-        <span class="material-icons">code</span>
-        <span>Tech Stack</span>
+      <div class="fact">
+        <div class="label">
+          <span class="material-icons">schedule</span>
+          <span>Response Time</span>
+        </div>
+        <strong>{{ settings.responseTime || 'Within 24 hours' }}</strong>
       </div>
-      <ng-container *ngIf="skillNames$ | async as skillNames">
-        <strong>{{ skillNames }}</strong>
-      </ng-container>
-    </div>
-    <div class="fact">
-      <div class="label">
-        <span class="material-icons">mail</span>
-        <span>Contact</span>
+      <div class="fact">
+        <div class="label">
+          <span class="material-icons">code</span>
+          <span>Tech Stack</span>
+        </div>
+        <ng-container *ngIf="skillNames">
+          <strong>{{ skillNames }}</strong>
+        </ng-container>
       </div>
-      <strong>{{ settings.email || 'contact@aryanmishra.work' }}</strong>
-    </div>
+      <div class="fact">
+        <div class="label">
+          <span class="material-icons">mail</span>
+          <span>Contact</span>
+        </div>
+        <strong>{{ settings.email || 'contact@aryanmishra.work' }}</strong>
+      </div>
+    </ng-container>
   </div>
 </section>
 

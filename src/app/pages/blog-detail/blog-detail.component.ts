@@ -1,24 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, switchMap, tap, catchError, of } from 'rxjs';
+import { switchMap, catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import { formatDateLong, trackByValue } from '../../shared/utils';
+
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
 @Component({
     selector: 'portfolio-blog-detail',
     standalone: true,
-    imports: [CommonModule, ButtonComponent],
+    imports: [CommonModule, ButtonComponent, SkeletonComponent],
     templateUrl: './blog-detail.component.html',
     styleUrl: './blog-detail.component.scss',
 })
 export class BlogDetailComponent implements OnInit {
-    post$!: Observable<BlogPostView | null>;
-    renderedContent$!: Observable<SafeHtml>;
+    post: BlogPostView | null = null;
+    renderedContent: SafeHtml = '';
     notFound = false;
+    isLoading = true;
 
     constructor(
         private route: ActivatedRoute,
@@ -28,13 +32,14 @@ export class BlogDetailComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.post$ = this.route.paramMap.pipe(
+        this.route.paramMap.pipe(
             switchMap(params => {
                 const slug = params.get('slug');
                 if (!slug) {
                     this.notFound = true;
                     return of(null);
                 }
+                this.isLoading = true;
                 return this.blogService.getBySlug(slug).pipe(
                     map(post => BlogService.toView(post)),
                     catchError(() => {
@@ -42,34 +47,26 @@ export class BlogDetailComponent implements OnInit {
                         return of(null);
                     })
                 );
-            }),
-            tap(post => {
-                if (!post) {
-                    this.notFound = true;
+            })
+        ).subscribe(post => {
+            if (post) {
+                this.post = post;
+                if (post.content) {
+                    const html = marked(post.content) as string;
+                    this.renderedContent = this.sanitizer.bypassSecurityTrustHtml(html);
                 }
-            })
-        );
-
-        this.renderedContent$ = this.post$.pipe(
-            map(post => {
-                if (!post?.content) return '';
-                const html = marked(post.content) as string;
-                return this.sanitizer.bypassSecurityTrustHtml(html);
-            })
-        );
-    }
-
-    formatDate(date: Date): string {
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            } else {
+                this.notFound = true;
+            }
+            this.isLoading = false;
         });
     }
+
+    formatDate = formatDateLong;
 
     goBack(): void {
         this.router.navigate(['/blogs']);
     }
 
-    trackByTag = (_: number, tag: string) => tag;
+    trackByTag = trackByValue;
 }

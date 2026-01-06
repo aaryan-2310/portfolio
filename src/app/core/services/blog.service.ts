@@ -1,32 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { BlogPost, BlogPostView } from '../../shared/models';
 
-export interface BlogPost {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    content: string;
-    coverImage?: string;
-    tags: string;
-    status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
-    publishedAt: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export interface BlogPostView {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    content: string;
-    coverImage?: string;
-    tags: string[];
-    publishedAt: Date;
-    readTime: number;
-}
+// Re-export for backward compatibility
+export type { BlogPost, BlogPostView } from '../../shared/models';
 
 @Injectable({
     providedIn: 'root'

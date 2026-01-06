@@ -96,12 +96,22 @@
       <div class="info-card">
         <h3 class="info-title">Connect</h3>
         <div class="social-links">
-          <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" rel="noopener noreferrer"
-            class="social-link" [attr.aria-label]="social.name">
-            <img [src]="social.logoUrl" [alt]="social.name" class="social-icon" />
-            <span class="social-name">{{ social.name }}</span>
-            <span class="material-icons social-arrow">arrow_forward</span>
-          </a>
+          <!-- Loading State -->
+          <ng-container *ngIf="isLoading">
+            <div class="social-link" *ngFor="let i of [1,2,3]">
+              <portfolio-skeleton variant="circle" width="24px" height="24px"></portfolio-skeleton>
+              <portfolio-skeleton variant="text" width="80px"></portfolio-skeleton>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="!isLoading">
+            <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" rel="noopener noreferrer"
+              class="social-link" [attr.aria-label]="social.name">
+              <img [src]="social.logoUrl" [alt]="social.name" class="social-icon" />
+              <span class="social-name">{{ social.name }}</span>
+              <span class="material-icons social-arrow">arrow_forward</span>
+            </a>
+          </ng-container>
         </div>
       </div>
 

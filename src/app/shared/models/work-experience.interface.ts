@@ -1,4 +1,4 @@
-export interface Skill {
+export interface WorkExperienceSkill {
   name: string;
   icon: string; // Material icon name or path to custom icon
   isCustomIcon?: boolean;
@@ -13,6 +13,6 @@ export interface WorkExperience {
   endDate: Date | null;
   location?: string;
   description: string[];
-  skills: Skill[];
+  skills: WorkExperienceSkill[];
   state?: 'current' | 'past';
 }

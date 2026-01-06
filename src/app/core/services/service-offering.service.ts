@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Skill, SkillService } from './skill.service';
+import { SkillService } from './skill.service';
+import { Skill, ServiceOffering } from '../../shared/models';
 
-export interface ServiceOffering {
-    title: string;
-    description: string;
-    icon: string;
-    tags: string[];
-}
+// Re-export for backward compatibility
+export type { ServiceOffering } from '../../shared/models';
 
 // Mapping of skill categories to service offerings
 const CATEGORY_CONFIG: Record<string, { title: string; description: string; icon: string }> = {

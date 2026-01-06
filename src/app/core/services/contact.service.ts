@@ -1,24 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { ContactSubmission, SocialLink } from '../../shared/models';
 
-export interface ContactSubmission {
-    name: string;
-    email: string;
-    subject?: string;
-    message: string;
-}
-
-export interface SocialLink {
-    id: string;
-    name: string;
-    url: string;
-    icon?: string;
-    logoUrl?: string;
-    displayOrder: number;
-    showInFooter: boolean;
-    showInContact: boolean;
-}
+// Re-export for backward compatibility
+export type { ContactSubmission, SocialLink } from '../../shared/models';
 
 @Injectable({
     providedIn: 'root'

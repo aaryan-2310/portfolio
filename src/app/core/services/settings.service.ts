@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { ApiService } from './api.service';
+import { SiteSettings } from '../../shared/models';
 
-export interface SiteSettings {
-    id?: number;
-    availableForFreelance: boolean;
-    email?: string;
-    calendlyUrl: string;
-    siteTitle?: string;
-    siteDescription?: string;
-    ogImage?: string;
-    location?: string;
-    responseTime?: string;
-}
+// Re-export for backward compatibility
+export type { SiteSettings } from '../../shared/models';
 
 @Injectable({
     providedIn: 'root'

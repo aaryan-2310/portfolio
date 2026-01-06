@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
+import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule, RouterLink, SkeletonComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })
@@ -29,6 +31,7 @@ export class BlogsComponent {
     // UI state for binding
     selectedTag: string | null = null;
     searchQuery: string = '';
+    isLoading = true;
 
     constructor(private blogService: BlogService) {
         // Fetch raw data
@@ -37,6 +40,7 @@ export class BlogsComponent {
         ).subscribe(views => {
             this.blogsSource$.next(views);
             this.allTags = [...new Set(views.flatMap(v => v.tags))].sort();
+            this.isLoading = false;
         });
 
         // Combine streams for filtering
@@ -68,14 +72,8 @@ export class BlogsComponent {
         this.searchQuery$.next(query);
     }
 
-    formatDate(date: Date): string {
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
+    formatDate = formatDateLong;
 
-    trackByPost = (_: number, post: BlogPostView) => post.id;
-    trackByTag = (_: number, tag: string) => tag;
+    trackByPost = trackById;
+    trackByTag = trackByValue;
 }
