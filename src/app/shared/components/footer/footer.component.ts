@@ -62,3 +62,4 @@ export class FooterComponent implements OnInit {
   getIconViewBox = getIconViewBox;
   getIconSvg = getIconSvg;
 }
+
