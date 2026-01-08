@@ -12,14 +12,17 @@
         <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           Home
         </a>
-        <a class="nav-link" routerLink="/about" routerLinkActive="active">
-          About
-        </a>
         <a class="nav-link" routerLink="/projects" routerLinkActive="active">
           Projects
         </a>
+        <a class="nav-link" routerLink="/services" routerLinkActive="active">
+          Services
+        </a>
         <a class="nav-link" routerLink="/career" routerLinkActive="active">
           Experience
+        </a>
+        <a class="nav-link" routerLink="/about" routerLinkActive="active">
+          About
         </a>
         <a class="nav-link" routerLink="/contact" routerLinkActive="active">
           Contact
@@ -29,12 +32,9 @@
       <!-- Right Side Actions -->
       <div class="navbar-actions">
         <!-- Availability Badge -->
-        <!-- Availability Badge -->
-        <button class="avail-badge readonly" type="button" [attr.aria-pressed]="availableForFreelance"
-          style="cursor: default">
-          <span class="avail-dot" [class.available]="availableForFreelance"></span>
-          <span class="avail-label desktop-only">{{ availableForFreelance ? 'Available' : 'Booked' }}</span>
-        </button>
+        <portfolio-availability-badge [available]="availableForFreelance" variant="compact"
+          [availableText]="'Available'" [bookedText]="'Booked'" class="desktop-only">
+        </portfolio-availability-badge>
 
         <!-- Theme Toggle -->
         <button class="theme-toggle" (click)="toggleTheme()"
@@ -76,6 +76,10 @@
         <mat-icon>apps</mat-icon>
         <span>Projects</span>
       </a>
+      <a class="mobile-nav-link" routerLink="/services" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <mat-icon>build</mat-icon>
+        <span>Services</span>
+      </a>
       <a class="mobile-nav-link" routerLink="/career" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>work</mat-icon>
         <span>Experience</span>
@@ -96,14 +100,8 @@
 
   <main class="content" id="main">
     <router-outlet></router-outlet>
+    <portfolio-chat-widget></portfolio-chat-widget>
   </main>
-
-  <!-- Mobile sticky CTA -->
-  <div class="sticky-cta">
-    <portfolio-button label="Get in Touch" variant="primary" size="lg" [routerLink]="'/contact'" ariaLabel="Contact me">
-      <span icon class="material-icons">mail</span>
-    </portfolio-button>
-  </div>
 
   <portfolio-footer></portfolio-footer>
 </div>

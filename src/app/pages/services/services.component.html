@@ -1,0 +1,113 @@
+<!-- Hero Section -->
+<section class="services-hero" aria-labelledby="services-title">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="badge-icon material-icons">build</span>
+            <span class="badge-text">What I Do</span>
+        </div>
+        <h1 id="services-title" class="hero-title">
+            <span class="title-line">My</span>
+            <span class="title-line accent">Services</span>
+        </h1>
+        <p class="hero-sub">
+            I help startups and scale-ups design, build, and ship reliable web applications.
+            From frontend polish to backend architecture — I've got you covered.
+        </p>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="material-icons">expand_more</span>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="services-grid-section section" revealOnScroll aria-labelledby="offerings-title">
+    <h2 id="offerings-title" class="section-title">What I Offer</h2>
+
+    <div class="services-grid">
+        <!-- Loading State -->
+        <ng-container *ngIf="(services$ | async) === null">
+            <article class="service-card" *ngFor="let i of [1,2,3,4]">
+                <div class="service-card__header">
+                    <portfolio-skeleton variant="circle" width="64px" height="64px"></portfolio-skeleton>
+                    <portfolio-skeleton variant="text" width="70%" height="28px"></portfolio-skeleton>
+                </div>
+                <portfolio-skeleton variant="text" [lines]="2"></portfolio-skeleton>
+                <div class="service-card__tags">
+                    <portfolio-skeleton variant="rect" width="80px" height="28px"
+                        borderRadius="14px"></portfolio-skeleton>
+                    <portfolio-skeleton variant="rect" width="60px" height="28px"
+                        borderRadius="14px"></portfolio-skeleton>
+                    <portfolio-skeleton variant="rect" width="70px" height="28px"
+                        borderRadius="14px"></portfolio-skeleton>
+                </div>
+            </article>
+        </ng-container>
+
+        <!-- Loaded State -->
+        <ng-container *ngIf="services$ | async as services">
+            <article class="service-card" *ngFor="let service of services; trackBy: trackByService">
+                <div class="service-card__header">
+                    <div class="service-card__icon">
+                        <span class="material-icons">{{ service.icon }}</span>
+                    </div>
+                    <h3 class="service-card__title">{{ service.title }}</h3>
+                </div>
+
+                <p class="service-card__desc">{{ service.description }}</p>
+
+                <div class="service-card__tags">
+                    <span class="tag" *ngFor="let tag of service.tags">{{ tag }}</span>
+                </div>
+
+                <div class="service-card__details">
+                    <div class="detail-section">
+                        <h4><span class="material-icons">check_circle</span> Benefits</h4>
+                        <ul>
+                            <li *ngFor="let benefit of getDetails(service.title).benefits">{{ benefit }}</li>
+                        </ul>
+                    </div>
+                    <div class="detail-section">
+                        <h4><span class="material-icons">inventory_2</span> Deliverables</h4>
+                        <ul>
+                            <li *ngFor="let item of getDetails(service.title).deliverables">{{ item }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+        </ng-container>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section section" revealOnScroll aria-labelledby="process-title">
+    <h2 id="process-title" class="section-title">How I Work</h2>
+    <p class="section-subtitle">A collaborative process designed for clarity and results.</p>
+
+    <div class="process-grid">
+        <div class="process-step" *ngFor="let step of processSteps; let i = index; trackBy: trackByStep">
+            <div class="step-number">{{ i + 1 }}</div>
+            <div class="step-icon">
+                <span class="material-icons">{{ step.icon }}</span>
+            </div>
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-desc">{{ step.description }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section section" revealOnScroll aria-labelledby="cta-title">
+    <div class="cta-content">
+        <h2 id="cta-title">Ready to start your project?</h2>
+        <p>Let's discuss how I can help bring your ideas to life.</p>
+        <div class="cta-actions">
+            <portfolio-button label="Get in Touch" variant="primary" size="lg" [routerLink]="'/contact'">
+                <span icon class="material-icons">mail</span>
+            </portfolio-button>
+            <portfolio-button label="View My Work" variant="tonal" size="lg" [routerLink]="'/projects'">
+                <span icon class="material-icons">north_east</span>
+            </portfolio-button>
+        </div>
+    </div>
+</section>

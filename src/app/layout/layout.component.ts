@@ -12,6 +12,8 @@ import { ButtonComponent } from '../shared/button/button.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SettingsService } from '../core/services/settings.service';
 import { A11yModule } from '@angular/cdk/a11y';
+import { AvailabilityBadgeComponent } from '../shared/components/availability-badge/availability-badge.component';
+import { ChatWidgetComponent } from '../shared/components/chat-widget/chat-widget.component';
 
 @Component({
   selector: 'portfolio-layout',
@@ -30,6 +32,8 @@ import { A11yModule } from '@angular/cdk/a11y';
     ButtonComponent,
     MatSnackBarModule,
     A11yModule,
+    AvailabilityBadgeComponent,
+    ChatWidgetComponent,
   ],
 })
 export class LayoutComponent implements OnInit, OnDestroy {

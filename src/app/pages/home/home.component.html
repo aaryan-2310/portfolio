@@ -1,24 +1,33 @@
-<section id="hero" aria-labelledby="hero-title">
-  <!-- Loading State for Hero -->
-  <div class="hero-surface" *ngIf="isLoading">
+<!-- Hero Loading State -->
+<section id="hero" aria-labelledby="hero-title" *ngIf="(settings$ | async) === null">
+  <div class="hero-surface">
     <div class="hero-content">
-      <portfolio-skeleton variant="text" width="200px"></portfolio-skeleton>
-      <portfolio-skeleton variant="text" height="60px" width="80%"></portfolio-skeleton>
-      <portfolio-skeleton variant="text" [lines]="2" width="60%"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="90%" height="48px" style="margin-top: 1rem;"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="70%" height="48px" style="margin-top: 0.5rem;"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="60%" height="20px" style="margin-top: 1.5rem;"></portfolio-skeleton>
+      <portfolio-skeleton variant="text" width="50%" height="20px" style="margin-top: 0.5rem;"></portfolio-skeleton>
+      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        <portfolio-skeleton variant="rect" width="160px" height="48px" borderRadius="8px"></portfolio-skeleton>
+        <portfolio-skeleton variant="rect" width="120px" height="48px" borderRadius="8px"></portfolio-skeleton>
+      </div>
+      <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
+        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
+        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="hero-surface" *ngIf="!isLoading && settings">
+<!-- Hero Loaded State -->
+<section id="hero" aria-labelledby="hero-title" *ngIf="settings$ | async as settings">
+  <div class="hero-surface">
     <div class="hero-content">
-      <span class="hero-eyebrow" [class.available]="settings.availableForFreelance">
-        <span class="status-dot" [class.on]="settings.availableForFreelance"></span>
-        {{ settings.availableForFreelance ? 'Available for new projects' : 'Currently booked' }}
-      </span>
       <h1 id="hero-title" class="hero-title">
-        {{ settings.siteTitle || 'Full‑stack engineer for TypeScript/Angular products.' }}
+        {{ settings.siteTitle || 'Full-stack engineer for TypeScript/Angular products.' }}
       </h1>
       <p class="hero-sub">
-        {{ settings?.siteDescription || 'I help startups and scaleups design, build, and ship reliable web apps — fast.'
+        {{ settings.siteDescription || 'I help startups and scaleups design, build, and ship reliable web apps — fast.'
         }}
       </p>
 
@@ -60,20 +69,20 @@
 
   <div class="projects-grid">
     <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
+    <ng-container *ngIf="(projects$ | async) === null">
       <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="300px"></portfolio-skeleton>
     </ng-container>
 
-    <ng-container *ngIf="!isLoading">
-      <a *ngFor="let project of projects; trackBy: trackByProject" class="project-card" [routerLink]="project.link">
-        <div class="project-media" [style.background]="project.gradient"></div>
-        <div class="project-info">
-          <h3 class="project-title">{{ project.title }}</h3>
-          <p class="project-desc">{{ project.description }}</p>
-        </div>
-        <span class="project-arrow material-icons">arrow_forward</span>
-      </a>
-    </ng-container>
+    <!-- Loaded State -->
+    <a *ngFor="let project of projects$ | async; trackBy: trackByProject" class="project-card"
+      [routerLink]="project.link">
+      <div class="project-media" [style.background]="project.gradient"></div>
+      <div class="project-info">
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-desc">{{ project.description }}</p>
+      </div>
+      <span class="project-arrow material-icons">arrow_forward</span>
+    </a>
   </div>
 
   <div class="section-cta">
@@ -93,12 +102,13 @@
 
   <div class="services-grid">
     <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
+    <ng-container *ngIf="(services$ | async) === null">
       <portfolio-skeleton *ngFor="let i of [1,2,3,4]" variant="card" height="250px"></portfolio-skeleton>
     </ng-container>
 
-    <ng-container *ngIf="!isLoading">
-      <div *ngFor="let service of services; trackBy: trackByService" class="service-card">
+    <!-- Loaded State -->
+    <ng-container *ngIf="(services$ | async) !== null">
+      <div *ngFor="let service of services$ | async; trackBy: trackByService" class="service-card">
         <div class="service-icon-wrapper">
           <span class="material-icons service-icon">{{ service.icon }}</span>
         </div>
@@ -121,25 +131,24 @@
 
   <div class="skills-grid">
     <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
+    <ng-container *ngIf="(skills$ | async) === null">
       <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6,7,8]" variant="rect" width="120px" height="40px"
         borderRadius="20px"></portfolio-skeleton>
     </ng-container>
 
-    <ng-container *ngIf="!isLoading">
-      <div *ngFor="let skill of skills; trackBy: trackBySkill" class="skill-chip">
-        <ng-container *ngIf="skill.icon">
-          <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
-          <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
-        </ng-container>
-        <span class="skill-name">{{ skill.name }}</span>
-      </div>
-    </ng-container>
+    <!-- Loaded State -->
+    <div *ngFor="let skill of skills$ | async; trackBy: trackBySkill" class="skill-chip">
+      <ng-container *ngIf="skill.icon">
+        <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
+        <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
+      </ng-container>
+      <span class="skill-name">{{ skill.name }}</span>
+    </div>
   </div>
 </section>
 
 <!-- Latest Posts Section -->
-<section id="latest-posts" class="section" aria-labelledby="posts-title" *ngIf="isLoading || recentPosts.length">
+<section id="latest-posts" class="section" aria-labelledby="posts-title">
   <div class="section-header">
     <span class="section-eyebrow">Blog</span>
     <h2 id="posts-title" class="section-title">Latest Posts</h2>
@@ -148,24 +157,24 @@
 
   <div class="posts-grid">
     <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
+    <ng-container *ngIf="(latestPosts$ | async) === null">
       <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="350px"></portfolio-skeleton>
     </ng-container>
 
-    <ng-container *ngIf="!isLoading">
-      <a *ngFor="let post of recentPosts; trackBy: trackByPost" class="post-card" [routerLink]="['/blogs', post.slug]">
-        <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
-          [class.no-image]="!post.coverImage"></div>
-        <div class="post-card__body">
-          <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
-          <h3 class="post-card__title">{{ post.title }}</h3>
-          <p class="post-card__excerpt">{{ post.excerpt }}</p>
-          <span class="post-card__cta">
-            Read article <span class="material-icons">arrow_forward</span>
-          </span>
-        </div>
-      </a>
-    </ng-container>
+    <!-- Loaded State -->
+    <a *ngFor="let post of latestPosts$ | async; trackBy: trackByPost" class="post-card"
+      [routerLink]="['/blogs', post.slug]">
+      <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
+        [class.no-image]="!post.coverImage"></div>
+      <div class="post-card__body">
+        <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
+        <h3 class="post-card__title">{{ post.title }}</h3>
+        <p class="post-card__excerpt">{{ post.excerpt }}</p>
+        <span class="post-card__cta">
+          Read article <span class="material-icons">arrow_forward</span>
+        </span>
+      </div>
+    </a>
   </div>
 
   <div class="section-cta">
