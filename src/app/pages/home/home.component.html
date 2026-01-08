@@ -107,14 +107,16 @@
     </ng-container>
 
     <!-- Loaded State -->
-    <div *ngFor="let service of services$ | async; trackBy: trackByService" class="service-card">
-      <div class="service-icon-wrapper">
-        <span class="material-icons service-icon">{{ service.icon }}</span>
-      </div>
-      <h3 class="service-title">{{ service.title }}</h3>
-      <p class="service-desc">{{ service.description }}</p>
-      <div class="service-tags">
-        <span *ngFor="let tag of service.tags" class="service-tag">{{ tag }}</span>
+    <ng-container *ngIf="(services$ | async) !== null">
+      <div *ngFor="let service of services$ | async; trackBy: trackByService" class="service-card">
+        <div class="service-icon-wrapper">
+          <span class="material-icons service-icon">{{ service.icon }}</span>
+        </div>
+        <h3 class="service-title">{{ service.title }}</h3>
+        <p class="service-desc">{{ service.description }}</p>
+        <div class="service-tags">
+          <span *ngFor="let tag of service.tags" class="service-tag">{{ tag }}</span>
+        </div>
       </div>
     </ng-container>
   </div>

@@ -9,6 +9,7 @@ import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { Observable, map, startWith } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
+import { formatDate, trackById, trackByTitle } from '../../shared/utils';
 
 // Adapters for view
 interface FeaturedProjectView {
