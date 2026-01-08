@@ -33,6 +33,7 @@ export class ProjectsComponent {
 
   projects$: Observable<ProjectView[] | null>;
   settings$: Observable<SiteSettings | null>;
+  isLoading = true;
 
   private gradients = [
     'linear-gradient(135deg, #34D399 0%, #10B981 100%)',

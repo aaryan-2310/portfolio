@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -70,16 +70,10 @@ export class HomeComponent {
     return gradients[index % gradients.length];
   }
 
-  trackByProject = (_: number, p: FeaturedProjectView) => p.title;
-  trackBySkill = (_: number, s: Skill) => s.id;
-  trackByService = (_: number, s: ServiceOffering) => s.title;
-  trackByPost = (_: number, p: BlogPostView) => p.id;
+  trackByProject = trackByTitle;
+  trackBySkill = trackById;
+  trackByService = trackByTitle;
+  trackByPost = trackById;
 
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-  }
+  formatDate = formatDate;
 }
