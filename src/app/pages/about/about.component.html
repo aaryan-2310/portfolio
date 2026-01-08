@@ -1,18 +1,55 @@
+<!-- Hero Section -->
 <section class="about-hero" aria-labelledby="about-title">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1 id="about-title" class="title">About Me</h1>
-      <p class="intro">👋 Hi, I’m Aryan Mishra</p>
-      <p class="sub">
-        I’m a Software Engineer passionate about building scalable full-stack solutions that make
-        complex tasks simple and intuitive. With experience in Java (Spring), Angular, React, and
-        microservices, I specialize in search UX, data visualization, and defensive engineering,
-        ensuring reliability and usability at scale.
-      </p>
+  <div class="hero-backdrop" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-main">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="badge-icon material-icons">person</span>
+          <span class="badge-text">Full-Stack Developer</span>
+        </div>
+        <h1 id="about-title" class="hero-title">
+          <span class="title-line">Hi, I'm</span>
+          <span class="title-line accent">Aryan Mishra</span>
+        </h1>
+        <p class="hero-sub">
+          I'm a Software Engineer passionate about building scalable full-stack solutions that make
+          complex tasks simple and intuitive. With experience in Java (Spring), Angular, React, and
+          microservices, I specialize in search UX, data visualization, and defensive engineering.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">3+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-card">
+            <span class="stat-value">10+</span>
+            <span class="stat-label">Projects Built</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-card">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Satisfaction</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <portfolio-button label="View Projects" variant="primary" size="lg" [routerLink]="'/projects'">
+            <span icon class="material-icons">north_east</span>
+          </portfolio-button>
+          <portfolio-button label="Contact Me" variant="tonal" size="lg" [routerLink]="'/contact'">
+            <span icon class="material-icons">mail</span>
+          </portfolio-button>
+        </div>
+      </div>
+      <div class="hero-profile" aria-hidden="true">
+        <div class="profile-ring"></div>
+        <img ngSrc="assets/img/my_pic.jpg" width="280" height="280" alt="Aryan Mishra" decoding="async" priority />
+      </div>
     </div>
-    <div class="hero-art" aria-hidden="true">
-      <img ngSrc="assets/img/my_pic.jpg" width="140" height="140" alt="" decoding="async" />
-    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span class="material-icons">expand_more</span>
   </div>
 </section>
 
@@ -148,7 +185,7 @@
 <section class="cta section" revealOnScroll aria-labelledby="cta-title">
   <h2 id="cta-title">
     I enjoy collaborating with cross‑functional teams to deliver reliable, impactful products. If
-    you’re looking for someone who can balance backend scalability with frontend usability, let’s
+    you're looking for someone who can balance backend scalability with frontend usability, let's
     connect.
   </h2>
   <div class="cta-actions">

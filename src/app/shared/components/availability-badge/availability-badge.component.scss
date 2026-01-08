@@ -1,0 +1,70 @@
+.availability-badge {
+    appearance: none;
+    background: color-mix(in oklab, var(--theme-accent) 10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, var(--theme-border));
+    border-radius: var(--radius-full);
+    padding: var(--space-8) var(--space-16);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    cursor: default;
+    color: var(--theme-on-surface);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+    // Compact variant for navbar
+    &.compact {
+        padding: var(--space-6) var(--space-12);
+        gap: var(--space-8);
+        font-size: 0.8125rem;
+
+        .dot {
+            width: 8px;
+            height: 8px;
+        }
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--theme-on-surface-variant);
+        display: inline-block;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+
+        &.on {
+            background: #10b981;
+            box-shadow: 0 0 0 4px color-mix(in oklab, #10b981 25%, transparent);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+    }
+
+    .label {
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+    }
+}
+
+@keyframes badgePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 3px color-mix(in oklab, #10b981 25%, transparent);
+    }
+
+    50% {
+        box-shadow: 0 0 0 5px color-mix(in oklab, #10b981 15%, transparent);
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .availability-badge.compact {
+        padding: var(--space-6) var(--space-8);
+    }
+}

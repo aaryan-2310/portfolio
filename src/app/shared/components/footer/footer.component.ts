@@ -9,12 +9,13 @@ import { SettingsService } from '../../../core/services/settings.service';
 import { ContactService, SocialLink } from '../../../core/services/contact.service';
 import { RouterModule } from '@angular/router';
 import { getIconViewBox, getIconSvg } from '../../utils';
+import { AvailabilityBadgeComponent } from '../availability-badge/availability-badge.component';
 
 // Footer Component
 @Component({
   selector: 'portfolio-footer',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, MatIconModule, ButtonComponent, MatSnackBarModule, MatDialogModule, RouterModule],
+  imports: [CommonModule, NgOptimizedImage, MatIconModule, ButtonComponent, MatSnackBarModule, MatDialogModule, RouterModule, AvailabilityBadgeComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })

@@ -2,10 +2,6 @@
 <section class="contact-hero" aria-labelledby="contact-title">
   <div class="hero-backdrop" aria-hidden="true"></div>
   <div class="hero-content">
-    <div class="hero-badge">
-      <span class="status-dot"></span>
-      <span class="badge-text">Available for Projects</span>
-    </div>
     <h1 id="contact-title" class="hero-title">
       <span class="title-line">Let's Work</span>
       <span class="title-line accent">Together</span>
@@ -117,12 +113,9 @@
 
       <!-- Availability -->
       <div class="info-card info-card--highlight">
-        <div class="availability-badge" [class.available]="settings.availableForFreelance">
-          <span class="availability-dot" [class.active]="settings.availableForFreelance"></span>
-          <span class="availability-text">
-            {{ settings.availableForFreelance ? 'Available for work' : 'Currently unavailable' }}
-          </span>
-        </div>
+        <portfolio-availability-badge [available]="settings.availableForFreelance"
+          [availableText]="'Available for work'" [bookedText]="'Currently unavailable'">
+        </portfolio-availability-badge>
         <p class="availability-desc">
           {{ settings.availableForFreelance
           ? 'Currently accepting new projects and freelance opportunities.'

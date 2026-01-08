@@ -31,6 +31,13 @@ export const routes: Routes = [
           import('./pages/projects/projects.component').then(m => m.ProjectsComponent),
       },
       {
+        path: 'services',
+        title: 'Services',
+        data: { description: 'Professional services — frontend, backend, and full-stack development.' },
+        loadComponent: () =>
+          import('./pages/services/services.component').then(m => m.ServicesComponent),
+      },
+      {
         path: 'career',
         title: 'Professional Experience',
         data: { description: 'Work experience and highlights across roles and companies.' },

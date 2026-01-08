@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { Observable, map, startWith } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { trackByTitle, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
-import { tap } from 'rxjs';
 
 type ProjectLink = { label: string; href: string; kind: 'repo' | 'live' };
 type ProjectView = {
@@ -21,7 +21,7 @@ type ProjectView = {
 @Component({
   selector: 'portfolio-projects',
   standalone: true,
-  imports: [CommonModule, ButtonComponent, SkeletonComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
@@ -31,9 +31,8 @@ export class ProjectsComponent {
     subtitle: "A curated selection of things I've designed, built, and shipped.",
   };
 
-  projects$: Observable<ProjectView[]>;
+  projects$: Observable<ProjectView[] | null>;
   settings$: Observable<SiteSettings | null>;
-  isLoading = true;
 
   private gradients = [
     'linear-gradient(135deg, #34D399 0%, #10B981 100%)',
@@ -52,7 +51,7 @@ export class ProjectsComponent {
         .filter(p => p.status === 'PUBLISHED')
         .map((p, i) => this.mapToView(p, i))
       ),
-      tap(() => this.isLoading = false)
+      startWith(null)
     );
     this.settings$ = this.settingsService.settings$;
   }
