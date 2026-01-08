@@ -34,73 +34,173 @@
   }
 }
 
-/* Hero */
+/* Hero - Improved Layout */
 .about-hero {
   position: relative;
-  padding: var(--space-80) var(--space-24);
-  min-height: 85vh;
+  min-height: calc(85dvh - 56px);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  background:
-    radial-gradient(800px 800px at 100% 0%,
-      color-mix(in oklab, var(--theme-accent) 8%, transparent),
-      transparent),
-    var(--theme-surface);
-  border-bottom: 1px solid var(--theme-border);
+  justify-content: center;
+  padding: var(--space-64) var(--space-24);
   overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%,
+      color-mix(in oklab, var(--theme-accent) 15%, transparent),
+      transparent),
+    var(--theme-background);
 
-  .hero-inner {
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: var(--space-64);
-    align-items: center;
+  .hero-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 80%,
+        color-mix(in oklab, var(--theme-accent) 8%, transparent) 0%,
+        transparent 50%),
+      radial-gradient(circle at 80% 20%,
+        color-mix(in oklab, var(--theme-accent) 6%, transparent) 0%,
+        transparent 40%);
+    pointer-events: none;
+  }
+
+  .hero-content {
     position: relative;
     z-index: 1;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .hero-main {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-64);
+    align-items: center;
   }
 
   .hero-text {
-    max-width: 640px;
+    text-align: left;
   }
 
-  .title {
-    color: var(--theme-on-surface);
-    margin: 0 0 var(--space-24);
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease-out forwards;
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-16);
+    margin-bottom: var(--space-20);
+    background: color-mix(in oklab, var(--theme-accent) 12%, var(--theme-surface));
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
+    border-radius: var(--radius-full);
+    animation: fadeInDown 0.6s ease-out;
+
+    .badge-icon {
+      font-size: 18px;
+      color: var(--theme-accent);
+    }
+
+    .badge-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--theme-on-surface);
+      letter-spacing: 0.02em;
+    }
   }
 
-  .intro {
-    font-size: 1.375rem;
-    font-weight: 600;
-    color: var(--theme-accent);
-    margin: 0 0 var(--space-24);
-    opacity: 0;
-    animation: fadeInUp 0.8s ease-out 0.1s forwards;
+  .hero-title {
+    margin: 0 0 var(--space-20);
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+
+    .title-line {
+      display: block;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--theme-on-surface);
+      letter-spacing: -0.02em;
+
+      &.accent {
+        color: var(--theme-accent);
+      }
+    }
   }
 
-  .sub {
-    margin: 0;
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
     color: var(--theme-on-surface-variant);
-    font-size: 1.125rem;
-    line-height: 1.8;
-    max-width: 580px;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    line-height: 1.7;
+    margin: 0 0 var(--space-32);
+    max-width: 540px;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
   }
 
-  .hero-art {
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    margin-bottom: var(--space-32);
+    animation: fadeInUp 0.6s ease-out 0.25s both;
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-12) var(--space-16);
+    background: var(--theme-surface);
+    border: 1px solid var(--theme-border);
+    border-radius: var(--radius-lg);
+    min-width: 90px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--elev-2);
+      border-color: var(--theme-accent);
+    }
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--theme-accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--theme-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-4);
+    text-align: center;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--theme-border);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-16);
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+  }
+
+  .hero-profile {
+    position: relative;
     display: flex;
     justify-content: center;
-    position: relative;
-    opacity: 0;
-    animation: scaleIn 0.8s ease-out 0.3s forwards;
+    align-items: center;
+    animation: scaleIn 0.8s ease-out 0.3s both;
+
+    .profile-ring {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 2px dashed color-mix(in oklab, var(--theme-accent) 30%, transparent);
+      animation: spin 40s linear infinite;
+    }
 
     img {
       border-radius: var(--radius-full);
@@ -109,75 +209,144 @@
         var(--elev-3);
       background: var(--theme-surface-2);
       object-fit: cover;
-      width: 240px;
-      height: 240px;
-    }
-
-    /* Decorative ring behind image */
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -20px;
-      border-radius: 50%;
-      border: 2px dashed color-mix(in oklab, var(--theme-accent) 30%, transparent);
-      animation: spin 30s linear infinite;
-      z-index: -1;
+      width: 280px;
+      height: 280px;
+      position: relative;
+      z-index: 1;
     }
   }
 
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: var(--space-24);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+
+    .material-icons {
+      font-size: 32px;
+      color: var(--theme-on-surface-variant);
+      opacity: 0.5;
+    }
+  }
+
+  // Tablet breakpoint
   @media (max-width: 900px) {
     min-height: auto;
-    padding: var(--space-64) var(--space-24);
+    padding: var(--space-48) var(--space-24);
 
-    .hero-inner {
+    .hero-main {
       grid-template-columns: 1fr;
-      text-align: center;
       gap: var(--space-40);
+      text-align: center;
     }
 
     .hero-text {
-      max-width: 100%;
+      text-align: center;
+      order: 2;
     }
 
-    .sub {
-      max-width: 100%;
-      margin: 0 auto;
-    }
+    .hero-profile {
+      order: 1;
 
-    .hero-art {
-      order: -1;
+      .profile-ring {
+        width: 260px;
+        height: 260px;
+      }
 
       img {
-        width: 180px;
-        height: 180px;
+        width: 220px;
+        height: 220px;
       }
+    }
+
+    .hero-sub {
+      max-width: 100%;
+      margin-inline: auto;
+    }
+
+    .hero-stats {
+      justify-content: center;
+    }
+
+    .hero-actions {
+      justify-content: center;
     }
   }
 
+  // Mobile breakpoint
   @media (max-width: 600px) {
-    padding: var(--space-48) var(--space-16);
+    padding: var(--space-32) var(--space-16);
 
-    .hero-inner {
+    .hero-main {
       gap: var(--space-32);
     }
 
-    .title {
+    .hero-title .title-line {
       font-size: 2rem;
     }
 
-    .intro {
-      font-size: 1.125rem;
+    .hero-profile {
+      .profile-ring {
+        width: 200px;
+        height: 200px;
+      }
+
+      img {
+        width: 160px;
+        height: 160px;
+      }
     }
 
-    .sub {
-      font-size: 1rem;
-      line-height: 1.7;
+    .hero-stats {
+      flex-wrap: wrap;
+      gap: var(--space-12);
     }
 
-    .hero-art img {
-      width: 140px;
-      height: 140px;
+    .stat-card {
+      padding: var(--space-10) var(--space-12);
+      min-width: 80px;
     }
+
+    .stat-value {
+      font-size: 1.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.6875rem;
+    }
+
+    .stat-divider {
+      display: none;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+      gap: var(--space-12);
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

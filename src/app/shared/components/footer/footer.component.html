@@ -1,13 +1,7 @@
 ﻿<footer class="footer">
   <div class="footer-cta" aria-labelledby="cta-title">
     <div class="cta-copy">
-      <button class="availability" type="button" role="status"
-        [attr.aria-checked]="availableForFreelance ? 'true' : 'false'" style="cursor: default">
-        <span class="dot" [class.on]="availableForFreelance"></span>
-        <span class="label">{{
-          availableForFreelance ? 'Available for freelance' : 'Currently booked'
-          }}</span>
-      </button>
+      <portfolio-availability-badge [available]="availableForFreelance"></portfolio-availability-badge>
       <h3 id="cta-title" class="cta-title">Let's build something great.</h3>
       <p class="cta-sub">
         Have an idea or a challenge? I can help plan, design, and ship fast, reliable web apps.
@@ -69,7 +63,7 @@
         <h4>Company</h4>
         <a routerLink="/about">About</a>
         <a routerLink="/contact">Contact</a>
-        <a routerLink="/freelance">Freelance Services</a>
+        <a routerLink="/services">Freelance Services</a>
       </div>
     </div>
   </div>
