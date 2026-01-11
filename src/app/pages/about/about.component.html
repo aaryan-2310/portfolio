@@ -59,16 +59,7 @@
     <div class="timeline-rail" aria-hidden="true"></div>
 
     <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
-      <div class="event" *ngFor="let i of [1,2,3]">
-        <div class="marker" aria-hidden="true"></div>
-        <div class="content">
-          <portfolio-skeleton variant="text" width="150px"></portfolio-skeleton>
-          <portfolio-skeleton variant="text" height="24px" width="80%"></portfolio-skeleton>
-          <portfolio-skeleton variant="text" [lines]="3"></portfolio-skeleton>
-        </div>
-      </div>
-    </ng-container>
+    <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
 
     <ng-container *ngIf="!isLoading">
       <article class="event" *ngFor="let exp of experiences; trackBy: trackByExperience">

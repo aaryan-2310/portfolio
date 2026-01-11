@@ -1,23 +1,5 @@
-<!-- Hero Loading State -->
-<section id="hero" aria-labelledby="hero-title" *ngIf="(settings$ | async) === null">
-  <div class="hero-surface">
-    <div class="hero-content">
-      <portfolio-skeleton variant="text" width="90%" height="48px" style="margin-top: 1rem;"></portfolio-skeleton>
-      <portfolio-skeleton variant="text" width="70%" height="48px" style="margin-top: 0.5rem;"></portfolio-skeleton>
-      <portfolio-skeleton variant="text" width="60%" height="20px" style="margin-top: 1.5rem;"></portfolio-skeleton>
-      <portfolio-skeleton variant="text" width="50%" height="20px" style="margin-top: 0.5rem;"></portfolio-skeleton>
-      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-        <portfolio-skeleton variant="rect" width="160px" height="48px" borderRadius="8px"></portfolio-skeleton>
-        <portfolio-skeleton variant="rect" width="120px" height="48px" borderRadius="8px"></portfolio-skeleton>
-      </div>
-      <div style="display: flex; gap: 2rem; margin-top: 2rem;">
-        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
-        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
-        <portfolio-skeleton variant="text" width="80px" height="40px"></portfolio-skeleton>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Hero Loading State and Global Loader -->
+<portfolio-loader *ngIf="(settings$ | async) === null" [fullscreen]="true"></portfolio-loader>
 
 <!-- Hero Loaded State -->
 <section id="hero" aria-labelledby="hero-title" *ngIf="settings$ | async as settings">

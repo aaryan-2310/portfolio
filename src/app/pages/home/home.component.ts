@@ -9,6 +9,7 @@ import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { Observable, map, startWith } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { formatDate, trackById, trackByTitle } from '../../shared/utils';
 
 // Adapters for view
@@ -16,13 +17,13 @@ interface FeaturedProjectView {
   title: string;
   description: string;
   gradient: string;
-  link: string;
+  link: string[];
 }
 
 @Component({
   selector: 'portfolio-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -45,7 +46,7 @@ export class HomeComponent {
         title: p.title,
         description: p.description,
         gradient: this.getGradient(i),
-        link: p.demoUrl || '/projects'
+        link: ['/projects', p.slug]
       }))),
       startWith(null)
     );
