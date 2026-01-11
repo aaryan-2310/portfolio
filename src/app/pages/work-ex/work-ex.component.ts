@@ -5,6 +5,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { WorkExperience, WorkExperienceSkill as WorkSkill } from '../../shared/models/work-experience.interface';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ExperienceCardComponent } from '../../shared/components/experience-card/experience-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +27,8 @@ import { ProjectService } from '../../core/services/project.service';
     ExperienceCardComponent,
     ButtonComponent,
     NgOptimizedImage,
-    SkeletonComponent
+    SkeletonComponent,
+    LoaderComponent
   ],
   templateUrl: './work-ex.component.html',
   styleUrl: './work-ex.component.scss',

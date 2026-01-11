@@ -7,10 +7,12 @@ import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { trackByTitle, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 type ProjectLink = { label: string; href: string; kind: 'repo' | 'live' };
 type ProjectView = {
   title: string;
+  slug: string;
   description: string;
   tech: string[];
   image?: string;
@@ -21,7 +23,7 @@ type ProjectView = {
 @Component({
   selector: 'portfolio-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
@@ -60,22 +62,14 @@ export class ProjectsComponent {
 
 
   private mapToView(project: Project, index: number): ProjectView {
-    const links: ProjectLink[] = [];
-
-    if (project.repoUrl) {
-      links.push({ label: 'View Repo', href: project.repoUrl, kind: 'repo' });
-    }
-    if (project.demoUrl) {
-      links.push({ label: 'Live Demo', href: project.demoUrl, kind: 'live' });
-    }
-
     return {
       title: project.title,
+      slug: project.slug,
       description: project.description,
       tech: project.tags || [],
       image: project.imageUrl,
       gradient: this.gradients[index % this.gradients.length],
-      links
+      links: project.links || []
     };
   }
 

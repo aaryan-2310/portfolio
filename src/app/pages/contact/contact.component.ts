@@ -9,11 +9,12 @@ import { ContactService, SocialLink } from '../../core/services/contact.service'
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { AvailabilityBadgeComponent } from '../../shared/components/availability-badge/availability-badge.component';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'portfolio-contact',
   standalone: true,
-  imports: [CommonModule, ContactFormComponent, SkeletonComponent, AvailabilityBadgeComponent],
+  imports: [CommonModule, ContactFormComponent, SkeletonComponent, AvailabilityBadgeComponent, LoaderComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
