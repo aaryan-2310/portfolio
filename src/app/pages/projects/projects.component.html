@@ -56,22 +56,7 @@
 
   <div class="projects__grid">
     <!-- Loading State -->
-    <ng-container *ngIf="(projects$ | async) === null">
-      <div class="project-card skeleton-card" *ngFor="let i of [1,2,3,4,5,6]">
-        <div class="project-card__media">
-          <portfolio-skeleton variant="rect" width="100%" height="100%"></portfolio-skeleton>
-        </div>
-        <div class="project-card__body">
-          <portfolio-skeleton variant="text" width="70%" height="24px"></portfolio-skeleton>
-          <portfolio-skeleton variant="text" [lines]="2"></portfolio-skeleton>
-          <div class="skills-container">
-            <portfolio-skeleton variant="rect" width="60px" height="24px" borderRadius="12px"></portfolio-skeleton>
-            <portfolio-skeleton variant="rect" width="80px" height="24px" borderRadius="12px"></portfolio-skeleton>
-            <portfolio-skeleton variant="rect" width="50px" height="24px" borderRadius="12px"></portfolio-skeleton>
-          </div>
-        </div>
-      </div>
-    </ng-container>
+    <portfolio-loader *ngIf="(projects$ | async) === null" [fullscreen]="true"></portfolio-loader>
 
     <!-- Loaded State -->
     <ng-container *ngIf="projects$ | async as projects">

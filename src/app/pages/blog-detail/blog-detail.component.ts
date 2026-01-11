@@ -10,11 +10,12 @@ import { marked } from 'marked';
 import { formatDateLong, trackByValue } from '../../shared/utils';
 
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
     selector: 'portfolio-blog-detail',
     standalone: true,
-    imports: [CommonModule, ButtonComponent, SkeletonComponent],
+    imports: [CommonModule, ButtonComponent, SkeletonComponent, LoaderComponent],
     templateUrl: './blog-detail.component.html',
     styleUrl: './blog-detail.component.scss',
 })

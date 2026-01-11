@@ -26,23 +26,7 @@
 
     <div class="services-grid">
         <!-- Loading State -->
-        <ng-container *ngIf="(services$ | async) === null">
-            <article class="service-card" *ngFor="let i of [1,2,3,4]">
-                <div class="service-card__header">
-                    <portfolio-skeleton variant="circle" width="64px" height="64px"></portfolio-skeleton>
-                    <portfolio-skeleton variant="text" width="70%" height="28px"></portfolio-skeleton>
-                </div>
-                <portfolio-skeleton variant="text" [lines]="2"></portfolio-skeleton>
-                <div class="service-card__tags">
-                    <portfolio-skeleton variant="rect" width="80px" height="28px"
-                        borderRadius="14px"></portfolio-skeleton>
-                    <portfolio-skeleton variant="rect" width="60px" height="28px"
-                        borderRadius="14px"></portfolio-skeleton>
-                    <portfolio-skeleton variant="rect" width="70px" height="28px"
-                        borderRadius="14px"></portfolio-skeleton>
-                </div>
-            </article>
-        </ng-container>
+        <portfolio-loader *ngIf="(services$ | async) === null" [fullscreen]="true"></portfolio-loader>
 
         <!-- Loaded State -->
         <ng-container *ngIf="services$ | async as services">

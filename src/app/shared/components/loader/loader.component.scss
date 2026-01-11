@@ -1,0 +1,132 @@
+// loader.component.scss
+$accent: #10b981;
+$bg-dark: #050505;
+
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    &.fullscreen {
+        position: fixed;
+        inset: 0;
+        background: $bg-dark;
+        z-index: 9999;
+    }
+}
+
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+}
+
+.spinner-box {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.spinner-core {
+    position: absolute;
+    inset: 15px;
+    background: $accent;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+    opacity: 0.5;
+}
+
+.spinner-ring {
+    position: absolute;
+    inset: 0;
+    border: 3px solid rgba($accent, 0.1);
+    border-top-color: $accent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 300px;
+}
+
+.message {
+    font-family: 'Inter', sans-serif;
+    color: #e5e7eb;
+    font-size: 1.1rem;
+    font-weight: 500;
+    min-height: 1.5em;
+    /* Prevent layout shift */
+    animation: fadeMessage 0.3s ease;
+}
+
+.sub-message {
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.5s forwards;
+}
+
+.progress-track {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: $accent;
+    border-radius: 2px;
+    transition: width 0.2s linear;
+    box-shadow: 0 0 10px rgba($accent, 0.5);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeMessage {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

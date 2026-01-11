@@ -43,22 +43,11 @@
     <p class="section-sub">Scroll through my professional journey</p>
   </div>
 
+  <!-- Loading State -->
+  <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
+
   <!-- Mobile Timeline (Cards Layout) -->
   <div class="mobile-timeline">
-    <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
-      <div class="timeline-item" *ngFor="let i of [1,2,3]">
-        <div class="timeline-connector">
-          <div class="connector-dot">
-            <portfolio-skeleton variant="circle" width="100%"></portfolio-skeleton>
-          </div>
-          <div class="connector-line"></div>
-        </div>
-        <div class="timeline-content">
-          <portfolio-skeleton variant="card" height="200px"></portfolio-skeleton>
-        </div>
-      </div>
-    </ng-container>
 
     <ng-container *ngIf="!isLoading">
       @for (exp of experiences; track exp.id; let i = $index; let isLast = $last) {
