@@ -16,7 +16,7 @@ interface FeaturedProjectView {
   title: string;
   description: string;
   gradient: string;
-  link: string;
+  link: string[];
 }
 
 @Component({
@@ -45,7 +45,7 @@ export class HomeComponent {
         title: p.title,
         description: p.description,
         gradient: this.getGradient(i),
-        link: p.demoUrl || '/projects'
+        link: ['/projects', p.slug]
       }))),
       startWith(null)
     );

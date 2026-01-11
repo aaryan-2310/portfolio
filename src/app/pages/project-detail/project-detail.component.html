@@ -1,0 +1,247 @@
+<ng-container *ngIf="project$ | async as project; else loading">
+    <div class="project-detail animate-in" *ngIf="caseStudy$ | async as cs; else noCaseStudy">
+
+        <!-- Custom Cursor / Gradient Glow Follower could be here, but let's stick to CSS -->
+        <div class="background-glow" [style.background]="project.gradient"></div>
+
+        <!-- Floating Navigation Header -->
+        <nav class="detail-nav" [class.scrolled]="isScrolled">
+            <div class="nav-container">
+                <a routerLink="/projects" class="nav-back-btn">
+                    <span class="material-icons">west</span>
+                </a>
+                <div class="nav-title-context">
+                    <span class="project-name">{{ project.title }}</span>
+                </div>
+                <div class="nav-actions">
+                    <a *ngIf="getLiveLink(project) as link" [href]="link" target="_blank" class="nav-btn primary">
+                        Live Demo
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Premium Hero Section -->
+        <header class="hero-section">
+            <div class="hero-container">
+                <div class="hero-main-info">
+                    <div class="reveal-up">
+                        <div class="hero-pre-title">Selected Work / 2024</div>
+                        <h1 class="hero-title">{{ project.title }}</h1>
+                        <p class="hero-description">{{ project.description }}</p>
+                    </div>
+
+                    <div class="hero-meta reveal-up" style="transition-delay: 0.1s;">
+                        <div class="meta-item">
+                            <span class="meta-label">Role</span>
+                            <span class="meta-value">Lead Developer</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Stack</span>
+                            <div class="meta-tags">
+                                <span class="mini-tag" *ngFor="let tag of project.tags">{{ tag }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Image / Mockup -->
+                <div class="hero-visual reveal-right" *ngIf="project.imageUrl || project.screenshots?.length">
+                    <div class="mockup-container">
+                        <div class="mockup-frame">
+                            <img [src]="project.imageUrl || (project.screenshots ? project.screenshots[0] : '')"
+                                [alt]="project.title" class="featured-img">
+                            <div class="mockup-glare"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Project Overview Grid (Bento Style) -->
+            <section class="overview-bento">
+                <!-- Problem Statement -->
+                <div class="bento-card problem reveal-up" *ngIf="cs.problemStatement">
+                    <div class="card-header">
+                        <span class="material-icons">psychology</span>
+                        <h3>The Challenge</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>{{ cs.problemStatement.title }}</h4>
+                        <p>{{ cs.problemStatement.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats / Technical Overview Table -->
+                <div class="bento-card tech-table reveal-up" style="transition-delay: 0.1s;">
+                    <div class="card-header">
+                        <span class="material-icons">terminal</span>
+                        <h3>Technical Specs</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="specs-table">
+                            <tr *ngFor="let tag of project.tags.slice(0, 4)">
+                                <td>Core Tech</td>
+                                <td>{{ tag }}</td>
+                            </tr>
+                            <tr>
+                                <td>Deployment</td>
+                                <td>Vercel / Edge</td>
+                            </tr>
+                            <tr>
+                                <td>Timeline</td>
+                                <td>4 Months</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Success Metrics -->
+                <div class="bento-card metrics reveal-up" style="transition-delay: 0.2s;" *ngIf="cs.outcomes?.length">
+                    <div class="metrics-grid">
+                        <div class="metric-item" *ngFor="let outcome of cs.outcomes.slice(0, 2)">
+                            <span class="metric-value">{{ outcome.value }}</span>
+                            <span class="metric-label">{{ outcome.metric }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flexible Display Sections -->
+            <ng-container *ngIf="cs.sections?.length">
+                <section class="dynamic-section" *ngFor="let section of cs.sections; let i = index"
+                    [ngClass]="'section-' + section.type">
+
+                    <div class="section-container" [class.reversed]="i % 2 !== 0">
+                        <div class="section-text reveal-up">
+                            <span class="section-subtitle" *ngIf="section.subtitle">{{ section.subtitle }}</span>
+                            <h2 class="section-title" *ngIf="section.title">{{ section.title }}</h2>
+                            <div class="section-content" *ngIf="section.content" [innerHTML]="section.content"></div>
+
+                            <!-- Technical Items List if present -->
+                            <div class="tech-grid" *ngIf="section.type === 'technical' && section.items">
+                                <div class="tech-item" *ngFor="let item of section.items">
+                                    <span class="item-label">{{ item.label }}</span>
+                                    <span class="item-value">{{ item.value }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-visual reveal-up" *ngIf="section.images?.length">
+                            <div class="image-wrapper" *ngFor="let img of section.images">
+                                <img [src]="img" [alt]="section.title || 'Showcase Image'">
+                                <div class="img-caption" *ngIf="section.title">{{ section.title }} Detail</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </ng-container>
+
+            <!-- Screenshot Gallery -->
+            <section class="gallery-section reveal-up" *ngIf="project.screenshots?.length">
+                <div class="section-header">
+                    <h2>Interface Showcase</h2>
+                    <p>A closer look at the user experience and design details.</p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" *ngFor="let screenshot of project.screenshots; let i = index"
+                        [style.transition-delay]="i * 0.1 + 's'">
+                        <img [src]="screenshot" alt="Screenshot">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technical Decisions (Timeline) -->
+            <section class="decisions-section" *ngIf="cs.technicalDecisions?.length">
+                <div class="section-header reveal-up">
+                    <span class="header-tag">Process</span>
+                    <h2>Key Decisions</h2>
+                </div>
+                <div class="decisions-list">
+                    <div class="decision-card reveal-up" *ngFor="let dec of cs.technicalDecisions; let i = index">
+                        <div class="decision-meta">
+                            <span class="decision-index">0{{ i + 1 }}</span>
+                        </div>
+                        <div class="decision-content">
+                            <h3>{{ dec.decision }}</h3>
+                            <div class="decision-details">
+                                <div class="detail-block">
+                                    <label>Rationale</label>
+                                    <p>{{ dec.rationale }}</p>
+                                </div>
+                                <div class="detail-block">
+                                    <label>Trade-offs</label>
+                                    <p>{{ dec.tradeOffs }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Ultra Premium Footer CTA -->
+        <footer class="premium-footer">
+            <div class="footer-background">
+                <div class="glow" [style.background]="project.gradient"></div>
+            </div>
+            <div class="footer-content">
+                <span class="footer-pre">Next Step</span>
+                <h2 class="footer-title">Have a project in mind?</h2>
+                <div class="footer-actions">
+                    <a routerLink="/contact" class="btn-main">Get in Touch</a>
+                    <a routerLink="/projects" class="btn-ghost">View All Work</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Empty State -->
+    <ng-template #noCaseStudy>
+        <div class="minimal-empty">
+            <nav class="detail-nav">
+                <div class="nav-container">
+                    <a routerLink="/projects" class="nav-back-btn"><span class="material-icons">west</span></a>
+                </div>
+            </nav>
+
+            <div class="empty-hero">
+                <!-- Dynamic Background Layers -->
+                <div class="hero-bg-layer" [style.background]="project.gradient"></div>
+                <div class="noise-overlay"></div>
+
+                <div class="empty-content reveal-up">
+                    <div class="status-badge">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Coming Soon</span>
+                    </div>
+
+                    <h1 class="project-title">{{ project.title }}</h1>
+
+                    <p class="project-description">
+                        The detailed case study for this project is currently being polished.
+                        We are crafting a comprehensive breakdown of the technical challenges and solutions.
+                    </p>
+
+                    <div class="empty-buttons">
+                        <a *ngIf="getLiveLink(project) as link" [href]="link" target="_blank" class="btn-main">
+                            View Prototype <span class="material-icons icon-right">arrow_outward</span>
+                        </a>
+                        <a routerLink="/projects" class="btn-ghost">Back to Gallery</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</ng-container>
+
+<ng-template #loading>
+    <div class="loading-overlay">
+        <div class="loader-visual">
+            <div class="loader-circle"></div>
+            <span>Loading Project...</span>
+        </div>
+    </div>
+</ng-template>

@@ -85,150 +85,223 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-8);
-    padding: var(--space-8) var(--space-16);
-    margin-bottom: var(--space-20);
-    background: color-mix(in oklab, var(--theme-accent) 12%, var(--theme-surface));
-    border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
-    border-radius: var(--radius-full);
-    animation: fadeInDown 0.6s ease-out;
+    padding: var(--space-12) var(--space-24);
+    margin-bottom: var(--space-24);
+
+    /* Glassmorphism effect */
+    background: linear-gradient(135deg,
+        color-mix(in oklab, var(--theme-accent) 12%, transparent) 0%,
+        color-mix(in oklab, var(--theme-accent) 6%, transparent) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Refined border with gradient */
+    border: 1px solid;
+    border-image: linear-gradient(135deg,
+        color-mix(in oklab, var(--theme-accent) 50%, transparent),
+        color-mix(in oklab, var(--theme-accent) 20%, transparent)) 1;
+
+    /* Soft ambient glow */
+    box-shadow:
+      0 8px 32px color-mix(in oklab, var(--theme-accent) 8%, transparent),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 1px 1px color-mix(in oklab, white 8%, transparent);
+
+    /* Smooth entrance + gentle float */
+    animation: badgeFloat 4s ease-in-out infinite;
+    opacity: 0;
+    animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+      badgeFloat 4s ease-in-out 0.8s infinite;
+
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 40px color-mix(in oklab, var(--theme-accent) 15%, transparent),
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        inset 0 1px 1px color-mix(in oklab, white 12%, transparent);
+    }
 
     .badge-icon {
       font-size: 18px;
       color: var(--theme-accent);
+      opacity: 0.9;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    &:hover .badge-icon {
+      transform: scale(1.1);
+      opacity: 1;
     }
 
     .badge-text {
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 500;
       color: var(--theme-on-surface);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover .badge-text {
+      opacity: 1;
     }
   }
 
-  .hero-title {
-    margin: 0 0 var(--space-20);
-    animation: fadeInUp 0.6s ease-out 0.1s both;
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.95);
+    }
 
-    .title-line {
-      display: block;
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.15;
-      color: var(--theme-on-surface);
-      letter-spacing: -0.02em;
-
-      &.accent {
-        color: var(--theme-accent);
-      }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 
-  .hero-sub {
-    font-size: clamp(1rem, 2.5vw, 1.125rem);
-    color: var(--theme-on-surface-variant);
-    line-height: 1.7;
-    margin: 0 0 var(--space-32);
-    max-width: 540px;
-    animation: fadeInUp 0.6s ease-out 0.2s both;
-  }
+  @keyframes badgeFloat {
 
-  .hero-stats {
-    display: flex;
-    align-items: center;
-    gap: var(--space-16);
-    margin-bottom: var(--space-32);
-    animation: fadeInUp 0.6s ease-out 0.25s both;
-  }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
 
-  .stat-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--space-12) var(--space-16);
-    background: var(--theme-surface);
-    border: 1px solid var(--theme-border);
-    border-radius: var(--radius-lg);
-    min-width: 90px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--elev-2);
-      border-color: var(--theme-accent);
+    50% {
+      transform: translateY(-4px);
     }
   }
+}
 
-  .stat-value {
-    font-size: 1.75rem;
+.hero-title {
+  margin: 0 0 var(--space-20);
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+
+  .title-line {
+    display: block;
+    font-size: clamp(2rem, 6vw, 3.5rem);
     font-weight: 800;
-    color: var(--theme-accent);
-    line-height: 1;
-  }
+    line-height: 1.15;
+    color: var(--theme-on-surface);
+    letter-spacing: -0.02em;
 
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--theme-on-surface-variant);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: var(--space-4);
-    text-align: center;
-  }
-
-  .stat-divider {
-    width: 1px;
-    height: 40px;
-    background: var(--theme-border);
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: var(--space-16);
-    animation: fadeInUp 0.6s ease-out 0.3s both;
-  }
-
-  .hero-profile {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: scaleIn 0.8s ease-out 0.3s both;
-
-    .profile-ring {
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      border: 2px dashed color-mix(in oklab, var(--theme-accent) 30%, transparent);
-      animation: spin 40s linear infinite;
-    }
-
-    img {
-      border-radius: var(--radius-full);
-      box-shadow:
-        0 0 0 8px var(--theme-surface),
-        var(--elev-3);
-      background: var(--theme-surface-2);
-      object-fit: cover;
-      width: 280px;
-      height: 280px;
-      position: relative;
-      z-index: 1;
+    &.accent {
+      color: var(--theme-accent);
     }
   }
+}
 
-  .hero-scroll-hint {
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  color: var(--theme-on-surface-variant);
+  line-height: 1.7;
+  margin: 0 0 var(--space-32);
+  max-width: 540px;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  margin-bottom: var(--space-32);
+  animation: fadeInUp 0.6s ease-out 0.25s both;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-12) var(--space-16);
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
+  border-radius: var(--radius-lg);
+  min-width: 90px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elev-2);
+    border-color: var(--theme-accent);
+  }
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--theme-accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--theme-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--theme-border);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-16);
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.hero-profile {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: scaleIn 0.8s ease-out 0.3s both;
+
+  .profile-ring {
     position: absolute;
-    bottom: var(--space-24);
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bounce 2s infinite;
-
-    .material-icons {
-      font-size: 32px;
-      color: var(--theme-on-surface-variant);
-      opacity: 0.5;
-    }
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 2px dashed color-mix(in oklab, var(--theme-accent) 30%, transparent);
+    animation: spin 40s linear infinite;
   }
+
+  img {
+    border-radius: var(--radius-full);
+    box-shadow:
+      0 0 0 8px var(--theme-surface),
+      var(--elev-3);
+    background: var(--theme-surface-2);
+    object-fit: cover;
+    width: 280px;
+    height: 280px;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: var(--space-24);
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+
+  .material-icons {
+    font-size: 32px;
+    color: var(--theme-on-surface-variant);
+    opacity: 0.5;
+  }
+}
+
+.about-hero {
 
   // Tablet breakpoint
   @media (max-width: 900px) {
