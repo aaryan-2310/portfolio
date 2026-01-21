@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "eslint . --ext .ts,.html",
     "lint:fix": "eslint . --ext .ts,.html --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve:ssr:portfolio": "node dist/server/server.mjs"
   },
   "private": true,
   "lint-staged": {
@@ -27,7 +28,9 @@
     "@angular/material": "^19.2.18",
     "@angular/platform-browser": "^19.2.14",
     "@angular/platform-browser-dynamic": "^19.2.14",
+    "@angular/platform-server": "^19.2.14",
     "@angular/router": "^19.2.14",
+    "@angular/ssr": "^19.2.14",
     "marked": "^17.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
