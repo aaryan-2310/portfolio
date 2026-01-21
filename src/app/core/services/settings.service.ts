@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SiteSettings } from '../../shared/models';
@@ -13,8 +14,13 @@ export class SettingsService {
     private readonly _settings$ = new BehaviorSubject<SiteSettings | null>(null);
     readonly settings$ = this._settings$.asObservable();
 
-    constructor(private api: ApiService) {
-        this.loadSettings();
+    constructor(
+        private api: ApiService,
+        @Inject(PLATFORM_ID) private platformId: object
+    ) {
+        if (isPlatformBrowser(this.platformId)) {
+            this.loadSettings();
+        }
     }
 
     loadSettings(): void {
