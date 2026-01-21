@@ -10,8 +10,7 @@
   "overrides": [
     {
       "files": [
-        "*.ts",
-        "*.tsx"
+        "*.ts"
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {

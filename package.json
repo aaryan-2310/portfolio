@@ -7,8 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "eslint . --ext .ts,.tsx,.html",
-    "lint:fix": "eslint . --ext .ts,.tsx,.html --fix",
+    "lint": "eslint . --ext .ts,.html",
+    "lint:fix": "eslint . --ext .ts,.html --fix",
     "prepare": "husky install"
   },
   "private": true,
@@ -31,6 +31,7 @@
     "@vercel/og": "^0.8.6",
     "marked": "^17.0.1",
     "rxjs": "~7.8.0",
+    "satori-html": "^0.3.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
