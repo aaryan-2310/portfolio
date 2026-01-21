@@ -23,6 +23,8 @@ $light-vars: (
   active: color-mix(in oklab, var(--theme-on-surface) 12%, transparent),
   disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
   ring-color: color-mix(in oklab, var(--theme-accent) 50%, white),
+  surface-rgb: (255, 255, 255),
+  accent-rgb: (5, 150, 105),
 );
 
 $dark-vars: (
@@ -46,6 +48,8 @@ $dark-vars: (
   active: color-mix(in oklab, var(--theme-on-surface) 20%, transparent),
   disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
   ring-color: color-mix(in oklab, var(--theme-accent) 70%, black),
+  surface-rgb: (24, 24, 24),
+  accent-rgb: (52, 211, 153),
 );
 
 @mixin theme-vars($map) {
