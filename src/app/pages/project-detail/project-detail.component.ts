@@ -112,6 +112,52 @@ export class ProjectDetailComponent implements OnInit {
         }
     }
 
+    private updateMetaTags(project: Project) {
+        // 1. Update Title
+        const title = `${project.title} | Aryan Mishra`;
+        this.titleService.setTitle(title);
+
+        // 2. Construct Dynamic Image URL
+        const techStack = project.tags ? project.tags.slice(0, 3).join(',') : '';
+        const ogImageUrl = `${this.OG_GENERATOR_URL}?title=${encodeURIComponent(project.title)}&type=Project&tech=${encodeURIComponent(techStack)}`;
+
+        // 3. Update Meta Tags
+        this.meta.updateTag({ name: 'description', content: project.description || 'Case Study by Aryan Mishra' });
+
+        // Open Graph
+        this.meta.updateTag({ property: 'og:title', content: title });
+        this.meta.updateTag({ property: 'og:description', content: project.description || 'Case Study by Aryan Mishra' });
+        this.meta.updateTag({ property: 'og:image', content: ogImageUrl });
+        this.meta.updateTag({ property: 'og:type', content: 'article' });
+
+        // Twitter
+        this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+        this.meta.updateTag({ name: 'twitter:title', content: title });
+        this.meta.updateTag({ name: 'twitter:description', content: project.description || 'Case Study by Aryan Mishra' });
+        this.meta.updateTag({ name: 'twitter:image', content: ogImageUrl });
+    }
+
+    @HostListener('keydown.escape')
+    onEscape() {
+        if (this.lightboxOpen) {
+            this.closeLightbox();
+        }
+    }
+
+    @HostListener('keydown.arrowleft')
+    onLeft() {
+        if (this.lightboxOpen) {
+            this.prevImage();
+        }
+    }
+
+    @HostListener('keydown.arrowright')
+    onRight() {
+        if (this.lightboxOpen) {
+            this.nextImage();
+        }
+    }
+
     getLiveLink(project: Project): string | undefined {
         return project.links?.find(l => l.kind === 'live')?.href;
     }
