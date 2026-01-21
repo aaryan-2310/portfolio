@@ -4,13 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node set-env.js && ng build",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "eslint . --ext .ts,.html",
     "lint:fix": "eslint . --ext .ts,.html --fix",
-    "prepare": "husky install",
-    "serve:ssr:portfolio": "node dist/server/server.mjs"
+    "prepare": "husky install"
   },
   "private": true,
   "lint-staged": {
@@ -28,10 +27,7 @@
     "@angular/material": "^19.2.18",
     "@angular/platform-browser": "^19.2.14",
     "@angular/platform-browser-dynamic": "^19.2.14",
-    "@angular/platform-server": "^19.2.14",
     "@angular/router": "^19.2.14",
-    "@angular/ssr": "^19.2.14",
-    "express": "^5.2.1",
     "marked": "^17.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -44,7 +40,6 @@
     "@angular-eslint/template-parser": "^19.4.0",
     "@angular/cli": "^19.2.14",
     "@angular/compiler-cli": "^19.2.14",
-    "@types/express": "^5.0.6",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",

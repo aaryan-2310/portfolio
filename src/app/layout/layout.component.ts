@@ -5,14 +5,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule, NgOptimizedImage, DOCUMENT } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FooterComponent } from '../shared/components/footer/footer.component';
-
+import { ButtonComponent } from '../shared/button/button.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SettingsService } from '../core/services/settings.service';
 import { A11yModule } from '@angular/cdk/a11y';
-
+import { AvailabilityBadgeComponent } from '../shared/components/availability-badge/availability-badge.component';
 import { ChatWidgetComponent } from '../shared/components/chat-widget/chat-widget.component';
 import { filter } from 'rxjs/operators';
 
@@ -23,14 +23,17 @@ import { filter } from 'rxjs/operators';
   styleUrl: './layout.component.scss',
   imports: [
     CommonModule,
+    NgOptimizedImage,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     RouterModule,
     MatMenuModule,
     FooterComponent,
+    ButtonComponent,
     MatSnackBarModule,
     A11yModule,
+    AvailabilityBadgeComponent,
     ChatWidgetComponent,
   ],
 })
@@ -97,8 +100,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   scrollToSection(sectionId: string) {
-    if (typeof window === 'undefined') return;
-
     const element = this.document.getElementById(sectionId);
     if (element) {
       const headerOffset = 100;
