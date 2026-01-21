@@ -1,6 +1,7 @@
 
 import { AngularAppEngine, createRequestHandler } from '@angular/ssr';
 import { getContext } from '@netlify/angular-runtime/context.mjs';
+import './src/main.server'; // Import to ensure manifest is registered and app is included
 
 const angularAppEngine = new AngularAppEngine();
 
