@@ -60,4 +60,9 @@ function run(): void {
     });
 }
 
-run();
+const mainModule = process.argv[1];
+const modulePath = fileURLToPath(import.meta.url);
+
+if (mainModule === modulePath || mainModule.includes('server.mjs')) {
+    run();
+}
