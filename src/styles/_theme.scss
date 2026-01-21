@@ -4,6 +4,9 @@
 
 // Define theme-specific CSS variable sets
 $light-vars: (
+  background: #ffffff,
+  inverse-on-surface: #f9fafb,
+  on-accent: #ffffff,
   surface: #ffffff,
   on-surface: #1f2937,
   primary: #059669,
@@ -23,6 +26,10 @@ $light-vars: (
 );
 
 $dark-vars: (
+  background: #181818,
+  // Alias for surface in some contexts
+  inverse-on-surface: #1f2937,
+  on-accent: #ffffff,
   surface: #181818,
   on-surface: #f9fafb,
   primary: #{colors.$color-accent},
