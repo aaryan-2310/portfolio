@@ -1,5 +1,5 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { Observable, switchMap, map } from 'rxjs';
@@ -31,7 +31,8 @@ export class ProjectDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private projectService: ProjectService,
         private meta: Meta,
-        private titleService: Title
+        private titleService: Title,
+        @Inject(PLATFORM_ID) private platformId: object
     ) {
         this.project$ = this.route.paramMap.pipe(
             switchMap(params => {
@@ -41,7 +42,6 @@ export class ProjectDetailComponent implements OnInit {
             })
         );
 
-        // Subscribe to project updates to set Meta Tags
         this.project$.subscribe(project => {
             if (project) {
                 this.updateMetaTags(project);
@@ -54,7 +54,6 @@ export class ProjectDetailComponent implements OnInit {
                 try {
                     return JSON.parse(project.caseStudy) as CaseStudy;
                 } catch (e) {
-                    console.error('Failed to parse case study JSON', e);
                     return null;
                 }
             })
@@ -62,7 +61,9 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        window.scrollTo(0, 0);
+        if (isPlatformBrowser(this.platformId)) {
+            window.scrollTo(0, 0);
+        }
     }
 
     private updateMetaTags(project: Project) {

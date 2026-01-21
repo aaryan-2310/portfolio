@@ -100,6 +100,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   scrollToSection(sectionId: string) {
+    if (typeof window === 'undefined') return;
+
     const element = this.document.getElementById(sectionId);
     if (element) {
       const headerOffset = 100;
