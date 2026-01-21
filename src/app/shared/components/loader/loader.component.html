@@ -1,0 +1,16 @@
+<div class="loader-container" [class.fullscreen]="fullscreen">
+    <div class="loader-content animate-in">
+        <div class="spinner-box">
+            <div class="spinner-core"></div>
+            <div class="spinner-ring"></div>
+        </div>
+
+        <div class="text-content">
+            <span class="message">{{ message }}</span>
+            <div class="progress-track" *ngIf="fullscreen">
+                <div class="progress-bar" [style.width.%]="progress"></div>
+            </div>
+            <span class="sub-message" *ngIf="progress > 20">Context: Render Free Tier backend</span>
+        </div>
+    </div>
+</div>

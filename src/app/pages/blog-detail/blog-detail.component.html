@@ -1,16 +1,6 @@
 <!-- Loading State -->
-<article class="blog-detail" *ngIf="isLoading">
-    <header class="blog-detail__hero">
-        <div class="hero-content">
-            <portfolio-skeleton variant="text" width="100px" style="margin-bottom: 2rem"></portfolio-skeleton>
-            <portfolio-skeleton variant="text" width="200px" style="margin-bottom: 1rem"></portfolio-skeleton>
-            <portfolio-skeleton variant="text" height="60px" width="80%"></portfolio-skeleton>
-        </div>
-    </header>
-    <div class="blog-detail__content-wrapper">
-        <portfolio-skeleton variant="text" [lines]="10"></portfolio-skeleton>
-    </div>
-</article>
+<!-- Loading State -->
+<portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
 
 <article class="blog-detail" *ngIf="!isLoading && post">
     <!-- Hero Cover -->

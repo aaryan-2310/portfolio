@@ -92,13 +92,8 @@
       <div class="info-card">
         <h3 class="info-title">Connect</h3>
         <div class="social-links">
-          <!-- Loading State -->
-          <ng-container *ngIf="isLoading">
-            <div class="social-link" *ngFor="let i of [1,2,3]">
-              <portfolio-skeleton variant="circle" width="24px" height="24px"></portfolio-skeleton>
-              <portfolio-skeleton variant="text" width="80px"></portfolio-skeleton>
-            </div>
-          </ng-container>
+          <!-- Loading State (Implicitly covered by global loader, but kept here for structure or use fullscreen) -->
+          <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
 
           <ng-container *ngIf="!isLoading">
             <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank" rel="noopener noreferrer"

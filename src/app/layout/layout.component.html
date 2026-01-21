@@ -1,40 +1,74 @@
 ﻿<div class="layout-container">
   <!-- Modern Navbar -->
+  <!-- Modern Navbar -->
   <header class="navbar" [class.scrolled]="isScrolled">
     <div class="navbar-inner">
-      <!-- Logo -->
-      <a class="navbar-logo" routerLink="/home" aria-label="Go to home">
-        <img ngSrc="assets/logo/aryan-logo.svg" width="140" height="24" priority alt="Aryan Mishra" class="logo-img" />
-      </a>
 
-      <!-- Desktop Navigation -->
-      <nav class="navbar-nav desktop-only" aria-label="Main navigation">
-        <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-          Home
+      <!-- Contextual Nav (Project Detail) -->
+      <ng-container *ngIf="isProjectDetailPage">
+        <div class="context-nav-left">
+          <a class="nav-back-btn" routerLink="/projects" aria-label="Back to projects">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Back</span>
+          </a>
+        </div>
+
+        <nav class="navbar-nav context-nav custom-scroll-nav desktop-only">
+          <button class="nav-link" (click)="scrollToSection('overview')" [class.active]="activeSection === 'overview'">
+            Overview
+          </button>
+          <button class="nav-link" (click)="scrollToSection('architecture')"
+            [class.active]="activeSection === 'architecture'">
+            Architecture
+          </button>
+          <button class="nav-link" (click)="scrollToSection('decisions')"
+            [class.active]="activeSection === 'decisions'">
+            Decisions
+          </button>
+          <button class="nav-link" (click)="scrollToSection('learnings')"
+            [class.active]="activeSection === 'learnings'">
+            Learnings
+          </button>
+        </nav>
+      </ng-container>
+
+      <!-- Global Nav (Default) -->
+      <ng-container *ngIf="!isProjectDetailPage">
+        <!-- Logo -->
+        <a class="navbar-logo" routerLink="/home" aria-label="Go to home">
+          <span class="logo-text">[ ARYAN MISHRA ]</span>
         </a>
-        <a class="nav-link" routerLink="/projects" routerLinkActive="active">
-          Projects
-        </a>
-        <a class="nav-link" routerLink="/services" routerLinkActive="active">
-          Services
-        </a>
-        <a class="nav-link" routerLink="/career" routerLinkActive="active">
-          Experience
-        </a>
-        <a class="nav-link" routerLink="/about" routerLinkActive="active">
-          About
-        </a>
-        <a class="nav-link" routerLink="/contact" routerLinkActive="active">
-          Contact
-        </a>
-      </nav>
+
+        <!-- Desktop Navigation -->
+        <nav class="navbar-nav desktop-only" aria-label="Main navigation">
+          <a class="nav-link" routerLink="/career" routerLinkActive="active">
+            Work
+          </a>
+          <a class="nav-link" routerLink="/projects" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: false}">
+            Case Studies
+          </a>
+          <a class="nav-link" routerLink="/blogs" routerLinkActive="active">
+            Writing
+          </a>
+          <a class="nav-link" routerLink="/about" routerLinkActive="active">
+            About
+          </a>
+        </nav>
+      </ng-container>
 
       <!-- Right Side Actions -->
       <div class="navbar-actions">
-        <!-- Availability Badge -->
-        <portfolio-availability-badge [available]="availableForFreelance" variant="compact"
-          [availableText]="'Available'" [bookedText]="'Booked'" class="desktop-only">
-        </portfolio-availability-badge>
+        <!-- Status Dot (Global Only, or both?) - User asked for Contextual to be minimal. Let's keep it clean. -->
+        <div class="status-indicator desktop-only" *ngIf="!isProjectDetailPage && availableForFreelance"
+          title="Available for work">
+          <span class="status-dot pulsing"></span>
+        </div>
+
+        <!-- Contact CTA (Global) -->
+        <a *ngIf="!isProjectDetailPage" routerLink="/contact" class="btn-cta desktop-only">
+          Contact
+        </a>
 
         <!-- Theme Toggle -->
         <button class="theme-toggle" (click)="toggleTheme()"
@@ -63,26 +97,55 @@
   <aside class="mobile-menu" [class.open]="mobileMenuOpen" aria-label="Mobile navigation"
     [cdkTrapFocus]="mobileMenuOpen" cdkTrapFocusAutoCapture>
     <nav class="mobile-nav">
+      <!-- Contextual Links (Project Detail Only) -->
+      <ng-container *ngIf="isProjectDetailPage">
+        <div class="mobile-nav-group">
+          <span class="mobile-group-label">On This Page</span>
+          <button class="mobile-nav-link" (click)="scrollToSection('overview')"
+            [class.active]="activeSection === 'overview'">
+            <mat-icon>dashboard</mat-icon>
+            <span>Overview</span>
+          </button>
+          <button class="mobile-nav-link" (click)="scrollToSection('architecture')"
+            [class.active]="activeSection === 'architecture'">
+            <mat-icon>architecture</mat-icon>
+            <span>Architecture</span>
+          </button>
+          <button class="mobile-nav-link" (click)="scrollToSection('decisions')"
+            [class.active]="activeSection === 'decisions'">
+            <mat-icon>psychology</mat-icon>
+            <span>Decisions</span>
+          </button>
+          <button class="mobile-nav-link" (click)="scrollToSection('learnings')"
+            [class.active]="activeSection === 'learnings'">
+            <mat-icon>lightbulb</mat-icon>
+            <span>Learnings</span>
+          </button>
+        </div>
+        <div class="mobile-nav-divider"></div>
+      </ng-container>
+
       <a class="mobile-nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         (click)="mobileMenuOpen = false">
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </a>
-      <a class="mobile-nav-link" routerLink="/about" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>person</mat-icon>
-        <span>About</span>
-      </a>
+
       <a class="mobile-nav-link" routerLink="/projects" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>apps</mat-icon>
-        <span>Projects</span>
-      </a>
-      <a class="mobile-nav-link" routerLink="/services" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>build</mat-icon>
-        <span>Services</span>
+        <span>Case Studies</span>
       </a>
       <a class="mobile-nav-link" routerLink="/career" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>work</mat-icon>
-        <span>Experience</span>
+        <span>Work</span>
+      </a>
+      <a class="mobile-nav-link" routerLink="/blogs" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <mat-icon>edit_note</mat-icon> <!-- Changed icon to be more 'writing' related -->
+        <span>Writing</span>
+      </a>
+      <a class="mobile-nav-link" routerLink="/about" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <mat-icon>person</mat-icon>
+        <span>About</span>
       </a>
       <a class="mobile-nav-link" routerLink="/contact" routerLinkActive="active" (click)="mobileMenuOpen = false">
         <mat-icon>mail</mat-icon>

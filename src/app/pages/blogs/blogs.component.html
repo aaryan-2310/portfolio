@@ -26,9 +26,7 @@
 
   <div class="blogs__grid">
     <!-- Loading State -->
-    <ng-container *ngIf="isLoading">
-      <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card" height="380px"></portfolio-skeleton>
-    </ng-container>
+    <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
 
     <ng-container *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost">
       <article class="blog-card" [routerLink]="['/blogs', post.slug]" *ngIf="!isLoading">

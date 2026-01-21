@@ -5,11 +5,12 @@ import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterLink, SkeletonComponent],
+    imports: [CommonModule, RouterLink, SkeletonComponent, LoaderComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })

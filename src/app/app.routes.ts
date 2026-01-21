@@ -31,6 +31,12 @@ export const routes: Routes = [
           import('./pages/projects/projects.component').then(m => m.ProjectsComponent),
       },
       {
+        path: 'projects/:slug',
+        title: 'Project Case Study',
+        loadComponent: () =>
+          import('./pages/project-detail/project-detail.component').then(m => m.ProjectDetailComponent),
+      },
+      {
         path: 'services',
         title: 'Services',
         data: { description: 'Professional services — frontend, backend, and full-stack development.' },
