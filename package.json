@@ -28,8 +28,10 @@
     "@angular/platform-browser": "^19.2.14",
     "@angular/platform-browser-dynamic": "^19.2.14",
     "@angular/router": "^19.2.14",
+    "@vercel/og": "^0.8.6",
     "marked": "^17.0.1",
     "rxjs": "~7.8.0",
+    "satori-html": "^0.3.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
@@ -42,6 +44,7 @@
     "@angular/compiler-cli": "^19.2.14",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "@types/react": "^19.2.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.0",
