@@ -4,22 +4,7 @@
         <!-- Custom Cursor / Gradient Glow Follower could be here, but let's stick to CSS -->
         <div class="background-glow" [style.background]="project.gradient"></div>
 
-        <!-- Floating Navigation Header -->
-        <nav class="detail-nav" [class.scrolled]="isScrolled">
-            <div class="nav-container">
-                <a routerLink="/projects" class="nav-back-btn">
-                    <span class="material-icons">west</span>
-                </a>
-                <div class="nav-title-context">
-                    <span class="project-name">{{ project.title }}</span>
-                </div>
-                <div class="nav-actions">
-                    <a *ngIf="getLiveLink(project) as link" [href]="link" target="_blank" class="nav-btn primary">
-                        Live Demo
-                    </a>
-                </div>
-            </div>
-        </nav>
+
 
         <!-- Premium Hero Section -->
         <header class="hero-section">
@@ -49,7 +34,7 @@
                 <div class="hero-visual reveal-right" *ngIf="project.imageUrl || project.screenshots?.length">
                     <div class="mockup-container">
                         <div class="mockup-frame">
-                            <img [src]="project.imageUrl || (project.screenshots ? project.screenshots[0] : '')"
+                            <img [src]="project.imageUrl || (project.screenshots && project.screenshots.length ? getScreenshotUrl(project.screenshots[0]) : '')"
                                 [alt]="project.title" class="featured-img">
                             <div class="mockup-glare"></div>
                         </div>
@@ -60,7 +45,7 @@
 
         <main class="main-content">
             <!-- Project Overview Grid (Bento Style) -->
-            <section class="overview-bento">
+            <section id="overview" class="overview-bento">
                 <!-- Problem Statement -->
                 <div class="bento-card problem reveal-up" *ngIf="cs.problemStatement">
                     <div class="card-header">
@@ -73,27 +58,19 @@
                     </div>
                 </div>
 
-                <!-- Quick Stats / Technical Overview Table -->
-                <div class="bento-card tech-table reveal-up" style="transition-delay: 0.1s;">
+                <!-- Technology Stack -->
+                <div class="bento-card tech-stack reveal-up" style="transition-delay: 0.1s;">
                     <div class="card-header">
-                        <span class="material-icons">terminal</span>
-                        <h3>Technical Specs</h3>
+                        <span class="material-icons">layers</span>
+                        <h3>Technology Stack</h3>
                     </div>
                     <div class="card-body">
-                        <table class="specs-table">
-                            <tr *ngFor="let tag of project.tags.slice(0, 4)">
-                                <td>Core Tech</td>
-                                <td>{{ tag }}</td>
-                            </tr>
-                            <tr>
-                                <td>Deployment</td>
-                                <td>Vercel / Edge</td>
-                            </tr>
-                            <tr>
-                                <td>Timeline</td>
-                                <td>4 Months</td>
-                            </tr>
-                        </table>
+                        <div class="tech-chips-grid">
+                            <div class="tech-chip" *ngFor="let tag of project.tags">
+                                <span class="material-icons chip-icon">code</span>
+                                <span class="chip-text">{{ tag }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -103,6 +80,24 @@
                         <div class="metric-item" *ngFor="let outcome of cs.outcomes.slice(0, 2)">
                             <span class="metric-value">{{ outcome.value }}</span>
                             <span class="metric-label">{{ outcome.metric }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architecture Section (New) -->
+            <section id="architecture" class="dynamic-section section-technical" *ngIf="cs.architecture">
+                <div class="section-container">
+                    <div class="section-text reveal-up">
+                        <span class="section-subtitle">System Design</span>
+                        <h2 class="section-title">Architecture</h2>
+                        <div class="section-content">
+                            <p>{{ cs.architecture.description }}</p>
+                        </div>
+                    </div>
+                    <div class="section-visual reveal-up" *ngIf="cs.architecture.diagramUrl">
+                        <div class="image-wrapper architecture-diagram">
+                            <img [src]="cs.architecture.diagramUrl" alt="System Architecture Diagram">
                         </div>
                     </div>
                 </div>
@@ -145,15 +140,46 @@
                     <p>A closer look at the user experience and design details.</p>
                 </div>
                 <div class="gallery-grid">
-                    <div class="gallery-item" *ngFor="let screenshot of project.screenshots; let i = index"
-                        [style.transition-delay]="i * 0.1 + 's'">
-                        <img [src]="screenshot" alt="Screenshot">
+                    <div class="gallery-item cursor-pointer"
+                        *ngFor="let screenshot of project.screenshots; let i = index"
+                        [style.transition-delay]="i * 0.1 + 's'" (click)="openLightbox(i)">
+                        <img [src]="getScreenshotUrl(screenshot)" alt="Screenshot">
                     </div>
                 </div>
             </section>
 
+            <!-- Lightbox Modal -->
+            <div class="lightbox-overlay" *ngIf="lightboxOpen" (click)="closeLightbox()">
+                <button class="lightbox-close-btn" (click)="closeLightbox()">
+                    <span class="material-icons">close</span>
+                </button>
+
+                <button class="lightbox-nav-btn prev" (click)="$event.stopPropagation(); prevImage()">
+                    <span class="material-icons">chevron_left</span>
+                </button>
+
+                <div class="lightbox-content" (click)="$event.stopPropagation()" *ngIf="project.screenshots">
+                    <img [src]="getScreenshotUrl(project.screenshots[currentImageIndex])" class="lightbox-image">
+
+                    <div class="lightbox-caption" *ngIf="getScreenshotCaption(project.screenshots[currentImageIndex])">
+                        <h3>{{ getScreenshotCaption(project.screenshots[currentImageIndex]) }}</h3>
+                        <p *ngIf="getScreenshotDescription(project.screenshots[currentImageIndex])">
+                            {{ getScreenshotDescription(project.screenshots[currentImageIndex]) }}
+                        </p>
+                    </div>
+
+                    <div class="lightbox-counter">
+                        {{ currentImageIndex + 1 }} / {{ project.screenshots.length }}
+                    </div>
+                </div>
+
+                <button class="lightbox-nav-btn next" (click)="$event.stopPropagation(); nextImage()">
+                    <span class="material-icons">chevron_right</span>
+                </button>
+            </div>
+
             <!-- Technical Decisions (Timeline) -->
-            <section class="decisions-section" *ngIf="cs.technicalDecisions?.length">
+            <section id="decisions" class="decisions-section" *ngIf="cs.technicalDecisions?.length">
                 <div class="section-header reveal-up">
                     <span class="header-tag">Process</span>
                     <h2>Key Decisions</h2>
@@ -176,6 +202,21 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learnings / Outcomes -->
+            <section id="learnings" class="outcomes-section" *ngIf="cs.outcomes?.length || cs.futureWork?.length">
+                <div class="section-header reveal-up">
+                    <h2>Outcomes & Learnings</h2>
+                </div>
+                <!-- Reuse metric cards if needed or just simple list, but relying on Outcomes structure for now -->
+                <div class="outcomes-grid" *ngIf="cs.outcomes?.length">
+                    <div class="outcome-card" *ngFor="let outcome of cs.outcomes">
+                        <div class="outcome-metric">{{ outcome.value }}</div>
+                        <div class="outcome-label">{{ outcome.metric }}</div>
+                        <p class="outcome-desc">{{ outcome.description }}</p>
                     </div>
                 </div>
             </section>

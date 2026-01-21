@@ -11,7 +11,7 @@ export interface Project {
     displayOrder: number;
     featured: boolean;
     gradient?: string;
-    screenshots?: string[];
+    screenshots?: Array<string | { url: string; caption?: string; description?: string; width?: number; height?: number }>;
     caseStudy?: string;
 }
 
@@ -22,7 +22,7 @@ export interface CaseStudySection {
     subtitle?: string;
     content?: string;
     images?: string[];
-    items?: Array<{ label: string; value: string; description?: string }>;
+    items?: Array<{ label: string; value: string; description?: string; icon?: string }>;
     accentColor?: string;
 }
 
