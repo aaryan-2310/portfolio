@@ -43,3 +43,6 @@ Thumbs.db
 .yarn/
 .pnp.*
 
+
+# Generated Environment Files
+src/environments/environment.prod.ts
