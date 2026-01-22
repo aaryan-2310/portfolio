@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith, shareReplay } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
@@ -54,7 +54,8 @@ export class ProjectsComponent {
         .filter(p => p.status === 'PUBLISHED')
         .map((p, i) => this.mapToView(p, i))
       ),
-      startWith(null)
+      startWith(null),
+      shareReplay(1)
     );
     this.settings$ = this.settingsService.settings$;
   }

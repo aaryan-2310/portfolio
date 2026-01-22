@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
-import { Observable, switchMap, map } from 'rxjs';
+import { Observable, switchMap, map, shareReplay, take } from 'rxjs';
 import { ProjectService } from '../../core/services/project.service';
 import { Project, CaseStudy } from '../../shared/models/project.model';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -21,7 +21,7 @@ export class ProjectDetailComponent implements OnInit {
     caseStudy$: Observable<CaseStudy | null>;
 
     // TODO: Update this with your actual deployed Vercel URL
-    private readonly OG_GENERATOR_URL = 'https://og-generator-fhkclcdyf-aryan-mishras-projects-b8f77aee.vercel.app';
+    private readonly OG_GENERATOR_URL = 'https://og-generator-fhkclcdyf-aryan-mishras-projects-b8f77aee.vercel.app/api';
 
     // Lightbox State
     lightboxOpen = false;
@@ -31,14 +31,16 @@ export class ProjectDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private projectService: ProjectService,
         private meta: Meta,
-        private titleService: Title
+        private titleService: Title,
+        @Inject(PLATFORM_ID) private platformId: object
     ) {
         this.project$ = this.route.paramMap.pipe(
             switchMap(params => {
                 const slug = params.get('slug');
                 if (!slug) return [null];
                 return this.projectService.getBySlug(slug);
-            })
+            }),
+            shareReplay(1)
         );
 
         // Subscribe to project updates to set Meta Tags
@@ -62,7 +64,9 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        window.scrollTo(0, 0);
+        if (isPlatformBrowser(this.platformId)) {
+            window.scrollTo(0, 0);
+        }
     }
 
     private updateMetaTags(project: Project) {
@@ -145,7 +149,7 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     nextImage() {
-        this.project$.subscribe(project => {
+        this.project$.pipe(take(1)).subscribe(project => {
             if (project?.screenshots) {
                 this.currentImageIndex = (this.currentImageIndex + 1) % project.screenshots.length;
             }
@@ -153,7 +157,7 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     prevImage() {
-        this.project$.subscribe(project => {
+        this.project$.pipe(take(1)).subscribe(project => {
             if (project?.screenshots) {
                 this.currentImageIndex = (this.currentImageIndex - 1 + project.screenshots.length) % project.screenshots.length;
             }
