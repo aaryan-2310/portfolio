@@ -25,11 +25,8 @@
     <h2 id="offerings-title" class="section-title">What I Offer</h2>
 
     <div class="services-grid">
-        <!-- Loading State -->
-        <portfolio-loader *ngIf="(services$ | async) === null" [fullscreen]="true"></portfolio-loader>
-
         <!-- Loaded State -->
-        <ng-container *ngIf="services$ | async as services">
+        <ng-container *ngIf="services$ | async as services; else servicesLoading">
             <article class="service-card" *ngFor="let service of services; trackBy: trackByService">
                 <div class="service-card__header">
                     <div class="service-card__icon">
@@ -60,6 +57,11 @@
                 </div>
             </article>
         </ng-container>
+
+        <!-- Loading State -->
+        <ng-template #servicesLoading>
+            <portfolio-loader [fullscreen]="true"></portfolio-loader>
+        </ng-template>
     </div>
 </section>
 

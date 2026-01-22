@@ -1,7 +1,7 @@
-<!-- Hero Loading State and Global Loader -->
+<!-- Global Site Settings Loader -->
 <portfolio-loader *ngIf="(settings$ | async) === null" [fullscreen]="true"></portfolio-loader>
 
-<!-- Hero Loaded State -->
+<!-- Hero Section -->
 <section id="hero" aria-labelledby="hero-title" *ngIf="settings$ | async as settings">
   <div class="hero-surface">
     <div class="hero-content">
@@ -51,21 +51,19 @@
   </div>
 
   <div class="projects-grid">
-    <!-- Loading State -->
-    <ng-container *ngIf="(projects$ | async) === null">
-      <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="300px"></portfolio-skeleton>
+    <ng-container *ngIf="projects$ | async as projects; else projectsLoading">
+      <a *ngFor="let project of projects; trackBy: trackByProject" class="project-card" [routerLink]="project.link">
+        <div class="project-media" [style.background]="project.gradient"></div>
+        <div class="project-info">
+          <h3 class="project-title">{{ project.title }}</h3>
+          <p class="project-desc">{{ project.description }}</p>
+        </div>
+        <span class="project-arrow material-icons">arrow_forward</span>
+      </a>
     </ng-container>
-
-    <!-- Loaded State -->
-    <a *ngFor="let project of projects$ | async; trackBy: trackByProject" class="project-card"
-      [routerLink]="project.link">
-      <div class="project-media" [style.background]="project.gradient"></div>
-      <div class="project-info">
-        <h3 class="project-title">{{ project.title }}</h3>
-        <p class="project-desc">{{ project.description }}</p>
-      </div>
-      <span class="project-arrow material-icons">arrow_forward</span>
-    </a>
+    <ng-template #projectsLoading>
+      <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="300px"></portfolio-skeleton>
+    </ng-template>
   </div>
 
   <div class="section-cta">
@@ -84,14 +82,8 @@
   </div>
 
   <div class="services-grid">
-    <!-- Loading State -->
-    <ng-container *ngIf="(services$ | async) === null">
-      <portfolio-skeleton *ngFor="let i of [1,2,3,4]" variant="card" height="250px"></portfolio-skeleton>
-    </ng-container>
-
-    <!-- Loaded State -->
-    <ng-container *ngIf="(services$ | async) !== null">
-      <div *ngFor="let service of services$ | async; trackBy: trackByService" class="service-card">
+    <ng-container *ngIf="services$ | async as services; else servicesLoading">
+      <div *ngFor="let service of services; trackBy: trackByService" class="service-card">
         <div class="service-icon-wrapper">
           <span class="material-icons service-icon">{{ service.icon }}</span>
         </div>
@@ -102,6 +94,9 @@
         </div>
       </div>
     </ng-container>
+    <ng-template #servicesLoading>
+      <portfolio-skeleton *ngFor="let i of [1,2,3,4]" variant="card" height="250px"></portfolio-skeleton>
+    </ng-template>
   </div>
 </section>
 
@@ -113,20 +108,19 @@
   </div>
 
   <div class="skills-grid">
-    <!-- Loading State -->
-    <ng-container *ngIf="(skills$ | async) === null">
+    <ng-container *ngIf="skills$ | async as skills; else skillsLoading">
+      <div *ngFor="let skill of skills; trackBy: trackBySkill" class="skill-chip">
+        <ng-container *ngIf="skill.icon">
+          <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
+          <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
+        </ng-container>
+        <span class="skill-name">{{ skill.name }}</span>
+      </div>
+    </ng-container>
+    <ng-template #skillsLoading>
       <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6,7,8]" variant="rect" width="120px" height="40px"
         borderRadius="20px"></portfolio-skeleton>
-    </ng-container>
-
-    <!-- Loaded State -->
-    <div *ngFor="let skill of skills$ | async; trackBy: trackBySkill" class="skill-chip">
-      <ng-container *ngIf="skill.icon">
-        <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
-        <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
-      </ng-container>
-      <span class="skill-name">{{ skill.name }}</span>
-    </div>
+    </ng-template>
   </div>
 </section>
 
@@ -139,25 +133,23 @@
   </div>
 
   <div class="posts-grid">
-    <!-- Loading State -->
-    <ng-container *ngIf="(latestPosts$ | async) === null">
-      <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="350px"></portfolio-skeleton>
+    <ng-container *ngIf="latestPosts$ | async as posts; else postsLoading">
+      <a *ngFor="let post of posts; trackBy: trackByPost" class="post-card" [routerLink]="['/blogs', post.slug]">
+        <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
+          [class.no-image]="!post.coverImage"></div>
+        <div class="post-card__body">
+          <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
+          <h3 class="post-card__title">{{ post.title }}</h3>
+          <p class="post-card__excerpt">{{ post.excerpt }}</p>
+          <span class="post-card__cta">
+            Read article <span class="material-icons">arrow_forward</span>
+          </span>
+        </div>
+      </a>
     </ng-container>
-
-    <!-- Loaded State -->
-    <a *ngFor="let post of latestPosts$ | async; trackBy: trackByPost" class="post-card"
-      [routerLink]="['/blogs', post.slug]">
-      <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
-        [class.no-image]="!post.coverImage"></div>
-      <div class="post-card__body">
-        <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
-        <h3 class="post-card__title">{{ post.title }}</h3>
-        <p class="post-card__excerpt">{{ post.excerpt }}</p>
-        <span class="post-card__cta">
-          Read article <span class="material-icons">arrow_forward</span>
-        </span>
-      </div>
-    </a>
+    <ng-template #postsLoading>
+      <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="350px"></portfolio-skeleton>
+    </ng-template>
   </div>
 
   <div class="section-cta">
