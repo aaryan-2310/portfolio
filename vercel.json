@@ -21,8 +21,5 @@
             "source": "/(.*)",
             "destination": "/api/ssr"
         }
-    ],
-    "engines": {
-        "node": "22.x"
-    }
+    ]
 }
