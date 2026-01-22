@@ -293,6 +293,14 @@
     tslib "^2.3.0"
     xhr2 "^0.2.0"
 
+"@angular/platform-server@19.2.14":
+  version "19.2.14"
+  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-19.2.14.tgz#5cc970c17d052b6608370a8a152736ac368bf015"
+  integrity sha512-vmnRTDhlhahna6HbmzJh+qelXkyy1wBiJrOhnLR3UVeoBMBOTTjnTKtInfVrgZTMYcV9H8us480cvtSWzYsddA==
+  dependencies:
+    tslib "^2.3.0"
+    xhr2 "^0.2.0"
+
 "@angular/router@^19.2.14":
   version "19.2.18"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-19.2.18.tgz#606006f0072efc54ce3ef0adba5402690f8d72fc"
