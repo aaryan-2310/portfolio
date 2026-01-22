@@ -6,7 +6,7 @@ import { ProjectService } from '../../core/services/project.service';
 import { Skill, SkillService } from '../../core/services/skill.service';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith, shareReplay } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
@@ -48,16 +48,26 @@ export class HomeComponent {
         gradient: this.getGradient(i),
         link: ['/projects', p.slug]
       }))),
-      startWith(null)
+      startWith(null),
+      shareReplay(1)
     );
 
-    this.skills$ = this.skillService.getAll().pipe(startWith(null));
-    this.services$ = this.serviceOfferingService.getServices().pipe(startWith(null));
-    this.settings$ = this.settingsService.settings$;
+    this.skills$ = this.skillService.getAll().pipe(
+      startWith(null),
+      shareReplay(1)
+    );
+    this.services$ = this.serviceOfferingService.getServices().pipe(
+      startWith(null),
+      shareReplay(1)
+    );
+    this.settings$ = this.settingsService.settings$.pipe(
+      shareReplay(1)
+    );
 
     this.latestPosts$ = this.blogService.getAll().pipe(
       map(posts => posts.slice(0, 3).map(p => BlogService.toView(p))),
-      startWith(null)
+      startWith(null),
+      shareReplay(1)
     );
   }
 

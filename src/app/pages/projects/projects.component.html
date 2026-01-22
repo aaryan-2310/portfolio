@@ -1,65 +1,62 @@
-<!-- Hero Section -->
-<section class="projects-hero" aria-labelledby="projects-title">
-  <div class="hero-backdrop" aria-hidden="true"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="badge-icon material-icons">rocket_launch</span>
-      <span class="badge-text">Featured Work</span>
-    </div>
-    <h1 id="projects-title" class="hero-title">
-      <span class="title-line">My</span>
-      <span class="title-line accent">Projects</span>
-    </h1>
-    <p class="hero-sub">
-      {{ header.subtitle }}
-    </p>
-    <div class="hero-stats">
-      <div class="stat-card">
-        <span class="stat-value">{{ (projects$ | async)?.length || '...' }}</span>
-        <span class="stat-label">Projects</span>
+<ng-container *ngIf="projects$ | async as projects; else loading">
+  <!-- Hero Section -->
+  <section class="projects-hero" aria-labelledby="projects-title">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-icon material-icons">rocket_launch</span>
+        <span class="badge-text">Featured Work</span>
       </div>
-      <div class="stat-divider" aria-hidden="true"></div>
-      <div class="stat-card">
-        <span class="stat-value">Full-Stack</span>
-        <span class="stat-label">Expertise</span>
+      <h1 id="projects-title" class="hero-title">
+        <span class="title-line">My</span>
+        <span class="title-line accent">Projects</span>
+      </h1>
+      <p class="hero-sub">
+        {{ header.subtitle }}
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-value">{{ projects?.length || 0 }}</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-card">
+          <span class="stat-value">Full-Stack</span>
+          <span class="stat-label">Expertise</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-card">
+          <span class="stat-value">Open</span>
+          <span class="stat-label">Source</span>
+        </div>
       </div>
-      <div class="stat-divider" aria-hidden="true"></div>
-      <div class="stat-card">
-        <span class="stat-value">Open</span>
-        <span class="stat-label">Source</span>
+      <div class="hero-actions">
+        <portfolio-button label="View on GitHub" variant="primary" size="lg" href="https://github.com/aaryan-2310"
+          target="_blank">
+          <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
+        </portfolio-button>
+        <portfolio-button label="Contact Me" variant="tonal" size="lg" [routerLink]="'/contact'">
+          <span icon class="material-icons">mail</span>
+        </portfolio-button>
       </div>
     </div>
-    <div class="hero-actions">
-      <portfolio-button label="View on GitHub" variant="primary" size="lg" href="https://github.com/aaryan-2310"
-        target="_blank">
-        <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
-      </portfolio-button>
-      <portfolio-button label="Contact Me" variant="tonal" size="lg" [routerLink]="'/contact'">
-        <span icon class="material-icons">mail</span>
-      </portfolio-button>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span class="material-icons">expand_more</span>
     </div>
-  </div>
-  <div class="hero-scroll-hint" aria-hidden="true">
-    <span class="material-icons">expand_more</span>
-  </div>
-</section>
+  </section>
 
-<!-- Projects Grid Section -->
-<section class="projects-section">
-  <div class="section-header">
-    <h2 class="section-title">
-      <span class="material-icons section-icon">apps</span>
-      All Projects
-    </h2>
-    <p class="section-subtitle">Click on any project to explore the details</p>
-  </div>
+  <!-- Projects Grid Section -->
+  <section class="projects-section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="material-icons section-icon">apps</span>
+        All Projects
+      </h2>
+      <p class="section-subtitle">Click on any project to explore the details</p>
+    </div>
 
-  <div class="projects__grid">
-    <!-- Loading State -->
-    <portfolio-loader *ngIf="(projects$ | async) === null" [fullscreen]="true"></portfolio-loader>
-
-    <!-- Loaded State -->
-    <ng-container *ngIf="projects$ | async as projects">
+    <div class="projects__grid">
+      <!-- Loaded State -->
       <article class="project-card" *ngFor="let p of projects; trackBy: trackByProject; let i = index"
         [style.--card-index]="i" [routerLink]="['/projects', p.slug]" style="cursor: pointer;">
         <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient">
@@ -102,17 +99,21 @@
           </div>
         </div>
       </article>
-    </ng-container>
-  </div>
-
-  <footer class="projects__footer" aria-label="Projects footer">
-    <div class="footer-content">
-      <p class="footer-text">Want to see more? Check out my GitHub for additional projects and contributions.</p>
-      <portfolio-button label="Explore GitHub" ariaLabel="See more projects on GitHub"
-        href="https://github.com/aaryan-2310" target="_blank" rel="noopener noreferrer" variant="primary" size="lg">
-        <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
-        <span icon-end class="material-icons">north_east</span>
-      </portfolio-button>
     </div>
-  </footer>
-</section>
+
+    <footer class="projects__footer" aria-label="Projects footer">
+      <div class="footer-content">
+        <p class="footer-text">Want to see more? Check out my GitHub for additional projects and contributions.</p>
+        <portfolio-button label="Explore GitHub" ariaLabel="See more projects on GitHub"
+          href="https://github.com/aaryan-2310" target="_blank" rel="noopener noreferrer" variant="primary" size="lg">
+          <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
+          <span icon-end class="material-icons">north_east</span>
+        </portfolio-button>
+      </div>
+    </footer>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <portfolio-loader [fullscreen]="true"></portfolio-loader>
+</ng-template>

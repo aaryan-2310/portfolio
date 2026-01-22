@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Observable, startWith } from 'rxjs';
+import { Observable, startWith, shareReplay } from 'rxjs';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
@@ -115,7 +115,10 @@ export class ServicesComponent {
         private serviceOfferingService: ServiceOfferingService,
         private settingsService: SettingsService
     ) {
-        this.services$ = this.serviceOfferingService.getServices().pipe(startWith(null));
+        this.services$ = this.serviceOfferingService.getServices().pipe(
+            startWith(null),
+            shareReplay(1)
+        );
         this.settings$ = this.settingsService.settings$;
     }
 
