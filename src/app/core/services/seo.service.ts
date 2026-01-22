@@ -77,11 +77,6 @@ export class SeoService {
         params.set('title', title);
         if (subtitle) params.set('subtitle', subtitle.slice(0, 50) + (subtitle.length > 50 ? '...' : ''));
 
-        // Use relative path for proxying or absolute if in prod
-        // Since vercel.json rewrites /api, we can use the relative path
-        // But for OG tags, absolute URL is preferred/required by some crawlers
-
-        const baseUrl = typeof window !== 'undefined' ? window.location.origin : this.siteUrl;
-        return `${baseUrl}/api/og?${params.toString()}`;
+        return `https://og-generator-ten.vercel.app/api?${params.toString()}`;
     }
 }
