@@ -4,7 +4,7 @@
     "outputDirectory": "dist/browser",
     "functions": {
         "api/ssr.ts": {
-            "runtime": "nodejs22.x",
+            "runtime": "@vercel/node@5.5.26",
             "includeFiles": "dist/**"
         }
     },
