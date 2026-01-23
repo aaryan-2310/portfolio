@@ -9,8 +9,8 @@ const distServerFolder = join(process.cwd(), 'dist', 'server');
 const distBrowserFolder = join(process.cwd(), 'dist', 'browser');
 const indexHtml = join(distServerFolder, 'index.server.html');
 
-let commonEngine: CommonEngine | null = null;
-let bootstrap: any = null;
+let commonEngine = null;
+let bootstrap = null;
 
 async function getBootstrap() {
     if (!bootstrap) {
