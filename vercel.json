@@ -1,13 +1,25 @@
 {
     "version": 2,
+    "buildCommand": "yarn build",
+    "outputDirectory": "dist/browser",
+    "functions": {
+        "api/ssr.ts": {
+            "runtime": "@vercel/node@5.5.26",
+            "includeFiles": "dist/**"
+        }
+    },
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "/api/$1"
+            "source": "/assets/(.*)",
+            "destination": "/assets/$1"
+        },
+        {
+            "source": "/(.*\\.(?:js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|map))",
+            "destination": "/$1"
         },
         {
             "source": "/(.*)",
-            "destination": "/index.html"
+            "destination": "/api/ssr"
         }
     ]
 }
