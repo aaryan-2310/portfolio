@@ -1,7 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { CommonEngine } from '@angular/ssr/node';
 import { join } from 'node:path';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+// import type { VercelRequest, VercelResponse } from '@vercel/node';
 // Paths relative to Vercel's deployment structure
 // In Vercel, the function runs from .vercel/output/functions/api/ssr.func/
 // The dist folder is included via includeFiles in vercel.json
@@ -21,7 +21,7 @@ async function getBootstrap() {
     return bootstrap;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
     try {
         if (!commonEngine) {
             commonEngine = new CommonEngine();
