@@ -62,8 +62,5 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^15.2.10",
     "typescript": "~5.5.2"
-  },
-  "engines": {
-    "node": "22.x"
   }
 }
