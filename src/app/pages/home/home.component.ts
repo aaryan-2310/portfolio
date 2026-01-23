@@ -6,7 +6,7 @@ import { ProjectService } from '../../core/services/project.service';
 import { Skill, SkillService } from '../../core/services/skill.service';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
-import { Observable, map, startWith, shareReplay } from 'rxjs';
+import { Observable, map, startWith, shareReplay, catchError, of } from 'rxjs';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
 import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
@@ -49,24 +49,44 @@ export class HomeComponent {
         link: ['/projects', p.slug]
       }))),
       startWith(null),
+      catchError(err => {
+        console.error('HomeComponent: Failed to load featured projects', err);
+        return of([]);
+      }),
       shareReplay(1)
     );
 
     this.skills$ = this.skillService.getAll().pipe(
       startWith(null),
+      catchError(err => {
+        console.error('HomeComponent: Failed to load skills', err);
+        return of([]);
+      }),
       shareReplay(1)
     );
     this.services$ = this.serviceOfferingService.getServices().pipe(
       startWith(null),
+      catchError(err => {
+        console.error('HomeComponent: Failed to load services', err);
+        return of([]);
+      }),
       shareReplay(1)
     );
     this.settings$ = this.settingsService.settings$.pipe(
+      catchError(err => {
+        console.error('HomeComponent: Failed to load settings', err);
+        return of(null);
+      }),
       shareReplay(1)
     );
 
     this.latestPosts$ = this.blogService.getAll().pipe(
       map(posts => posts.slice(0, 3).map(p => BlogService.toView(p))),
       startWith(null),
+      catchError(err => {
+        console.error('HomeComponent: Failed to load blog posts', err);
+        return of([]);
+      }),
       shareReplay(1)
     );
   }

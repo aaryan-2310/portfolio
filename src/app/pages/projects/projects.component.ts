@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Observable, map, startWith, shareReplay } from 'rxjs';
+import { Observable, map, startWith, shareReplay, catchError, of } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
@@ -55,6 +55,10 @@ export class ProjectsComponent {
         .map((p, i) => this.mapToView(p, i))
       ),
       startWith(null),
+      catchError(err => {
+        console.error('ProjectsComponent: Failed to load projects', err);
+        return of([]);
+      }),
       shareReplay(1)
     );
     this.settings$ = this.settingsService.settings$;

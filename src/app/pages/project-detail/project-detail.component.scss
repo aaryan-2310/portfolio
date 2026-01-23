@@ -120,7 +120,7 @@ $radius-card: 20px;
 
 // --- Hero Section ---
 .hero-section {
-    padding: 12rem 2.5rem 6rem;
+    padding: var(--space-32) 2.5rem var(--space-16);
     max-width: 1300px;
     margin: 0 auto;
 

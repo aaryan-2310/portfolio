@@ -31,24 +31,51 @@ export class ProjectService {
 
     private mapProject(p: ProjectDTO): Project {
         let parsedLinks: Project['links'] = [];
-        if (p.links) {
-            try {
-                parsedLinks = typeof p.links === 'string' ? JSON.parse(p.links) : p.links;
-            } catch (e) {
-                console.error('Failed to parse links', e);
+        let parsedTags: string[] = p.tags || [];
+        let parsedScreenshots: string[] = typeof p.screenshots === 'object' ? p.screenshots : [];
+        let parsedCaseStudy: string | object = p.caseStudy || {};
+
+        try {
+            if (p.links && typeof p.links === 'string') {
+                parsedLinks = JSON.parse(p.links);
             }
+        } catch (e) {
+            console.error(`Failed to parse links for project ${p.id}`, e);
+        }
+
+        try {
+            if (p.techStack && typeof p.techStack === 'string') {
+                parsedTags = JSON.parse(p.techStack);
+            }
+        } catch (e) {
+            console.error(`Failed to parse techStack for project ${p.id}`, e);
+            parsedTags = [];
+        }
+
+        try {
+            if (p.screenshots && typeof p.screenshots === 'string') {
+                parsedScreenshots = JSON.parse(p.screenshots);
+            }
+        } catch (e) {
+            console.error(`Failed to parse screenshots for project ${p.id}`, e);
+            parsedScreenshots = [];
+        }
+
+        try {
+            if (p.caseStudy && typeof p.caseStudy === 'string') {
+                parsedCaseStudy = JSON.parse(p.caseStudy);
+            }
+        } catch (e) {
+            console.error(`Failed to parse caseStudy for project ${p.id}`, e);
+            parsedCaseStudy = {};
         }
 
         return {
             ...p,
-            // Map techStack (backend) to tags (frontend)
-            tags: typeof p.techStack === 'string' ? JSON.parse(p.techStack) : (p.tags || []),
-            // Pre-parsed links
+            tags: parsedTags,
             links: parsedLinks,
-            // Parse screenshots if it's a string
-            screenshots: typeof p.screenshots === 'string' ? JSON.parse(p.screenshots) : (p.screenshots || []),
-            // Ensure case study is stringified for components that parse it themselves
-            caseStudy: typeof p.caseStudy === 'string' ? p.caseStudy : JSON.stringify(p.caseStudy)
+            screenshots: parsedScreenshots,
+            caseStudy: typeof parsedCaseStudy === 'string' ? parsedCaseStudy : JSON.stringify(parsedCaseStudy)
         } as Project;
     }
 
