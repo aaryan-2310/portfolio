@@ -4,7 +4,7 @@
     "outputDirectory": "dist",
     "functions": {
         "api/ssr.ts": {
-            "runtime": "@vercel/node",
+            "runtime": "@vercel/node@5",
             "includeFiles": "dist/**"
         }
     },
