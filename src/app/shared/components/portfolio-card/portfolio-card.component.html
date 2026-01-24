@@ -1,0 +1,25 @@
+<article class="portfolio-card" [style.--card-index]="index" [routerLink]="routerLink" [class.clickable]="!!routerLink"
+    [attr.role]="routerLink ? 'link' : 'article'" [attr.tabindex]="routerLink ? 0 : null">
+
+    <!-- Media Section -->
+    <div class="card-media" [style.background-image]="image ? 'url(' + image + ')' : gradient"
+        [class.has-image]="!!image">
+
+        <div class="card-overlay">
+            <ng-content select="[card-overlay-content]"></ng-content>
+        </div>
+
+        <ng-content select="[card-media-extra]"></ng-content>
+    </div>
+
+    <!-- Body Section -->
+    <div class="card-body">
+        <h2 class="card-title">
+            {{ title }}
+        </h2>
+        <p class="card-desc">{{ description }}</p>
+
+        <!-- Slot for Footer (Skills, Tags, Actions) -->
+        <ng-content select="[card-footer]"></ng-content>
+    </div>
+</article>

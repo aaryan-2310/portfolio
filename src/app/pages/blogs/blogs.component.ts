@@ -1,17 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
 import { ToolbarSearchComponent } from '../../shared/components/toolbar-search/toolbar-search.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterLink, LoaderComponent, EmptyStateComponent, ToolbarSearchComponent],
+    imports: [CommonModule, RouterModule, LoaderComponent, EmptyStateComponent, ToolbarSearchComponent, PortfolioCardComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })

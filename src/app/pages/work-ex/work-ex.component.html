@@ -55,7 +55,8 @@
         <div class="timeline-connector" [class.last]="isLast">
           <div class="connector-dot">
             @if (exp.logoUrl) {
-            <img [src]="exp.logoUrl" [alt]="exp.company" [title]="exp.company + ' logo'" class="connector-logo" />
+            <img [ngSrc]="exp.logoUrl" [alt]="exp.company" width="16" height="16" [title]="exp.company + ' logo'"
+              class="connector-logo" />
             } @else {
             <span class="material-icons">work</span>
             }
@@ -158,7 +159,7 @@
       <ng-container *ngFor="let exp of experiences">
         <ng-template matStepperIcon="current">
           <ng-container *ngIf="exp.logoUrl; else defaultIcon">
-            <img [src]="exp.logoUrl" [alt]="exp.company" [title]="exp.company + ' logo'" width="16"
+            <img [ngSrc]="exp.logoUrl" [alt]="exp.company" [title]="exp.company + ' logo'" width="16" height="16"
               class="stepper-company-icon" />
           </ng-container>
           <ng-template #defaultIcon>

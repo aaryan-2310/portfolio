@@ -11,6 +11,7 @@ import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.com
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ToolbarSearchComponent } from '../../shared/components/toolbar-search/toolbar-search.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
 
 type ProjectLink = { label: string; href: string; kind: 'repo' | 'live' };
 type ProjectView = {
@@ -26,7 +27,7 @@ type ProjectView = {
 @Component({
   selector: 'portfolio-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, ToolbarSearchComponent, EmptyStateComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, ToolbarSearchComponent, EmptyStateComponent, PortfolioCardComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
