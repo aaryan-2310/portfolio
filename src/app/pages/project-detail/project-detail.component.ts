@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Meta, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { Observable, switchMap, map, shareReplay, take } from 'rxjs';
 import { ProjectService } from '../../core/services/project.service';
 import { Project, CaseStudy } from '../../shared/models/project.model';
@@ -20,9 +20,6 @@ export class ProjectDetailComponent implements OnInit {
     project$: Observable<Project | null>;
     caseStudy$: Observable<CaseStudy | null>;
 
-    // TODO: Update this with your actual deployed Vercel URL
-    private readonly OG_GENERATOR_URL = 'https://og-generator-fhkclcdyf-aryan-mishras-projects-b8f77aee.vercel.app/api';
-
     // Lightbox State
     lightboxOpen = false;
     currentImageIndex = 0;
@@ -30,9 +27,7 @@ export class ProjectDetailComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
-        private meta: Meta,
-        private titleService: Title,
-        @Inject(PLATFORM_ID) private platformId: object
+        private titleService: Title
     ) {
         this.project$ = this.route.paramMap.pipe(
             switchMap(params => {
@@ -43,10 +38,10 @@ export class ProjectDetailComponent implements OnInit {
             shareReplay(1)
         );
 
-        // Subscribe to project updates to set Meta Tags
+        // Subscribe to project updates to set title
         this.project$.subscribe(project => {
             if (project) {
-                this.updateMetaTags(project);
+                this.titleService.setTitle(`${project.title} | Aryan Mishra`);
             }
         });
 
@@ -64,34 +59,7 @@ export class ProjectDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (isPlatformBrowser(this.platformId)) {
-            window.scrollTo(0, 0);
-        }
-    }
-
-    private updateMetaTags(project: Project) {
-        // 1. Update Title
-        const title = `${project.title} | Aryan Mishra`;
-        this.titleService.setTitle(title);
-
-        // 2. Construct Dynamic Image URL
-        const techStack = project.tags ? project.tags.slice(0, 3).join(',') : '';
-        const ogImageUrl = `${this.OG_GENERATOR_URL}?title=${encodeURIComponent(project.title)}&type=Project&tech=${encodeURIComponent(techStack)}`;
-
-        // 3. Update Meta Tags
-        this.meta.updateTag({ name: 'description', content: project.description || 'Case Study by Aryan Mishra' });
-
-        // Open Graph
-        this.meta.updateTag({ property: 'og:title', content: title });
-        this.meta.updateTag({ property: 'og:description', content: project.description || 'Case Study by Aryan Mishra' });
-        this.meta.updateTag({ property: 'og:image', content: ogImageUrl });
-        this.meta.updateTag({ property: 'og:type', content: 'article' });
-
-        // Twitter
-        this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-        this.meta.updateTag({ name: 'twitter:title', content: title });
-        this.meta.updateTag({ name: 'twitter:description', content: project.description || 'Case Study by Aryan Mishra' });
-        this.meta.updateTag({ name: 'twitter:image', content: ogImageUrl });
+        window.scrollTo(0, 0);
     }
 
     @HostListener('keydown.escape')
