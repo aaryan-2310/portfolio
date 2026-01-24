@@ -1,0 +1,360 @@
+// TOOLBAR COMPONENT STYLES
+// ============================================
+
+:host {
+    display: contents;
+}
+
+// Sentinel for sticky detection
+.sticky-sentinel {
+    width: 100%;
+    height: 1px;
+    pointer-events: none;
+    visibility: hidden;
+    position: relative;
+    top: -24px; // Offset to match toolbar margin pull-up
+}
+
+.toolbar-wrapper {
+    position: sticky;
+    top: 64px;
+    z-index: 10;
+    padding: 0 var(--space-24) var(--space-16);
+    margin-top: calc(var(--space-24) * -1);
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    // DOCKED STATE
+    &.is-docked {
+        width: 100%;
+        padding: 0;
+        margin-top: 0;
+        top: 64px;
+
+        .portfolio-toolbar {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid var(--theme-border);
+            background: color-mix(in oklab, var(--theme-surface) 95%, transparent);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            padding: var(--space-12) var(--space-24);
+            justify-content: center;
+
+            @media (max-width: 768px) {
+                padding: var(--space-12);
+            }
+        }
+
+        // Reset elastic effect when docked
+        .portfolio-toolbar.focused {
+            transform: none;
+            border-color: transparent;
+        }
+
+        .toolbar-search {
+            max-width: 600px;
+            flex-grow: 1;
+        }
+    }
+}
+
+.portfolio-toolbar {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-16);
+    padding: var(--space-8);
+    background: color-mix(in oklab, var(--theme-surface) 85%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--theme-border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--theme-shadow-md);
+    max-width: 100%;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        border-radius 0.5s ease,
+        background-color 0.5s ease,
+        max-width 0.5s ease,
+        width 0.5s ease,
+        padding 0.5s ease;
+
+    // Elastic Expansion State (Only when NOT docked)
+    &.focused {
+        transform: scale(1.02);
+        border-color: var(--theme-accent);
+
+        .toolbar-search input {
+            background: var(--theme-surface);
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: var(--radius-lg);
+        padding: var(--space-12);
+        gap: var(--space-12);
+        position: relative;
+        top: 0;
+
+        &.focused {
+            transform: none;
+        }
+    }
+}
+
+.toolbar-search {
+    position: relative;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    transition: flex-grow 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+
+    .portfolio-toolbar.focused & {
+        flex-grow: 1;
+    }
+
+    &.shake {
+        animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+    }
+
+    .search-icon-wrapper {
+        position: absolute;
+        left: var(--space-20, 20px);
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .search-icon {
+        color: var(--theme-on-surface-variant);
+        font-size: 24px;
+        transition: all 0.3s ease;
+
+        &.spinner {
+            animation: spin 1s linear infinite;
+            color: var(--theme-accent);
+        }
+    }
+
+    .clear-btn {
+        position: absolute;
+        right: 80px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        border: none;
+        background: none;
+        padding: 4px;
+        cursor: pointer;
+        color: var(--theme-on-surface-variant);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background: var(--theme-surface-2);
+            color: var(--theme-error, #ef4444);
+        }
+
+        .material-icons {
+            font-size: 18px;
+        }
+    }
+
+    input {
+        width: 100%;
+        height: 52px;
+        padding: 0 120px 0 56px;
+        border-radius: var(--radius-full);
+        border: 1px solid transparent;
+        background: var(--theme-surface-2);
+        color: var(--theme-on-surface);
+        font-size: 1rem;
+        line-height: normal;
+        transition: all 0.2s ease;
+        position: relative;
+        z-index: 1;
+
+        &:focus {
+            outline: none;
+            background: var(--theme-surface);
+            box-shadow:
+                0 0 0 1px var(--theme-surface),
+                0 0 0 3px color-mix(in oklab, var(--theme-accent) 40%, transparent);
+        }
+
+        &::placeholder {
+            color: var(--theme-on-surface-variant);
+            opacity: 0.6;
+            font-weight: 400;
+        }
+    }
+
+    .result-count {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: var(--theme-surface-1);
+        color: var(--theme-accent);
+        padding: 4px 10px;
+        border-radius: 12px;
+        border: 1px solid color-mix(in oklab, var(--theme-accent) 20%, transparent);
+        pointer-events: none;
+        animation: fadeIn 0.2s ease;
+        white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+        min-width: 100%;
+
+        input {
+            font-size: 16px;
+            height: 48px;
+            padding: 0 80px 0 48px;
+        }
+
+        .search-icon-wrapper {
+            left: 12px;
+        }
+
+        .clear-btn {
+            right: 44px;
+        }
+
+        .result-count {
+            right: 8px;
+            padding: 2px 6px;
+
+            .count-label {
+                display: none;
+            }
+        }
+    }
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--theme-border);
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.toolbar-filters {
+    display: flex;
+    gap: var(--space-8);
+    overflow-x: auto;
+    padding: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.filter-chip {
+    height: 40px;
+    padding: 0 var(--space-16);
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--theme-on-surface-variant);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--theme-surface-2);
+        color: var(--theme-on-surface);
+    }
+
+    &.active {
+        background: var(--theme-on-surface);
+        color: var(--theme-background);
+    }
+}
+
+// Animations
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+        border-color: var(--theme-error, #f87171);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

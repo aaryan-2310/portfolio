@@ -1,25 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, map, tap } from 'rxjs';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
-import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { ToolbarSearchComponent } from '../../shared/components/toolbar-search/toolbar-search.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterLink, SkeletonComponent, LoaderComponent, EmptyStateComponent],
+    imports: [CommonModule, RouterLink, LoaderComponent, EmptyStateComponent, ToolbarSearchComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })
 export class BlogsComponent {
+    @ViewChild(ToolbarSearchComponent) toolbar!: ToolbarSearchComponent;
+
     header = {
         title: 'Blog',
         subtitle: 'Articles and insights on software development, architecture, and best practices.',
     };
+
+    // UX State
+    spotlightActive = false;
+    placeholderTexts = ['"Angular Signals"', '"System Design"', '"Performance"', '"Career Growth"'];
 
     // Data streams
     private blogsSource$ = new BehaviorSubject<BlogPostView[]>([]);
@@ -28,11 +34,11 @@ export class BlogsComponent {
 
     // Public observables
     filteredBlogs$: Observable<BlogPostView[]>;
+    resultCount$: Observable<number>;
     allTags: string[] = [];
 
     // UI state for binding
     selectedTag: string | null = null;
-    searchQuery: string = '';
     isLoading = true;
 
     constructor(private blogService: BlogService) {
@@ -59,23 +65,37 @@ export class BlogsComponent {
                         post.excerpt.toLowerCase().includes(query.toLowerCase());
                     return matchesTag && matchesSearch;
                 });
+            }),
+            tap(results => {
+                // Haptic/Shake on "No Results"
+                if (results.length === 0 && this.searchQuery$.value) {
+                    this.toolbar?.triggerShake();
+                }
             })
         );
+
+        this.resultCount$ = this.filteredBlogs$.pipe(map(list => list.length));
     }
 
-    filterByTag(tag: string | null): void {
+    onTagChange(tag: string | null): void {
         this.selectedTag = tag;
         this.selectedTag$.next(tag);
     }
 
-    onSearch(event: Event): void {
-        const query = (event.target as HTMLInputElement).value;
-        this.searchQuery = query;
+    onSearch(query: string): void {
         this.searchQuery$.next(query);
     }
 
-    formatDate = formatDateLong;
+    onFocusChange(focused: boolean): void {
+        this.spotlightActive = focused;
+    }
 
+    // Helper method for template compatibility if needed, or update template to call onTagChange
+    filterByTag(tag: string | null): void {
+        this.onTagChange(tag);
+    }
+
+    formatDate = formatDateLong;
     trackByPost = trackById;
     trackByTag = trackByValue;
 }
