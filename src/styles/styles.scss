@@ -59,6 +59,12 @@ body {
   user-select: none;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Ensure routed content inherits themed surface */
 main.content {
   background: var(--theme-surface);

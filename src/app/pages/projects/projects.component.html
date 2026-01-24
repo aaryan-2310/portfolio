@@ -48,36 +48,32 @@
 
     <!-- Toolbar -->
     <portfolio-toolbar-search [tags]="allTags" [activeTag]="selectedTag" [resultCount]="resultCount$ | async"
-      [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($event)" (tagChange)="onTagChange($event)"
-      (focusChange)="onFocusChange($event)">
+      [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($any($event))"
+      (tagChange)="onTagChange($any($event))" (focusChange)="onFocusChange($any($event))">
     </portfolio-toolbar-search>
 
     <!-- Projects Grid Section -->
     <section class="projects-section">
       <div class="projects__grid">
         <!-- Loaded State -->
-        <article class="project-card" *ngFor="let p of data.projects; trackBy: trackByProject; let i = index"
-          [style.--card-index]="i" [routerLink]="['/projects', p.slug]" style="cursor: pointer;">
-          <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient">
-            <div class="project-card__overlay">
-              <div class="overlay-actions">
-                <a *ngIf="p.links.length > 0" [href]="p.links[0].href" target="_blank" rel="noopener noreferrer"
-                  class="overlay-btn primary" [attr.aria-label]="p.links[0].label" (click)="$event.stopPropagation()">
-                  <span class="material-icons">{{ p.links[0].kind === 'live' ? 'open_in_new' : 'code' }}</span>
-                </a>
-                <a *ngIf="p.links.length > 1" [href]="p.links[1].href" target="_blank" rel="noopener noreferrer"
-                  class="overlay-btn" [attr.aria-label]="p.links[1].label" (click)="$event.stopPropagation()">
-                  <span class="material-icons">{{ p.links[1].kind === 'live' ? 'open_in_new' : 'code' }}</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card__body">
-            <h2 class="project-card__title">
-              <span style="color: inherit;">{{ p.title }}</span>
-            </h2>
-            <p class="project-card__desc">{{ p.description }}</p>
+        <portfolio-card *ngFor="let p of data.projects; trackBy: trackByProject; let i = index" [index]="i"
+          [title]="p.title" [description]="p.description" [image]="p.image" [gradient]="p.gradient"
+          [routerLink]="['/projects', p.slug]">
 
+          <!-- Overlay Actions -->
+          <div card-overlay-content class="overlay-actions">
+            <a *ngIf="p.links.length > 0" [href]="p.links[0].href" target="_blank" rel="noopener noreferrer"
+              class="overlay-btn primary" [attr.aria-label]="p.links[0].label" (click)="$event.stopPropagation()">
+              <span class="material-icons">{{ p.links[0].kind === 'live' ? 'open_in_new' : 'code' }}</span>
+            </a>
+            <a *ngIf="p.links.length > 1" [href]="p.links[1].href" target="_blank" rel="noopener noreferrer"
+              class="overlay-btn" [attr.aria-label]="p.links[1].label" (click)="$event.stopPropagation()">
+              <span class="material-icons">{{ p.links[1].kind === 'live' ? 'open_in_new' : 'code' }}</span>
+            </a>
+          </div>
+
+          <!-- Footer Content (Skills + Actions) -->
+          <div card-footer>
             <div class="skills-container" role="list">
               <div class="skill-chip" role="listitem" *ngFor="let t of p.tech.slice(0, 4); trackBy: trackByTech">
                 <span class="skill-name">{{ t }}</span>
@@ -87,7 +83,7 @@
               </div>
             </div>
 
-            <div class="project-card__actions">
+            <div class="project-actions">
               <portfolio-button *ngFor="let link of p.links; trackBy: trackByLink" [label]="link.label"
                 [href]="link.href" target="_blank" rel="noopener noreferrer"
                 [variant]="link.kind === 'live' ? 'primary' : 'tonal'" size="sm" (click)="$event.stopPropagation()">
@@ -97,7 +93,7 @@
               </portfolio-button>
             </div>
           </div>
-        </article>
+        </portfolio-card>
       </div>
 
       <!-- Empty State -->

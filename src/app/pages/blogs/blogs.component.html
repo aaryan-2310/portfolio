@@ -16,7 +16,7 @@
 
   <!-- Shared Search Toolbar -->
   <portfolio-toolbar-search [tags]="allTags" [activeTag]="selectedTag" [resultCount]="resultCount$ | async"
-    [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($event)" (tagChange)="onTagChange($event)"
+    [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($any($event))" (tagChange)="onTagChange($event)"
     (focusChange)="onFocusChange($event)">
   </portfolio-toolbar-search>
 
@@ -28,28 +28,23 @@
     <!-- Post Grid -->
     <div class="blogs__grid" *ngIf="!isLoading">
       <ng-container *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost">
-        <article class="blog-card" [routerLink]="['/blogs', post.slug]">
-          <div class="blog-card__media"
-            [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
-            [class.no-image]="!post.coverImage">
-            <!-- Category Pill (optional, if we have categories distinct from tags) -->
-            <span class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
-          </div>
+        <portfolio-card *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost" [title]="post.title"
+          [description]="post.excerpt" [image]="post.coverImage" [routerLink]="['/blogs', post.slug]">
 
-          <div class="blog-card__body">
-            <!-- Meta Header (Date/Time) -->
+          <!-- Category Pill -->
+          <span card-media-extra class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
+
+          <!-- Footer (Meta + Tags + Action) -->
+          <div card-footer>
+            <!-- Meta Info (Date/Time) -->
             <div class="blog-card__meta">
               <span class="meta-item">{{ formatDate(post.publishedAt) }}</span>
               <span class="meta-dot">·</span>
               <span class="meta-item">{{ post.readTime }} min read</span>
             </div>
 
-            <h2 class="blog-card__title">{{ post.title }}</h2>
-            <p class="blog-card__excerpt">{{ post.excerpt }}</p>
-
             <div class="blog-card__footer">
               <div class="blog-card__tags">
-                <!-- Limit tags shown on card to avoid clutter -->
                 <span *ngFor="let tag of post.tags.slice(0, 2); trackBy: trackByTag" class="tag-pill">
                   {{ tag }}
                 </span>
@@ -62,7 +57,7 @@
               </span>
             </div>
           </div>
-        </article>
+        </portfolio-card>
       </ng-container>
     </div>
 

@@ -179,6 +179,9 @@
   }
 
   @media (max-width: 600px) {
+    min-height: auto;
+    padding: var(--space-64) var(--space-16) var(--space-32);
+
     .hero-stats {
       flex-wrap: wrap;
       gap: var(--space-12);
@@ -270,7 +273,6 @@
 // PROJECTS GRID SECTION
 // ============================================
 .projects-section {
-  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-64) var(--space-24) var(--space-80);
@@ -305,7 +307,7 @@
 
   .projects__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: var(--space-32);
 
     @media (max-width: 599px) {
@@ -315,262 +317,116 @@
   }
 }
 
-.project-card {
-  --card-index: 0;
-  height: 100%;
-  background: var(--theme-surface-1);
-  border: 1px solid var(--theme-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--elev-1);
+// ============================================
+// CARD CONTENT STYLES
+// ============================================
+
+// Overlay Actions (Hover)
+.overlay-actions {
   display: flex;
-  flex-direction: column;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-  animation: cardFadeIn 0.5s ease-out calc(var(--card-index) * 0.1s) both;
-
-  &:hover,
-  &:focus-within {
-    transform: translateY(-6px);
-    box-shadow: var(--elev-4);
-    border-color: var(--theme-accent);
-  }
-
-  .project-card__media {
-    position: relative;
-    aspect-ratio: 16/9;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-bottom: 1px solid var(--theme-border);
-    overflow: hidden;
-  }
-
-  .project-card__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top,
-        rgba(0, 0, 0, 0.8) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        transparent 100%);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: var(--space-16);
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  &:hover .project-card__overlay {
-    opacity: 1;
-  }
-
-  .overlay-actions {
-    display: flex;
-    gap: var(--space-12);
-    transform: translateY(10px);
-    transition: transform 0.25s ease;
-  }
-
-  &:hover .overlay-actions {
-    transform: translateY(0);
-  }
-
-  .overlay-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--theme-surface);
-    border: 1px solid var(--theme-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--theme-on-surface);
-    transition: all 0.2s ease;
-    text-decoration: none;
-
-    &:hover {
-      background: var(--theme-accent);
-      border-color: var(--theme-accent);
-      color: white;
-      transform: scale(1.1);
-    }
-
-    &.primary {
-      background: var(--theme-accent);
-      border-color: var(--theme-accent);
-      color: white;
-    }
-
-    .material-icons {
-      font-size: 22px;
-    }
-  }
-
-  .project-card__body {
-    padding: var(--space-24);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12);
-    flex: 1;
-  }
-
-  .project-card__title {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--theme-on-surface);
-    line-height: 1.3;
-  }
-
-  .project-card__desc {
-    margin: 0;
-    color: var(--theme-on-surface-variant);
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-8);
-    margin-top: auto;
-  }
-
-  .skill-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-6);
-    padding: var(--space-4) var(--space-10);
-    border-radius: var(--radius-full);
-    background-color: color-mix(in oklab, var(--theme-accent) 12%, transparent);
-    color: var(--theme-on-surface);
-    border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
-    font-size: 0.75rem;
-    font-weight: 500;
-
-    &.more {
-      background-color: var(--theme-surface-2);
-      border-color: var(--theme-border);
-      color: var(--theme-on-surface-variant);
-    }
-  }
-
-  .project-card__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-10);
-    margin-top: var(--space-8);
-    padding-top: var(--space-16);
-    border-top: 1px solid var(--theme-border);
-  }
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-16);
+  width: 100%;
+  height: 100%;
 }
 
-@keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Ensure slot images/icons adapt to theme */
-.projects :where(img[icon]) {
-  display: inline-block;
-  filter: none;
-}
-
-:host-context(html[data-theme='dark']) .projects :where(img[icon]) {
-  filter: invert(1) contrast(0.95) brightness(1.1);
-}
-
-/* Light/dark surface support for this section */
-.projects {
+.overlay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   background: var(--theme-surface);
   color: var(--theme-on-surface);
-}
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  box-shadow: var(--elev-2);
+  text-decoration: none;
 
-/* Footer CTA placement and emphasis */
-.projects__footer {
-  margin: var(--space-64) auto 0;
-  padding: var(--space-48) var(--space-24);
-  max-width: 1200px;
-  background: var(--theme-surface-1);
-  border: 1px solid var(--theme-border);
-  border-radius: var(--radius-lg);
-
-  .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-24);
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: var(--elev-4);
+    background: var(--theme-inverse-surface);
+    color: var(--theme-inverse-on-surface);
   }
 
-  .footer-text {
-    margin: 0;
+  &.primary {
+    background: var(--theme-accent);
+    color: white; // Safe fallback
+
+    &:hover {
+      background: color-mix(in oklab, var(--theme-accent) 85%, white);
+      transform: scale(1.1);
+    }
+  }
+
+  .material-icons {
+    font-size: 24px;
+  }
+}
+
+// Footer Content (Skills + Actions)
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-bottom: var(--space-16);
+}
+
+.skill-chip {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--theme-surface-2);
+  color: var(--theme-on-surface-variant);
+  letter-spacing: 0.02em;
+  border: 1px solid color-mix(in oklab, var(--theme-border) 50%, transparent);
+
+  &.more {
+    background: transparent;
+    padding: 4px 0;
+    border: none;
     color: var(--theme-on-surface-variant);
-    font-size: 1.125rem;
-    line-height: 1.6;
-    max-width: 500px;
+    opacity: 0.8;
   }
 }
 
-/* Responsive adjustments */
+.project-actions {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: auto;
+
+  // Hide on desktop to prefer overlay actions
+  @media (min-width: 1025px) {
+    display: none;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+
+  // Hide overlay actions on touch/tablet
+  .overlay-actions {
+    display: none;
+  }
+
+  // Ensure project buttons are visible
+  .project-actions {
+    display: flex;
+  }
+}
+
+// Responsive adjustments for the section
 @media (max-width: 768px) {
-  .projects {
+  .projects-section {
     padding: var(--space-48) var(--space-24) var(--space-64);
-  }
-
-  .projects .projects__header {
-    margin-bottom: var(--space-32);
-  }
-
-  .projects .projects__header .projects__title {
-    font-size: 1.75rem;
-  }
-
-  .projects .projects__header .projects__subtitle {
-    font-size: 1rem;
-  }
-
-  .project-card .project-card__body {
-    padding: var(--space-24);
-  }
-
-  .projects__footer {
-    margin-top: var(--space-32);
-    padding-top: var(--space-24);
   }
 }
 
 @media (max-width: 480px) {
-  .projects {
+  .projects-section {
     padding: var(--space-32) var(--space-16) var(--space-48);
-  }
-
-  .project-card .project-card__body {
-    padding: var(--space-16);
-    gap: var(--space-12);
-  }
-
-  .project-card .project-card__title {
-    font-size: 1.125rem;
-  }
-
-  .project-card .project-card__actions {
-    flex-direction: column;
   }
 }
