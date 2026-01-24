@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ContactFormComponent,
   ContactFormData,
@@ -26,6 +26,8 @@ export class ContactComponent implements OnInit {
   settings$: Observable<SiteSettings | null>;
   socialLinks: SocialLink[] = [];
   isLoading = true;
+  linkedinUrl = '';
+  xUrl = '';
 
   constructor(
     private contactService: ContactService,
@@ -35,12 +37,15 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactService.getSocialLinks().pipe(
-      map(links => links
-        .filter(l => l.showInContact)
-      )
-    ).subscribe(links => {
-      this.socialLinks = links;
+    this.contactService.getSocialLinks().subscribe(links => {
+      this.socialLinks = links.filter(l => l.showInContact);
+
+      const linkedin = links.find(l => l.name.toLowerCase() === 'linkedin');
+      const x = links.find(l => l.name.toLowerCase() === 'twitter' || l.name.toLowerCase() === 'x');
+
+      if (linkedin) this.linkedinUrl = linkedin.url;
+      if (x) this.xUrl = x.url;
+
       this.isLoading = false;
     });
   }

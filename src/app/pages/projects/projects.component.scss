@@ -1,9 +1,28 @@
 // ============================================
+// MIXINS & SETUP
+// ============================================
+.projects-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+// Spotlight Mode
+.projects-container.spotlight-active {
+
+  .projects-hero,
+  .projects-section {
+    filter: grayscale(100%) opacity(0.3);
+    transition: filter 0.4s ease;
+  }
+}
+
+// ============================================
 // HERO SECTION
 // ============================================
 .projects-hero {
   position: relative;
-  min-height: calc(60dvh - 56px);
+  min-height: calc(100dvh - 56px - var(--space-96));
   display: flex;
   flex-direction: column;
   align-items: center;

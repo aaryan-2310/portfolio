@@ -1,11 +1,9 @@
 import { ApplicationConfig, ErrorHandler } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, TitleStrategy } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AppTitleStrategy } from './seo/title.strategy';
 import { GlobalErrorHandler } from './core/error/global-error.handler';
 
 export const appConfig: ApplicationConfig = {
@@ -18,9 +16,7 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     provideHttpClient(withFetch()),
-    provideClientHydration(),
     provideAnimations(),
-    { provide: TitleStrategy, useClass: AppTitleStrategy },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
 };

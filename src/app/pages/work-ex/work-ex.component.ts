@@ -13,6 +13,7 @@ import { ButtonComponent } from '../../shared/button/button.component';
 import { forkJoin } from 'rxjs';
 import { Experience, ExperienceService } from '../../core/services/experience.service';
 import { ProjectService } from '../../core/services/project.service';
+import { ContactService, SocialLink } from '../../core/services/contact.service';
 
 @Component({
   selector: 'portfolio-work-ex',
@@ -41,24 +42,29 @@ export class WorkExComponent implements AfterViewInit, OnInit {
   yearsOfExperience = 0;
   isLoading = true;
 
-  readonly githubUrl = 'https://github.com/aaryan-2310';
-  readonly linkedinUrl = 'https://linkedin.com/in/aaryan-mishra-dev';
-  readonly xUrl = 'https://x.com/';
+  githubUrl = '';
+  linkedinUrl = '';
+  xUrl = '';
 
   constructor(
     private experienceService: ExperienceService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private contactService: ContactService
   ) { }
 
   ngOnInit(): void {
     forkJoin({
       experiences: this.experienceService.getAll(),
-      projects: this.projectService.getAll()
-    }).subscribe(({ experiences, projects }) => {
+      projects: this.projectService.getAll(),
+      socialLinks: this.contactService.getSocialLinks()
+    }).subscribe(({ experiences, projects, socialLinks }) => {
       this.experiences = experiences.map((exp, i) => this.mapToWorkExperience(exp, i));
       this.experienceCount = this.getUniqueCompanyCount(experiences);
       this.projectCount = projects.length;
       this.yearsOfExperience = this.calculateYearsOfExperience(experiences);
+
+      this.populateSocialLinks(socialLinks);
+
       this.isLoading = false;
     });
   }
@@ -70,6 +76,16 @@ export class WorkExComponent implements AfterViewInit, OnInit {
   replayReveal(): void {
     this.revealActive = false;
     setTimeout(() => (this.revealActive = true), 0);
+  }
+
+  private populateSocialLinks(links: SocialLink[]): void {
+    const github = links.find(l => l.name.toLowerCase() === 'github');
+    const linkedin = links.find(l => l.name.toLowerCase() === 'linkedin');
+    const x = links.find(l => l.name.toLowerCase() === 'twitter' || l.name.toLowerCase() === 'x');
+
+    if (github) this.githubUrl = github.url;
+    if (linkedin) this.linkedinUrl = linkedin.url;
+    if (x) this.xUrl = x.url;
   }
 
   private getUniqueCompanyCount(experiences: Experience[]): number {

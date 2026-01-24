@@ -13,23 +13,35 @@
   --radius-xl: 20px;
   --radius-full: 9999px;
 
-  /* Elevation */
-  --elev-1: 0 8px 24px var(--theme-shadow);
-  --elev-2: 0 12px 28px var(--theme-shadow-hover);
-  --elev-3: 0 16px 40px var(--theme-shadow-hover);
+  /* Elevation (Adaptive) */
+  --elev-1: var(--theme-shadow-sm);
+  --elev-2: var(--theme-shadow-md);
+  --elev-3: var(--theme-shadow-lg);
+  // Keep original for back-compat or delete? Let's delete hardcoded shadows from root and rely on theme vars injected by theme mixin.
+  // Actually, we need to map the theme variables to these global tokens if components use --elev-*.
+  // Since theme vars are CSS vars (--theme-shadow-sm), we can just point to them.
+  // Note: --theme-shadow-sm is defined in the theme maps, so it will be available where @include theme-vars is used.
+
 
   /* Spacing scale */
   --space-2: 2px;
   --space-4: 4px;
   --space-6: 6px;
   --space-8: 8px;
+  --space-10: 10px;
   --space-12: 12px;
+  --space-14: 14px;
   --space-16: 16px;
   --space-24: 24px;
   --space-32: 32px;
   --space-42: 42px;
   --space-48: 48px;
   --space-64: 64px;
+  --space-72: 72px;
+  --space-80: 80px;
+  --space-88: 88px;
+  --space-96: 96px;
+  --space-128: 128px;
 
   /* Focus ring */
   --focus-ring-width: 2px;
@@ -44,6 +56,7 @@ body {
   background: var(--theme-surface);
   color: var(--theme-on-surface);
   scroll-behavior: smooth;
+  user-select: none;
 }
 
 /* Ensure routed content inherits themed surface */

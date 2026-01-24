@@ -1,0 +1,42 @@
+<!-- Toolbar Docking Sentinel -->
+<div class="sticky-sentinel" #sentinel></div>
+
+<!-- Toolbar Wrapper -->
+<div class="toolbar-wrapper" [class.is-docked]="isDocked">
+    <div class="portfolio-toolbar" [class.focused]="searchFocused">
+
+        <!-- Search Input -->
+        <div class="toolbar-search" [class.shake]="searchShake">
+            <!-- Morphing Icon -->
+            <div class="search-icon-wrapper">
+                <span class="material-icons search-icon" *ngIf="!searchQuery && !isTyping">search</span>
+                <span class="material-icons search-icon spinner" *ngIf="isTyping">autorenew</span>
+                <button class="clear-btn" *ngIf="searchQuery && !isTyping" (click)="clearSearch()"
+                    aria-label="Clear search">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+
+            <input type="text" [value]="searchQuery" (input)="onSearch($event)" (focus)="onFocus()" (blur)="onBlur()"
+                [portfolioTypewriter]="placeholderTexts" aria-label="Search" />
+
+            <!-- Result Counter -->
+            <div class="result-count" *ngIf="resultCount !== null && searchQuery">
+                {{ resultCount }}<span class="count-label"> results</span>
+            </div>
+        </div>
+
+        <div class="toolbar-divider" aria-hidden="true" *ngIf="tags.length > 0"></div>
+
+        <!-- Filters -->
+        <div class="toolbar-filters" *ngIf="tags.length > 0">
+            <button class="filter-chip" [class.active]="activeTag === null" (click)="selectTag(null)">
+                All
+            </button>
+            <button *ngFor="let tag of tags" class="filter-chip" [class.active]="activeTag === tag"
+                (click)="selectTag(tag)">
+                {{ tag }}
+            </button>
+        </div>
+    </div>
+</div>

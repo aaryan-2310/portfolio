@@ -25,6 +25,7 @@ export class FooterComponent implements OnInit {
   calendlyUrl = '';
   email = '';
   socialLinks: SocialLink[] = [];
+  githubUrl = '';
 
   constructor(
     private settingsService: SettingsService,
@@ -47,6 +48,9 @@ export class FooterComponent implements OnInit {
       .subscribe(links => {
         this.socialLinks = links.filter(link => link.showInFooter)
           .sort((a, b) => a.displayOrder - b.displayOrder);
+
+        const github = links.find(l => l.name.toLowerCase() === 'github');
+        this.githubUrl = github ? github.url : 'https://github.com/';
       });
   }
 

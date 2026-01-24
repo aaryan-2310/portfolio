@@ -1,117 +1,125 @@
-<ng-container *ngIf="projects$ | async as projects; else loading">
-  <!-- Hero Section -->
-  <section class="projects-hero" aria-labelledby="projects-title">
-    <div class="hero-backdrop" aria-hidden="true"></div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="badge-icon material-icons">rocket_launch</span>
-        <span class="badge-text">Featured Work</span>
-      </div>
-      <h1 id="projects-title" class="hero-title">
-        <span class="title-line">My</span>
-        <span class="title-line accent">Projects</span>
-      </h1>
-      <p class="hero-sub">
-        {{ header.subtitle }}
-      </p>
-      <div class="hero-stats">
-        <div class="stat-card">
-          <span class="stat-value">{{ projects?.length || 0 }}</span>
-          <span class="stat-label">Projects</span>
+<ng-container *ngIf="{ projects: filteredProjects$ | async } as data">
+  <div class="projects-container" [class.spotlight-active]="spotlightActive">
+    <!-- Hero Section -->
+    <section class="projects-hero" aria-labelledby="projects-title">
+      <div class="hero-backdrop" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-icon material-icons">rocket_launch</span>
+          <span class="badge-text">Featured Work</span>
         </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-card">
-          <span class="stat-value">Full-Stack</span>
-          <span class="stat-label">Expertise</span>
-        </div>
-        <div class="stat-divider" aria-hidden="true"></div>
-        <div class="stat-card">
-          <span class="stat-value">Open</span>
-          <span class="stat-label">Source</span>
-        </div>
-      </div>
-      <div class="hero-actions">
-        <portfolio-button label="View on GitHub" variant="primary" size="lg" href="https://github.com/aaryan-2310"
-          target="_blank">
-          <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
-        </portfolio-button>
-        <portfolio-button label="Contact Me" variant="tonal" size="lg" [routerLink]="'/contact'">
-          <span icon class="material-icons">mail</span>
-        </portfolio-button>
-      </div>
-    </div>
-    <div class="hero-scroll-hint" aria-hidden="true">
-      <span class="material-icons">expand_more</span>
-    </div>
-  </section>
-
-  <!-- Projects Grid Section -->
-  <section class="projects-section">
-    <div class="section-header">
-      <h2 class="section-title">
-        <span class="material-icons section-icon">apps</span>
-        All Projects
-      </h2>
-      <p class="section-subtitle">Click on any project to explore the details</p>
-    </div>
-
-    <div class="projects__grid">
-      <!-- Loaded State -->
-      <article class="project-card" *ngFor="let p of projects; trackBy: trackByProject; let i = index"
-        [style.--card-index]="i" [routerLink]="['/projects', p.slug]" style="cursor: pointer;">
-        <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient">
-          <div class="project-card__overlay">
-            <div class="overlay-actions">
-              <a *ngIf="p.links.length > 0" [href]="p.links[0].href" target="_blank" rel="noopener noreferrer"
-                class="overlay-btn primary" [attr.aria-label]="p.links[0].label" (click)="$event.stopPropagation()">
-                <span class="material-icons">{{ p.links[0].kind === 'live' ? 'open_in_new' : 'code' }}</span>
-              </a>
-              <a *ngIf="p.links.length > 1" [href]="p.links[1].href" target="_blank" rel="noopener noreferrer"
-                class="overlay-btn" [attr.aria-label]="p.links[1].label" (click)="$event.stopPropagation()">
-                <span class="material-icons">{{ p.links[1].kind === 'live' ? 'open_in_new' : 'code' }}</span>
-              </a>
-            </div>
+        <h1 id="projects-title" class="hero-title">
+          <span class="title-line">My</span>
+          <span class="title-line accent">Projects</span>
+        </h1>
+        <p class="hero-sub">
+          {{ header.subtitle }}
+        </p>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value">{{ data.projects?.length || 0 }}</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-card">
+            <span class="stat-value">Full-Stack</span>
+            <span class="stat-label">Expertise</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-card">
+            <span class="stat-value">Open</span>
+            <span class="stat-label">Source</span>
           </div>
         </div>
-        <div class="project-card__body">
-          <h2 class="project-card__title">
-            <span style="color: inherit;">{{ p.title }}</span>
-          </h2>
-          <p class="project-card__desc">{{ p.description }}</p>
-
-          <div class="skills-container" role="list">
-            <div class="skill-chip" role="listitem" *ngFor="let t of p.tech.slice(0, 4); trackBy: trackByTech">
-              <span class="skill-name">{{ t }}</span>
-            </div>
-            <div class="skill-chip more" *ngIf="p.tech.length > 4">
-              +{{ p.tech.length - 4 }}
-            </div>
-          </div>
-
-          <div class="project-card__actions">
-            <portfolio-button *ngFor="let link of p.links; trackBy: trackByLink" [label]="link.label" [href]="link.href"
-              target="_blank" rel="noopener noreferrer" [variant]="link.kind === 'live' ? 'primary' : 'tonal'" size="sm"
-              (click)="$event.stopPropagation()">
-              <span icon class="material-icons">{{
-                link.kind === 'live' ? 'open_in_new' : 'code'
-                }}</span>
-            </portfolio-button>
-          </div>
+        <div class="hero-actions">
+          <portfolio-button label="View on GitHub" variant="primary" size="lg" [href]="(githubUrl$ | async) ?? '#'"
+            target="_blank">
+            <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
+          </portfolio-button>
+          <portfolio-button label="Contact Me" variant="tonal" size="lg" [routerLink]="'/contact'">
+            <span icon class="material-icons">mail</span>
+          </portfolio-button>
         </div>
-      </article>
-    </div>
-
-    <footer class="projects__footer" aria-label="Projects footer">
-      <div class="footer-content">
-        <p class="footer-text">Want to see more? Check out my GitHub for additional projects and contributions.</p>
-        <portfolio-button label="Explore GitHub" ariaLabel="See more projects on GitHub"
-          href="https://github.com/aaryan-2310" target="_blank" rel="noopener noreferrer" variant="primary" size="lg">
-          <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
-          <span icon-end class="material-icons">north_east</span>
-        </portfolio-button>
       </div>
-    </footer>
-  </section>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="material-icons">expand_more</span>
+      </div>
+    </section>
+
+    <!-- Toolbar -->
+    <portfolio-toolbar-search [tags]="allTags" [activeTag]="selectedTag" [resultCount]="resultCount$ | async"
+      [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($event)" (tagChange)="onTagChange($event)"
+      (focusChange)="onFocusChange($event)">
+    </portfolio-toolbar-search>
+
+    <!-- Projects Grid Section -->
+    <section class="projects-section">
+      <div class="projects__grid">
+        <!-- Loaded State -->
+        <article class="project-card" *ngFor="let p of data.projects; trackBy: trackByProject; let i = index"
+          [style.--card-index]="i" [routerLink]="['/projects', p.slug]" style="cursor: pointer;">
+          <div class="project-card__media" [style.background-image]="p.image ? 'url(' + p.image + ')' : p.gradient">
+            <div class="project-card__overlay">
+              <div class="overlay-actions">
+                <a *ngIf="p.links.length > 0" [href]="p.links[0].href" target="_blank" rel="noopener noreferrer"
+                  class="overlay-btn primary" [attr.aria-label]="p.links[0].label" (click)="$event.stopPropagation()">
+                  <span class="material-icons">{{ p.links[0].kind === 'live' ? 'open_in_new' : 'code' }}</span>
+                </a>
+                <a *ngIf="p.links.length > 1" [href]="p.links[1].href" target="_blank" rel="noopener noreferrer"
+                  class="overlay-btn" [attr.aria-label]="p.links[1].label" (click)="$event.stopPropagation()">
+                  <span class="material-icons">{{ p.links[1].kind === 'live' ? 'open_in_new' : 'code' }}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <h2 class="project-card__title">
+              <span style="color: inherit;">{{ p.title }}</span>
+            </h2>
+            <p class="project-card__desc">{{ p.description }}</p>
+
+            <div class="skills-container" role="list">
+              <div class="skill-chip" role="listitem" *ngFor="let t of p.tech.slice(0, 4); trackBy: trackByTech">
+                <span class="skill-name">{{ t }}</span>
+              </div>
+              <div class="skill-chip more" *ngIf="p.tech.length > 4">
+                +{{ p.tech.length - 4 }}
+              </div>
+            </div>
+
+            <div class="project-card__actions">
+              <portfolio-button *ngFor="let link of p.links; trackBy: trackByLink" [label]="link.label"
+                [href]="link.href" target="_blank" rel="noopener noreferrer"
+                [variant]="link.kind === 'live' ? 'primary' : 'tonal'" size="sm" (click)="$event.stopPropagation()">
+                <span icon class="material-icons">{{
+                  link.kind === 'live' ? 'open_in_new' : 'code'
+                  }}</span>
+              </portfolio-button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Empty State -->
+      <div class="projects__empty" *ngIf="!isLoading && data.projects?.length === 0"
+        style="grid-column: 1/-1; display: flex; justify-content: center; padding: 48px 0;">
+        <portfolio-empty-state icon="search_off" title="No projects found"
+          message="We couldn't find any projects matching your search. Try different keywords.">
+        </portfolio-empty-state>
+      </div>
+
+      <footer class="projects__footer" aria-label="Projects footer" *ngIf="(data.projects?.length || 0) > 0">
+        <div class="footer-content">
+          <p class="footer-text">Want to see more? Check out my GitHub for additional projects and contributions.</p>
+          <portfolio-button label="Explore GitHub" ariaLabel="See more projects on GitHub"
+            [href]="(githubUrl$ | async) ?? '#'" target="_blank" rel="noopener noreferrer" variant="primary" size="lg">
+            <img icon src="assets/icons/github.svg" alt="GitHub" width="18" height="18" />
+            <span icon-end class="material-icons">north_east</span>
+          </portfolio-button>
+        </div>
+      </footer>
+    </section>
+  </div>
 </ng-container>
 
 <ng-template #loading>

@@ -11,6 +11,7 @@ import { SettingsService, SiteSettings } from '../../core/services/settings.serv
 import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { formatDate, trackById, trackByTitle } from '../../shared/utils';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 // Adapters for view
 interface FeaturedProjectView {
@@ -23,7 +24,7 @@ interface FeaturedProjectView {
 @Component({
   selector: 'portfolio-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, EmptyStateComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

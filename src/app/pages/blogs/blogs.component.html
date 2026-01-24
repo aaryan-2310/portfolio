@@ -1,72 +1,76 @@
-<section class="blogs">
-  <header class="blogs__header">
-    <h1 class="blogs__title">{{ header.title }}</h1>
-    <p class="blogs__subtitle">{{ header.subtitle }}</p>
+<section class="blogs-container" [class.spotlight-active]="spotlightActive">
+  <!-- Editorial Hero -->
+  <header class="blogs-hero" aria-labelledby="blogs-title">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="material-icons badge-icon">auto_stories</span>
+        <span class="badge-text">Latest Insights</span>
+      </div>
+      <h1 id="blogs-title" class="hero-title">
+        <span class="title-line">{{ header.title }}</span>
+      </h1>
+      <p class="hero-sub">{{ header.subtitle }}</p>
+    </div>
   </header>
 
-  <div class="blogs__controls">
-    <!-- Search Bar -->
-    <div class="blogs__search">
-      <span class="material-icons search-icon">search</span>
-      <input type="text" placeholder="Search articles..." [value]="searchQuery" (input)="onSearch($event)"
-        aria-label="Search articles" />
-    </div>
+  <!-- Shared Search Toolbar -->
+  <portfolio-toolbar-search [tags]="allTags" [activeTag]="selectedTag" [resultCount]="resultCount$ | async"
+    [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($event)" (tagChange)="onTagChange($event)"
+    (focusChange)="onFocusChange($event)">
+  </portfolio-toolbar-search>
 
-    <!-- Tag Filter -->
-    <div class="blogs__filters" *ngIf="allTags.length > 0">
-      <button class="filter-chip" [class.active]="selectedTag === null" (click)="filterByTag(null)">
-        All
-      </button>
-      <button *ngFor="let tag of allTags; trackBy: trackByTag" class="filter-chip" [class.active]="selectedTag === tag"
-        (click)="filterByTag(tag)">
-        {{ tag }}
-      </button>
-    </div>
-  </div>
-
-  <div class="blogs__grid">
-    <!-- Loading State -->
+  <!-- Content Grid -->
+  <div class="blogs-grid-section">
+    <!-- Loader -->
     <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
 
-    <ng-container *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost">
-      <article class="blog-card" [routerLink]="['/blogs', post.slug]" *ngIf="!isLoading">
-        <div class="blog-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
-          [class.no-image]="!post.coverImage">
-          <span class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
-        </div>
-        <div class="blog-card__body">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">
-              <span class="material-icons">calendar_today</span>
-              {{ formatDate(post.publishedAt) }}
-            </span>
-            <span class="blog-card__read-time">
-              <span class="material-icons">schedule</span>
-              {{ post.readTime }} min read
-            </span>
-          </div>
-          <h2 class="blog-card__title">{{ post.title }}</h2>
-          <p class="blog-card__excerpt">{{ post.excerpt }}</p>
-
-          <div class="blog-card__tags">
-            <span *ngFor="let tag of post.tags; trackBy: trackByTag" class="tag-chip">
-              {{ tag }}
-            </span>
+    <!-- Post Grid -->
+    <div class="blogs__grid" *ngIf="!isLoading">
+      <ng-container *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost">
+        <article class="blog-card" [routerLink]="['/blogs', post.slug]">
+          <div class="blog-card__media"
+            [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
+            [class.no-image]="!post.coverImage">
+            <!-- Category Pill (optional, if we have categories distinct from tags) -->
+            <span class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
           </div>
 
-          <div class="blog-card__cta">
-            <span class="read-more">Read article</span>
-            <span class="material-icons">arrow_forward</span>
-          </div>
-        </div>
-      </article>
-    </ng-container>
-  </div>
+          <div class="blog-card__body">
+            <!-- Meta Header (Date/Time) -->
+            <div class="blog-card__meta">
+              <span class="meta-item">{{ formatDate(post.publishedAt) }}</span>
+              <span class="meta-dot">·</span>
+              <span class="meta-item">{{ post.readTime }} min read</span>
+            </div>
 
-  <!-- Empty State -->
-  <div class="blogs__empty" *ngIf="(filteredBlogs$ | async)?.length === 0">
-    <span class="material-icons empty-icon">article</span>
-    <h3>No blog posts yet</h3>
-    <p>Check back soon for articles on software development and more.</p>
+            <h2 class="blog-card__title">{{ post.title }}</h2>
+            <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+
+            <div class="blog-card__footer">
+              <div class="blog-card__tags">
+                <!-- Limit tags shown on card to avoid clutter -->
+                <span *ngFor="let tag of post.tags.slice(0, 2); trackBy: trackByTag" class="tag-pill">
+                  {{ tag }}
+                </span>
+                <span *ngIf="post.tags.length > 2" class="tag-pill more">+{{ post.tags.length - 2 }}</span>
+              </div>
+
+              <span class="read-action">
+                Read
+                <span class="material-icons">arrow_forward</span>
+              </span>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+    </div>
+
+    <!-- Empty State -->
+    <div class="blogs__empty" *ngIf="!isLoading && (filteredBlogs$ | async)?.length === 0">
+      <portfolio-empty-state icon="article" title="No articles found"
+        message="Try adjusting your search or filter to find what you're looking for.">
+      </portfolio-empty-state>
+    </div>
   </div>
 </section>
