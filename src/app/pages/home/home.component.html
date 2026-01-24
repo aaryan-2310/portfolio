@@ -134,25 +134,34 @@
 
   <div class="posts-grid">
     <ng-container *ngIf="latestPosts$ | async as posts; else postsLoading">
-      <a *ngFor="let post of posts; trackBy: trackByPost" class="post-card" [routerLink]="['/blogs', post.slug]">
-        <div class="post-card__media" [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
-          [class.no-image]="!post.coverImage"></div>
-        <div class="post-card__body">
-          <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
-          <h3 class="post-card__title">{{ post.title }}</h3>
-          <p class="post-card__excerpt">{{ post.excerpt }}</p>
-          <span class="post-card__cta">
-            Read article <span class="material-icons">arrow_forward</span>
-          </span>
+      <ng-container *ngIf="posts.length > 0; else noPosts">
+        <a *ngFor="let post of posts; trackBy: trackByPost" class="post-card" [routerLink]="['/blogs', post.slug]">
+          <div class="post-card__media"
+            [style.background-image]="post.coverImage ? 'url(' + post.coverImage + ')' : null"
+            [class.no-image]="!post.coverImage"></div>
+          <div class="post-card__body">
+            <span class="post-card__date">{{ formatDate(post.publishedAt) }}</span>
+            <h3 class="post-card__title">{{ post.title }}</h3>
+            <p class="post-card__excerpt">{{ post.excerpt }}</p>
+            <span class="post-card__cta">
+              Read article <span class="material-icons">arrow_forward</span>
+            </span>
+          </div>
+        </a>
+      </ng-container>
+      <ng-template #noPosts>
+        <div class="posts-empty">
+          <portfolio-empty-state icon="article" title="No recent posts" message="Check back soon for new articles.">
+          </portfolio-empty-state>
         </div>
-      </a>
+      </ng-template>
     </ng-container>
     <ng-template #postsLoading>
       <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="350px"></portfolio-skeleton>
     </ng-template>
   </div>
 
-  <div class="section-cta">
+  <div class="section-cta" *ngIf="(latestPosts$ | async)?.length">
     <portfolio-button label="View All Posts" variant="secondary" size="md" [routerLink]="'/blogs'">
       <span icon class="material-icons">article</span>
     </portfolio-button>

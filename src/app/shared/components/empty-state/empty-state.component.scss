@@ -1,0 +1,42 @@
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-48) var(--space-24);
+    color: var(--theme-on-surface);
+
+    &__icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        margin-bottom: var(--space-24);
+        border-radius: 50%;
+        background: color-mix(in oklab, var(--theme-accent) 10%, transparent);
+        // Premium glow effect
+        box-shadow: 0 0 20px color-mix(in oklab, var(--theme-accent) 15%, transparent);
+        border: 1px solid color-mix(in oklab, var(--theme-accent) 20%, transparent);
+    }
+
+    &__icon {
+        font-size: 36px;
+        color: var(--theme-accent);
+    }
+
+    &__title {
+        margin: 0 0 var(--space-8);
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    &__message {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--theme-on-surface-variant);
+        max-width: 400px;
+        line-height: 1.6;
+    }
+}

@@ -30,6 +30,11 @@
   --space-42: 42px;
   --space-48: 48px;
   --space-64: 64px;
+  --space-72: 72px;
+  --space-80: 80px;
+  --space-88: 88px;
+  --space-96: 96px;
+  --space-128: 128px;
 
   /* Focus ring */
   --focus-ring-width: 2px;
@@ -44,6 +49,7 @@ body {
   background: var(--theme-surface);
   color: var(--theme-on-surface);
   scroll-behavior: smooth;
+  user-select: none;
 }
 
 /* Ensure routed content inherits themed surface */

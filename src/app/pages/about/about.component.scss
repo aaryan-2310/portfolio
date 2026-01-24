@@ -37,7 +37,7 @@
 /* Hero - Improved Layout */
 .about-hero {
   position: relative;
-  min-height: calc(85dvh - 56px);
+  height: calc(100dvh - 56px - 128px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -654,71 +654,343 @@
   background: var(--theme-surface);
 }
 
-.beyond .split {
+/* ========================================
+   BEYOND CODE - EDITORIAL LAYOUT
+   ======================================== */
+.beyond-code {
+  padding: var(--space-96) var(--space-24);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.beyond-code__layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 460px) 1fr;
   gap: var(--space-64);
   align-items: center;
 }
 
-.beyond .text h2 {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  margin-bottom: var(--space-32);
-  color: var(--theme-on-surface);
+.beyond-code__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
 }
 
-.beyond .list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.beyond .list li {
-  position: relative;
-  padding-left: var(--space-32);
-  margin-bottom: var(--space-24);
+.beyond-code__label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--theme-on-surface-variant);
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  opacity: 0.55;
+  display: block;
 }
 
-.beyond .list li:last-child {
-  margin-bottom: 0;
+.beyond-code__title {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--theme-on-surface);
+  max-width: 420px;
+  margin: 0;
 }
 
-.beyond .list li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--theme-accent);
-  font-weight: 700;
-  font-size: 1.125rem;
+.beyond-code__description {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--theme-on-surface-variant);
+  max-width: 420px;
+  margin: 0;
 }
 
-.beyond .art-box {
+.beyond-code__divider {
+  width: var(--space-48);
+  height: 1px;
+  background: var(--theme-accent);
+  opacity: 0.3;
+  margin: var(--space-24) 0;
+}
+
+.beyond-code__anchor {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.beyond-code__anchor-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--theme-on-surface);
+  margin: 0;
+}
+
+.beyond-code__anchor-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--theme-on-surface-variant);
+  margin: 0;
+  opacity: 0.8;
+}
+
+.beyond-code__art {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: radial-gradient(circle at top,
+      color-mix(in oklab, var(--theme-accent) 12%, transparent),
+      color-mix(in oklab, var(--theme-surface) 85%, black));
   width: 100%;
   aspect-ratio: 4/3;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--theme-border);
-  /* Generative CSS Pattern */
-  background-color: var(--theme-surface-1);
-  background-image:
-    radial-gradient(var(--theme-border) 1px, transparent 1px),
-    radial-gradient(var(--theme-border) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position:
-    0 0,
-    10px 10px;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
 
+/* Crystal Pipeline Integration */
+.beyond-code__art .crystal-pipeline {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+@media (max-width: 768px) {
+  .beyond-code__layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-48);
+  }
+
+  .beyond-code__art {
+    order: 5;
+  }
+}
+
+.crystal-pipeline {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%,
+      var(--theme-surface-1),
+      var(--theme-surface));
+  border: 1px solid var(--theme-border);
+  border-radius: var(--radius-xl);
+}
+
+.scene {
+  width: 300px;
+  height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  /* Isometric-ish view */
+  transform: rotateX(60deg) rotateZ(45deg) scale(0.8);
+}
+
+.assembly {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- 1. Chaotic Stream (Input) --- */
+.stream {
+  position: absolute;
+  /* Positioned "before" the gates in 3D space along Y/X */
+  transform: translate3d(-150px, -150px, 0);
+  transform-style: preserve-3d;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--theme-on-surface-variant);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 10px var(--theme-accent);
+  animation: flowToOrder 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  animation-delay: calc(var(--i) * 0.2s);
+
+  /* Random starting positions for chaos */
+  &:nth-child(1) {
+    top: -20px;
+    left: 20px;
+  }
+
+  &:nth-child(2) {
+    top: 30px;
+    left: -10px;
+  }
+
+  &:nth-child(3) {
+    top: 0;
+    left: 0;
+  }
+
+  &:nth-child(4) {
+    top: -40px;
+    left: -20px;
+  }
+
+  &:nth-child(5) {
+    top: 20px;
+    left: 40px;
+  }
+
+  &:nth-child(6) {
+    top: 50px;
+    left: 10px;
+  }
+}
+
+@keyframes flowToOrder {
+  0% {
+    transform: translate3d(0, 0, 20px) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.8;
+    transform: translate3d(30px, 30px, 0) scale(1);
+  }
+
+  80% {
+    /* Converging towards the center (0,0) where the core is */
+    opacity: 0.4;
+    transform: translate3d(130px, 130px, 0) scale(0.2);
+  }
+
+  100% {
+    transform: translate3d(150px, 150px, 0) scale(0);
+    opacity: 0;
+  }
+}
+
+/* --- 2. Logic Gates (Process) --- */
+.gates {
+  position: absolute;
+  transform-style: preserve-3d;
+  /* Align with flow path */
+  transform: translate3d(-50px, -50px, 0);
+}
+
+.gate {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 15px rgba(var(--theme-accent-rgb), 0.1);
+  transform-style: preserve-3d;
+  animation: gateSpin 8s infinite linear;
+  animation-delay: calc(var(--i) * -2s);
+
+  /* Spacing along the diagonal axis */
+  top: calc(var(--i) * 35px);
+  left: calc(var(--i) * 35px);
+
+  /* Make them look like frames */
   &::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg,
-        color-mix(in oklab, var(--theme-accent) 10%, transparent),
-        transparent);
+    inset: 4px;
+    border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, transparent);
+    opacity: 0.5;
+  }
+}
+
+@keyframes gateSpin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+/* --- 3. Stable Core (Output) --- */
+.core {
+  position: absolute;
+  /* End of the pipeline */
+  transform: translate3d(100px, 100px, 0);
+  width: 40px;
+  height: 40px;
+  transform-style: preserve-3d;
+  animation: coreFloat 4s ease-in-out infinite;
+}
+
+.face {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: color-mix(in oklab, var(--theme-accent) 80%, white);
+  border: 1px solid white;
+  opacity: 0.9;
+  box-shadow: 0 0 20px var(--theme-accent);
+}
+
+.face.front {
+  transform: translateZ(20px);
+}
+
+.face.back {
+  transform: rotateY(180deg) translateZ(20px);
+}
+
+.face.right {
+  transform: rotateY(90deg) translateZ(20px);
+}
+
+.face.left {
+  transform: rotateY(-90deg) translateZ(20px);
+}
+
+.face.top {
+  transform: rotateX(90deg) translateZ(20px);
+}
+
+.face.bottom {
+  transform: rotateX(-90deg) translateZ(20px);
+}
+
+@keyframes coreFloat {
+
+  0%,
+  100% {
+    transform: translate3d(100px, 100px, 0) rotateZ(0deg);
+  }
+
+  50% {
+    transform: translate3d(100px, 100px, 20px) rotateZ(10deg);
+  }
+}
+
+/* --- Theme Adjustments --- */
+/* Ensure glow visibility in light/dark modes */
+.assembly {
+  --theme-accent-rgb: 16, 185, 129;
+  /* Default emerald */
+}
+
+/* Responsive Scaling */
+@media (max-width: 600px) {
+  .scene {
+    transform: rotateX(60deg) rotateZ(45deg) scale(0.6);
   }
 }
 

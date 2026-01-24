@@ -6,11 +6,12 @@ import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterLink, SkeletonComponent, LoaderComponent],
+    imports: [CommonModule, RouterLink, SkeletonComponent, LoaderComponent, EmptyStateComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })

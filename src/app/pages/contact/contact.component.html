@@ -127,11 +127,11 @@
     <span class="material-icons cta-icon">forum</span>
     <p class="cta-text">Prefer a quick chat? Find me on social media or schedule a call.</p>
     <div class="cta-links">
-      <a href="https://linkedin.com/in/aaryan-2310" target="_blank" rel="noopener noreferrer" class="cta-link">
+      <a [href]="linkedinUrl" target="_blank" rel="noopener noreferrer" class="cta-link" *ngIf="linkedinUrl">
         <span class="material-icons">open_in_new</span>
         LinkedIn
       </a>
-      <a href="https://x.com/aaryan_2310" target="_blank" rel="noopener noreferrer" class="cta-link">
+      <a [href]="xUrl" target="_blank" rel="noopener noreferrer" class="cta-link" *ngIf="xUrl">
         <span class="material-icons">open_in_new</span>
         X (Twitter)
       </a>

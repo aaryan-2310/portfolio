@@ -5,6 +5,7 @@ import { Observable, map, startWith, shareReplay, catchError, of } from 'rxjs';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
+import { ContactService } from '../../core/services/contact.service';
 import { trackByTitle, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
@@ -35,6 +36,7 @@ export class ProjectsComponent {
 
   projects$: Observable<ProjectView[] | null>;
   settings$: Observable<SiteSettings | null>;
+  githubUrl$: Observable<string>;
   isLoading = true;
 
   private gradients = [
@@ -47,7 +49,8 @@ export class ProjectsComponent {
 
   constructor(
     private projectService: ProjectService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private contactService: ContactService
   ) {
     this.projects$ = this.projectService.getAll().pipe(
       map(projects => projects
@@ -62,6 +65,11 @@ export class ProjectsComponent {
       shareReplay(1)
     );
     this.settings$ = this.settingsService.settings$;
+
+    this.githubUrl$ = this.contactService.getSocialLinks().pipe(
+      map(links => links.find(l => l.name.toLowerCase() === 'github')?.url || 'https://github.com'),
+      shareReplay(1)
+    );
   }
 
 

@@ -64,9 +64,10 @@
   </div>
 
   <!-- Empty State -->
+  <!-- Empty State -->
   <div class="blogs__empty" *ngIf="(filteredBlogs$ | async)?.length === 0">
-    <span class="material-icons empty-icon">article</span>
-    <h3>No blog posts yet</h3>
-    <p>Check back soon for articles on software development and more.</p>
+    <portfolio-empty-state icon="article" title="No blog posts yet"
+      message="Check back soon for articles on software development and more.">
+    </portfolio-empty-state>
   </div>
 </section>
