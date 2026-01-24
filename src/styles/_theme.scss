@@ -12,17 +12,26 @@ $light-vars: (
   primary: #059669,
   on-primary: #ffffff,
   accent: #059669,
-  surface-variant: #f0f0f0,
+  surface-variant: #f3f4f6,
+  // Gray 100
   on-surface-variant: #374151,
+  // Gray 700
   outline: #d1d5db,
+  // Gray 300
   border: #e5e7eb,
+  // Gray 200
   surface-1: #ffffff,
   surface-2: #fafafa,
+  // Gray 50
   surface-3: #f5f5f5,
+  // Gray 100
   hover: color-mix(in oklab, var(--theme-on-surface) 6%, transparent),
   active: color-mix(in oklab, var(--theme-on-surface) 12%, transparent),
   disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
   ring-color: color-mix(in oklab, var(--theme-accent) 50%, white),
+  shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+  shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
   surface-rgb: (255, 255, 255),
   accent-rgb: (5, 150, 105),
 );
@@ -38,8 +47,11 @@ $dark-vars: (
   on-primary: #ffffff,
   accent: #{colors.$color-accent},
   surface-variant: #374151,
+  // Gray 700
   on-surface-variant: #a0aec0,
+  // Gray 400
   outline: #4b5563,
+  // Gray 600
   border: #333333,
   surface-1: #1b1b1b,
   surface-2: #212121,
@@ -48,6 +60,9 @@ $dark-vars: (
   active: color-mix(in oklab, var(--theme-on-surface) 20%, transparent),
   disabled: color-mix(in oklab, var(--theme-on-surface) 40%, transparent),
   ring-color: color-mix(in oklab, var(--theme-accent) 70%, black),
+  shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3),
+  shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+  shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
   surface-rgb: (24, 24, 24),
   accent-rgb: (52, 211, 153),
 );

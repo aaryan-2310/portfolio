@@ -1,6 +1,5 @@
 // loader.component.scss
-$accent: #10b981;
-$bg-dark: #050505;
+$accent: var(--theme-accent);
 
 .loader-container {
     display: flex;
@@ -11,7 +10,7 @@ $bg-dark: #050505;
     &.fullscreen {
         position: fixed;
         inset: 0;
-        background: $bg-dark;
+        background: var(--theme-background);
         z-index: 9999;
     }
 }
@@ -42,7 +41,7 @@ $bg-dark: #050505;
 .spinner-ring {
     position: absolute;
     inset: 0;
-    border: 3px solid rgba($accent, 0.1);
+    border: 3px solid color-mix(in oklab, var(--theme-accent) 20%, transparent);
     border-top-color: $accent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -58,7 +57,7 @@ $bg-dark: #050505;
 
 .message {
     font-family: 'Inter', sans-serif;
-    color: #e5e7eb;
+    color: var(--theme-on-surface);
     font-size: 1.1rem;
     font-weight: 500;
     min-height: 1.5em;
@@ -68,7 +67,7 @@ $bg-dark: #050505;
 
 .sub-message {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--theme-on-surface-variant);
     font-family: 'JetBrains Mono', monospace;
     opacity: 0;
     animation: fadeIn 0.5s ease 0.5s forwards;
@@ -77,7 +76,7 @@ $bg-dark: #050505;
 .progress-track {
     width: 200px;
     height: 4px;
-    background: rgba(255, 255, 255, 0.05);
+    background: color-mix(in oklab, var(--theme-on-surface) 10%, transparent);
     border-radius: 2px;
     overflow: hidden;
 }
@@ -87,7 +86,7 @@ $bg-dark: #050505;
     background: $accent;
     border-radius: 2px;
     transition: width 0.2s linear;
-    box-shadow: 0 0 10px rgba($accent, 0.5);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--theme-accent) 50%, transparent);
 }
 
 @keyframes spin {
