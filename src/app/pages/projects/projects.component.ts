@@ -115,12 +115,17 @@ export class ProjectsComponent {
     );
 
     this.resultCount$ = this.filteredProjects$.pipe(map(p => p.length));
+
     this.settings$ = this.settingsService.settings$;
     this.githubUrl$ = this.contactService.getSocialLinks().pipe(
       map(links => links.find(l => l.name.toLowerCase() === 'github')?.url || 'https://github.com'),
       shareReplay(1)
     );
   }
+
+  readonly hasActiveSearch$ = combineLatest([this.selectedTag$, this.searchQuery$]).pipe(
+    map(([tag, q]) => tag !== null || q !== '')
+  );
 
   onSearch(query: string): void {
     this.router.navigate([], {

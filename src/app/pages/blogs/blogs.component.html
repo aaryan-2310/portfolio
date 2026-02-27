@@ -74,8 +74,10 @@
 
     <!-- Empty State -->
     <div class="blogs__empty" *ngIf="!isLoading && (filteredBlogs$ | async)?.length === 0">
-      <portfolio-empty-state icon="article" title="No articles found"
-        message="Try adjusting your search or filter to find what you're looking for.">
+      <portfolio-empty-state
+        [icon]="(hasActiveSearch$ | async) ? 'search_off' : 'article'"
+        [title]="(hasActiveSearch$ | async) ? 'No results found' : 'No articles yet'"
+        [message]="(hasActiveSearch$ | async) ? 'Try adjusting your search or filter to find what you\'re looking for.' : 'Check back soon — new content is on the way.'">
       </portfolio-empty-state>
     </div>
   </div>

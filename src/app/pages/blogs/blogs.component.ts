@@ -85,6 +85,10 @@ export class BlogsComponent {
         this.resultCount$ = this.filteredBlogs$.pipe(map(list => list.length));
     }
 
+    readonly hasActiveSearch$ = combineLatest([this.selectedTag$, this.searchQuery$]).pipe(
+        map(([tag, q]) => tag !== null || q !== '')
+    );
+
     onTagChange(tag: string | null): void {
         this.selectedTag = tag;
         this.selectedTag$.next(tag);

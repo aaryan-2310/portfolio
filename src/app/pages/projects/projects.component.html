@@ -117,8 +117,10 @@
       <!-- Empty State -->
       <div class="projects__empty" *ngIf="!isLoading && data.projects?.length === 0"
         style="grid-column: 1/-1; display: flex; justify-content: center; padding: 48px 0;">
-        <portfolio-empty-state icon="search_off" title="No projects found"
-          message="We couldn't find any projects matching your search. Try different keywords.">
+        <portfolio-empty-state
+          [icon]="(hasActiveSearch$ | async) ? 'search_off' : 'folder_off'"
+          [title]="(hasActiveSearch$ | async) ? 'No projects found' : 'No projects yet'"
+          [message]="(hasActiveSearch$ | async) ? 'Try different keywords or clear your filter.' : 'Check back soon — projects are on the way.'">
         </portfolio-empty-state>
       </div>
 
