@@ -61,7 +61,7 @@
     <section class="projects-section">
       <!-- Loading Skeletons -->
       <div class="projects__grid" *ngIf="isLoading">
-        <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card" height="320px"></portfolio-skeleton>
+        <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card"></portfolio-skeleton>
       </div>
 
       <div class="projects__grid" *ngIf="!isLoading">
