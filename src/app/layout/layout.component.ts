@@ -83,7 +83,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntilDestroyed()
-    ).subscribe((event: any) => {
+    ).subscribe((event: NavigationEnd) => {
       this.isProjectDetailPage = event.url.includes('/projects/') && !event.url.endsWith('/projects');
       // Reset active section on navigation
       if (this.isProjectDetailPage) {
