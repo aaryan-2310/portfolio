@@ -341,6 +341,16 @@
   color: var(--theme-on-accent);
 }
 
+.service-card:active {
+  transform: translateY(-2px);
+  box-shadow: var(--elev-1);
+  border-color: color-mix(in oklab, var(--theme-accent) 50%, var(--theme-border));
+}
+
+.service-card:active .service-icon-wrapper {
+  background: color-mix(in oklab, var(--theme-accent) 60%, transparent);
+}
+
 .service-icon-wrapper {
   display: flex;
   align-items: center;
