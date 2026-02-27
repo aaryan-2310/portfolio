@@ -53,6 +53,7 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy() {
         this.observer?.disconnect();
+        clearTimeout(this.debounceTimer);
     }
 
     onSearch(event: Event): void {
