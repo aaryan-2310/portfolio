@@ -232,7 +232,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   .hero-surface {
     min-height: calc(100dvh - 56px - 32px);
   }
@@ -402,14 +402,14 @@
   border-radius: var(--radius-full);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .services-grid {
     @include responsive-grid(1, 2, 4);
     gap: var(--space-24);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   .service-card {
     padding: var(--space-24);
   }
@@ -528,8 +528,8 @@
    COMPREHENSIVE RESPONSIVE BREAKPOINTS
    ======================================== */
 
-/* Tablet (768px - 900px) */
-@media (max-width: 900px) {
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
   .section {
     padding: var(--space-24) var(--space-16);
   }
@@ -539,8 +539,8 @@
   }
 }
 
-/* Mobile (max-width: 600px) */
-@media (max-width: 600px) {
+/* Mobile (max-width: 599px) */
+@media (max-width: 599px) {
   .section {
     padding: var(--space-16) var(--space-12);
   }
@@ -984,7 +984,7 @@
   outline-offset: var(--focus-ring-offset);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .posts-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -994,7 +994,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   #latest-posts {
     padding: var(--space-32) var(--space-12);
   }

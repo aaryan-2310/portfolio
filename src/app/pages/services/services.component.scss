@@ -22,7 +22,7 @@
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
     .section {
         padding: var(--space-64) var(--space-24);
     }
@@ -32,7 +32,7 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
     .section {
         padding: var(--space-48) var(--space-16);
     }
@@ -352,7 +352,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .service-card {
         padding: var(--space-24);
     }
@@ -489,7 +489,7 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
     .cta-section {
         padding: var(--space-64) var(--space-16);
 

@@ -484,7 +484,7 @@
    RESPONSIVE BREAKPOINTS
    ======================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .navbar-inner {
     padding: 0 var(--space-16);
     gap: var(--space-16);
@@ -500,7 +500,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .desktop-only {
     display: none !important;
   }
@@ -639,7 +639,7 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   .footer {
 
     .footer-content,
