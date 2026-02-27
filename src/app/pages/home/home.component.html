@@ -108,7 +108,7 @@
       <div *ngFor="let skill of skills; trackBy: trackBySkill" class="skill-chip">
         <ng-container *ngIf="skill.icon">
           <img *ngIf="skill.icon.startsWith('http')" [ngSrc]="skill.icon" [alt]="skill.name" width="24" height="24"
-            class="skill-icon custom" />
+            class="skill-icon custom" loading="lazy" />
           <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
         </ng-container>
         <span class="skill-name">{{ skill.name }}</span>
