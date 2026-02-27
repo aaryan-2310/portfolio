@@ -108,10 +108,9 @@
       inset 0 1px 1px color-mix(in oklab, white 8%, transparent);
 
     /* Smooth entrance + gentle float */
-    animation: badgeFloat 4s ease-in-out infinite;
     opacity: 0;
     animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-      badgeFloat 4s ease-in-out 0.8s infinite;
+      badgeFloat 4s ease-in-out 0.8s 3;
 
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -292,7 +291,7 @@
   bottom: var(--space-24);
   left: 50%;
   transform: translateX(-50%);
-  animation: bounce 2s infinite;
+  animation: bounce 2s ease-in-out 4;
 
   .material-icons {
     font-size: 32px;

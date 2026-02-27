@@ -45,7 +45,7 @@
       transparent 70%);
   top: -100px;
   right: -100px;
-  animation: floatOrb 8s ease-in-out infinite;
+  animation: floatOrb 8s ease-in-out 6;
   pointer-events: none;
 }
 
@@ -60,7 +60,7 @@
       transparent 70%);
   bottom: -50px;
   left: -50px;
-  animation: floatOrb 10s ease-in-out infinite reverse;
+  animation: floatOrb 10s ease-in-out 6 reverse;
   pointer-events: none;
 }
 
@@ -116,7 +116,7 @@
   border-radius: 50%;
   background: var(--theme-accent);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--theme-accent) 30%, transparent);
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse 2s ease-in-out 6;
 }
 
 @keyframes pulse {

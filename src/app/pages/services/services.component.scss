@@ -137,7 +137,7 @@
         bottom: var(--space-24);
         left: 50%;
         transform: translateX(-50%);
-        animation: bounce 2s infinite;
+        animation: bounce 2s ease-in-out 4;
 
         .material-icons {
             font-size: 32px;
