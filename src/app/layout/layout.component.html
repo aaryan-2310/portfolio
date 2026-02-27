@@ -8,7 +8,7 @@
       <ng-container *ngIf="isProjectDetailPage">
         <div class="context-nav-left">
           <a class="nav-back-btn" routerLink="/projects" aria-label="Back to projects">
-            <mat-icon>arrow_back</mat-icon>
+            <span class="material-icons" aria-hidden="true">arrow_back</span>
             <span>Back</span>
           </a>
         </div>
@@ -79,7 +79,7 @@
         <button class="theme-toggle" (click)="toggleTheme()"
           [attr.aria-label]="getCurrentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
           type="button">
-          <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
+          <span class="material-icons" aria-hidden="true">{{ getCurrentTheme() }}_mode</span>
         </button>
 
         <!-- Mobile Menu Toggle -->
@@ -108,22 +108,22 @@
           <span class="mobile-group-label">On This Page</span>
           <button class="mobile-nav-link" (click)="scrollToSection('overview')"
             [class.active]="activeSection === 'overview'">
-            <mat-icon>dashboard</mat-icon>
+            <span class="material-icons" aria-hidden="true">dashboard</span>
             <span>Overview</span>
           </button>
           <button class="mobile-nav-link" (click)="scrollToSection('architecture')"
             [class.active]="activeSection === 'architecture'">
-            <mat-icon>architecture</mat-icon>
+            <span class="material-icons" aria-hidden="true">architecture</span>
             <span>Architecture</span>
           </button>
           <button class="mobile-nav-link" (click)="scrollToSection('decisions')"
             [class.active]="activeSection === 'decisions'">
-            <mat-icon>psychology</mat-icon>
+            <span class="material-icons" aria-hidden="true">psychology</span>
             <span>Decisions</span>
           </button>
           <button class="mobile-nav-link" (click)="scrollToSection('learnings')"
             [class.active]="activeSection === 'learnings'">
-            <mat-icon>lightbulb</mat-icon>
+            <span class="material-icons" aria-hidden="true">lightbulb</span>
             <span>Learnings</span>
           </button>
         </div>
@@ -132,35 +132,35 @@
 
       <a class="mobile-nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         (click)="mobileMenuOpen = false">
-        <mat-icon>home</mat-icon>
+        <span class="material-icons" aria-hidden="true">home</span>
         <span>Home</span>
       </a>
 
       <a class="mobile-nav-link" routerLink="/projects" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>apps</mat-icon>
+        <span class="material-icons" aria-hidden="true">apps</span>
         <span>Case Studies</span>
       </a>
       <a class="mobile-nav-link" routerLink="/career" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>work</mat-icon>
+        <span class="material-icons" aria-hidden="true">work</span>
         <span>Work</span>
       </a>
       <a class="mobile-nav-link" routerLink="/blogs" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>edit_note</mat-icon> <!-- Changed icon to be more 'writing' related -->
+        <span class="material-icons" aria-hidden="true">edit_note</span>
         <span>Writing</span>
       </a>
       <a class="mobile-nav-link" routerLink="/about" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>person</mat-icon>
+        <span class="material-icons" aria-hidden="true">person</span>
         <span>About</span>
       </a>
       <a class="mobile-nav-link" routerLink="/contact" routerLinkActive="active" (click)="mobileMenuOpen = false">
-        <mat-icon>mail</mat-icon>
+        <span class="material-icons" aria-hidden="true">mail</span>
         <span>Contact</span>
       </a>
     </nav>
 
     <div class="mobile-menu-footer">
       <button class="mobile-theme-toggle" (click)="toggleTheme()" type="button">
-        <mat-icon>{{ getCurrentTheme() }}_mode</mat-icon>
+        <span class="material-icons" aria-hidden="true">{{ getCurrentTheme() }}_mode</span>
         <span>{{ getCurrentTheme() === 'dark' ? 'Light Mode' : 'Dark Mode' }}</span>
       </button>
     </div>

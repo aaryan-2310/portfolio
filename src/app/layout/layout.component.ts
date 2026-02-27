@@ -1,12 +1,11 @@
 import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../core/services/theme.service';
-import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { SettingsService } from '../core/services/settings.service';
-import { A11yModule } from '@angular/cdk/a11y';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { ChatWidgetComponent } from '../shared/components/chat-widget/chat-widget.component';
 import { ToolbarSearchComponent } from '../shared/components/toolbar-search/toolbar-search.component';
 import { filter } from 'rxjs/operators';
@@ -18,10 +17,9 @@ import { filter } from 'rxjs/operators';
   styleUrl: './layout.component.scss',
   imports: [
     CommonModule,
-    MatIconModule,
     RouterModule,
     FooterComponent,
-    A11yModule,
+    CdkTrapFocus,
     ChatWidgetComponent,
     ToolbarSearchComponent,
   ],
