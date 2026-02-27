@@ -32,38 +32,36 @@
 
     <!-- Post Grid -->
     <div class="blogs__grid" *ngIf="!isLoading">
-      <ng-container *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost">
-        <portfolio-card *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost" [title]="post.title"
-          [description]="post.excerpt" [image]="post.coverImage" [routerLink]="['/blogs', post.slug]">
+      <portfolio-card *ngFor="let post of filteredBlogs$ | async; trackBy: trackByPost" [title]="post.title"
+        [description]="post.excerpt" [image]="post.coverImage" [routerLink]="['/blogs', post.slug]">
 
-          <!-- Category Pill -->
-          <span card-media-extra class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
+        <!-- Category Pill -->
+        <span card-media-extra class="blog-card__category" *ngIf="post.tags.length > 0">{{ post.tags[0] }}</span>
 
-          <!-- Footer (Meta + Tags + Action) -->
-          <div card-footer>
-            <!-- Meta Info (Date/Time) -->
-            <div class="blog-card__meta">
-              <span class="meta-item">{{ formatDate(post.publishedAt) }}</span>
-              <span class="meta-dot">·</span>
-              <span class="meta-item">{{ post.readTime }} min read</span>
-            </div>
-
-            <div class="blog-card__footer">
-              <div class="blog-card__tags">
-                <span *ngFor="let tag of post.tags.slice(0, 2); trackBy: trackByTag" class="tag-pill">
-                  {{ tag }}
-                </span>
-                <span *ngIf="post.tags.length > 2" class="tag-pill more">+{{ post.tags.length - 2 }}</span>
-              </div>
-
-              <span class="read-action">
-                Read
-                <span class="material-icons">arrow_forward</span>
-              </span>
-            </div>
+        <!-- Footer (Meta + Tags + Action) -->
+        <div card-footer>
+          <!-- Meta Info (Date/Time) -->
+          <div class="blog-card__meta">
+            <span class="meta-item">{{ formatDate(post.publishedAt) }}</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-item">{{ post.readTime }} min read</span>
           </div>
-        </portfolio-card>
-      </ng-container>
+
+          <div class="blog-card__footer">
+            <div class="blog-card__tags">
+              <span *ngFor="let tag of post.tags.slice(0, 2); trackBy: trackByTag" class="tag-pill">
+                {{ tag }}
+              </span>
+              <span *ngIf="post.tags.length > 2" class="tag-pill more">+{{ post.tags.length - 2 }}</span>
+            </div>
+
+            <span class="read-action">
+              Read
+              <span class="material-icons">arrow_forward</span>
+            </span>
+          </div>
+        </div>
+      </portfolio-card>
     </div>
 
     <!-- Empty State -->
