@@ -46,11 +46,16 @@
       </div>
     </section>
 
-    <!-- Toolbar -->
-    <portfolio-toolbar-search [tags]="allTags" [activeTag]="selectedTag" [resultCount]="resultCount$ | async"
-      [placeholderTexts]="placeholderTexts" (searchChange)="onSearch($any($event))"
-      (tagChange)="onTagChange($any($event))" (focusChange)="onFocusChange($any($event))">
-    </portfolio-toolbar-search>
+    <!-- Filters -->
+    <div class="filters-bar">
+      <button class="filter-chip" [class.active]="selectedTag === null" (click)="onTagChange(null)">
+        All
+      </button>
+      <button class="filter-chip" *ngFor="let tag of allTags" [class.active]="selectedTag === tag"
+        (click)="onTagChange(tag)">
+        {{ tag }}
+      </button>
+    </div>
 
     <!-- Projects Grid Section -->
     <section class="projects-section">

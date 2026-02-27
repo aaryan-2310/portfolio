@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Observable, map, shareReplay, catchError, of, BehaviorSubject, combineLatest, tap } from 'rxjs';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { Observable, map, shareReplay, catchError, of, BehaviorSubject, combineLatest } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Project, ProjectService } from '../../core/services/project.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
@@ -9,7 +10,6 @@ import { ContactService } from '../../core/services/contact.service';
 import { trackByTitle, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
-import { ToolbarSearchComponent } from '../../shared/components/toolbar-search/toolbar-search.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
 
@@ -27,12 +27,11 @@ type ProjectView = {
 @Component({
   selector: 'portfolio-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, ToolbarSearchComponent, EmptyStateComponent, PortfolioCardComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, EmptyStateComponent, PortfolioCardComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent {
-  @ViewChild(ToolbarSearchComponent) toolbar!: ToolbarSearchComponent;
 
   header = {
     title: 'Projects',
@@ -68,8 +67,16 @@ export class ProjectsComponent {
   constructor(
     private projectService: ProjectService,
     private settingsService: SettingsService,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    // React to Query Params
+    this.route.queryParams.pipe(takeUntilDestroyed()).subscribe(params => {
+      const q = params['q'] || '';
+      this.searchQuery$.next(q);
+    });
+
     // Load Data
     this.projectService.getAll().pipe(
       map(projects => projects
@@ -105,11 +112,6 @@ export class ProjectsComponent {
           return matchesTag && matchesSearch;
         });
       }),
-      tap(results => {
-        if (results.length === 0 && this.searchQuery$.value) {
-          this.toolbar?.triggerShake();
-        }
-      }),
       shareReplay(1)
     );
 
@@ -122,7 +124,11 @@ export class ProjectsComponent {
   }
 
   onSearch(query: string): void {
-    this.searchQuery$.next(query);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { q: query || null },
+      queryParamsHandling: 'merge'
+    });
   }
 
   onTagChange(tag: string | null): void {

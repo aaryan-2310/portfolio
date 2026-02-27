@@ -14,9 +14,9 @@
     display: flex;
     flex-direction: column;
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        transform 0.4s var(--ease-spring),
+        box-shadow 0.4s var(--ease-spring),
+        border-color 0.3s ease;
     animation: cardFadeIn 0.5s ease-out calc(var(--card-index) * 0.1s) both;
     position: relative;
 
@@ -40,6 +40,13 @@
         background-repeat: no-repeat;
         border-bottom: 1px solid var(--theme-border);
         overflow: hidden;
+        transition: transform 0.5s ease-out; // Smooth zoom for parallax
+        transform-origin: center center;
+    }
+
+    &:hover .card-media,
+    &:focus-within .card-media {
+        transform: scale(1.05);
     }
 
     .card-overlay {

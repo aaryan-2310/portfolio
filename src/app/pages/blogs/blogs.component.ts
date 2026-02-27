@@ -1,23 +1,22 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
-import { ToolbarSearchComponent } from '../../shared/components/toolbar-search/toolbar-search.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterModule, LoaderComponent, EmptyStateComponent, ToolbarSearchComponent, PortfolioCardComponent],
+    imports: [CommonModule, RouterModule, LoaderComponent, EmptyStateComponent, PortfolioCardComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })
 export class BlogsComponent {
-    @ViewChild(ToolbarSearchComponent) toolbar!: ToolbarSearchComponent;
 
     header = {
         title: 'Blog',
@@ -42,7 +41,17 @@ export class BlogsComponent {
     selectedTag: string | null = null;
     isLoading = true;
 
-    constructor(private blogService: BlogService) {
+    constructor(
+        private blogService: BlogService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {
+        // React to Query Params
+        this.route.queryParams.pipe(takeUntilDestroyed()).subscribe(params => {
+            const q = params['q'] || '';
+            this.searchQuery$.next(q);
+        });
+
         // Fetch raw data
         this.blogService.getAll().pipe(
             map(posts => posts.map(p => BlogService.toView(p)))
@@ -68,10 +77,8 @@ export class BlogsComponent {
                 });
             }),
             tap(results => {
-                // Haptic/Shake on "No Results"
-                if (results.length === 0 && this.searchQuery$.value) {
-                    this.toolbar?.triggerShake();
-                }
+                console.log(`Filtered blogs: ${results.length} results for tag="${this.selectedTag}" and query="${this.searchQuery$.value}"`);
+                // TODO: Haptic/Shake on "No Results" (Optional: implement a different feedback mechanism)
             })
         );
 
@@ -84,7 +91,11 @@ export class BlogsComponent {
     }
 
     onSearch(query: string): void {
-        this.searchQuery$.next(query);
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { q: query || null },
+            queryParamsHandling: 'merge'
+        });
     }
 
     onFocusChange(focused: boolean): void {

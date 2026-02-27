@@ -1,8 +1,8 @@
 <!-- Toolbar Docking Sentinel -->
-<div class="sticky-sentinel" #sentinel></div>
+<div class="sticky-sentinel" #sentinel *ngIf="mode === 'inline'"></div>
 
 <!-- Toolbar Wrapper -->
-<div class="toolbar-wrapper" [class.is-docked]="isDocked">
+<div class="toolbar-wrapper" [class.is-docked]="isDocked" [class.global-mode]="mode === 'global'">
     <div class="portfolio-toolbar" [class.focused]="searchFocused">
 
         <!-- Search Input -->

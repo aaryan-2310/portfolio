@@ -273,8 +273,7 @@
 // PROJECTS GRID SECTION
 // ============================================
 .projects-section {
-  max-width: 1200px;
-  margin: 0 auto;
+  // max-width: 1200px;
   padding: var(--space-64) var(--space-24) var(--space-80);
   background: var(--theme-surface);
   color: var(--theme-on-surface);
@@ -307,12 +306,12 @@
 
   .projects__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: var(--space-32);
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-24);
 
     @media (max-width: 599px) {
       grid-template-columns: 1fr;
-      gap: var(--space-24);
+      gap: var(--space-16);
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "additionalDirectories": [
+      "C:\\usr\\workspace\\personal\\portfolio-cms"
+    ],
+    "allow": [
+      "Bash(wc:*)"
+    ]
+  }
+}
