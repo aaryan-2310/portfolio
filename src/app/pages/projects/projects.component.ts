@@ -9,7 +9,6 @@ import { SettingsService, SiteSettings } from '../../core/services/settings.serv
 import { ContactService } from '../../core/services/contact.service';
 import { trackByTitle, trackByValue } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
-import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
 
@@ -27,7 +26,7 @@ type ProjectView = {
 @Component({
   selector: 'portfolio-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, EmptyStateComponent, PortfolioCardComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, EmptyStateComponent, PortfolioCardComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })

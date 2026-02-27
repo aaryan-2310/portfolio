@@ -59,7 +59,12 @@
 
     <!-- Projects Grid Section -->
     <section class="projects-section">
-      <div class="projects__grid">
+      <!-- Loading Skeletons -->
+      <div class="projects__grid" *ngIf="isLoading">
+        <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card" height="320px"></portfolio-skeleton>
+      </div>
+
+      <div class="projects__grid" *ngIf="!isLoading">
         <!-- Loaded State -->
         <portfolio-card *ngFor="let p of data.projects; trackBy: trackByProject; let i = index" [index]="i"
           [title]="p.title" [description]="p.description" [image]="p.image" [gradient]="p.gradient"
@@ -122,7 +127,3 @@
     </section>
   </div>
 </ng-container>
-
-<ng-template #loading>
-  <portfolio-loader [fullscreen]="true"></portfolio-loader>
-</ng-template>
