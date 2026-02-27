@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { Observable, BehaviorSubject, combineLatest, map, tap } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, map, catchError, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
@@ -54,7 +54,11 @@ export class BlogsComponent {
 
         // Fetch raw data
         this.blogService.getAll().pipe(
-            map(posts => posts.map(p => BlogService.toView(p)))
+            map(posts => posts.map(p => BlogService.toView(p))),
+            catchError(err => {
+                console.error('BlogsComponent: Failed to load blogs', err);
+                return of([]);
+            })
         ).subscribe(views => {
             this.blogsSource$.next(views);
             this.allTags = [...new Set(views.flatMap(v => v.tags))].sort();
@@ -75,10 +79,6 @@ export class BlogsComponent {
                         post.excerpt.toLowerCase().includes(query.toLowerCase());
                     return matchesTag && matchesSearch;
                 });
-            }),
-            tap(results => {
-                console.log(`Filtered blogs: ${results.length} results for tag="${this.selectedTag}" and query="${this.searchQuery$.value}"`);
-                // TODO: Haptic/Shake on "No Results" (Optional: implement a different feedback mechanism)
             })
         );
 
