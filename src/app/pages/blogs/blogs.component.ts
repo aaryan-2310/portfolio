@@ -106,11 +106,6 @@ export class BlogsComponent {
         this.spotlightActive = focused;
     }
 
-    // Helper method for template compatibility if needed, or update template to call onTagChange
-    filterByTag(tag: string | null): void {
-        this.onTagChange(tag);
-    }
-
     formatDate = formatDateLong;
     trackByPost = trackById;
     trackByTag = trackByValue;
