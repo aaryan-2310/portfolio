@@ -89,6 +89,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       if (this.isProjectDetailPage) {
         this.activeSection = 'overview';
       }
+      this.mobileMenuOpen = false;
     });
   }
 
