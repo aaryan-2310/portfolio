@@ -48,10 +48,18 @@
 
     <!-- Filters -->
     <div class="filters-bar">
-      <button class="filter-chip" [class.active]="selectedTag === null" (click)="onTagChange(null)">
+      <button class="filter-chip"
+        [class.active]="selectedTag === null"
+        [attr.aria-pressed]="selectedTag === null"
+        aria-label="Show all projects"
+        (click)="onTagChange(null)">
         All
       </button>
-      <button class="filter-chip" *ngFor="let tag of allTags" [class.active]="selectedTag === tag"
+      <button class="filter-chip"
+        *ngFor="let tag of allTags"
+        [class.active]="selectedTag === tag"
+        [attr.aria-pressed]="selectedTag === tag"
+        [attr.aria-label]="'Filter projects by ' + tag"
         (click)="onTagChange(tag)">
         {{ tag }}
       </button>
