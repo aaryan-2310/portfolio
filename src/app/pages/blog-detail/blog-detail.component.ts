@@ -57,7 +57,7 @@ export class BlogDetailComponent implements OnInit {
             if (post) {
                 this.post = post;
                 if (post.content) {
-                    const rawHtml = marked(post.content) as string;
+                    const rawHtml = marked.parse(post.content, { async: false });
                     const cleanHtml = DOMPurify.sanitize(rawHtml);
                     this.renderedContent = this.sanitizer.bypassSecurityTrustHtml(cleanHtml);
                 }
