@@ -215,9 +215,11 @@
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
 
+  .hero-eyebrow,
   .hero-title,
   .hero-sub,
-  .hero-buttons {
+  .hero-buttons,
+  .hero-trust {
     opacity: 1;
     transform: none;
     animation: none;
