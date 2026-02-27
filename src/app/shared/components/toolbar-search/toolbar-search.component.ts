@@ -100,6 +100,8 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
         }, 200);
     }
 
+    trackByTag = (_: number, tag: string): string => tag;
+
     // Bind to parent if they want to trigger shake externally, or check internal
     triggerShake() {
         this.searchShake = true;

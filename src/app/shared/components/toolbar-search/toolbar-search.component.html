@@ -33,7 +33,7 @@
             <button class="filter-chip" [class.active]="activeTag === null" (click)="selectTag(null)">
                 All
             </button>
-            <button *ngFor="let tag of tags" class="filter-chip" [class.active]="activeTag === tag"
+            <button *ngFor="let tag of tags; trackBy: trackByTag" class="filter-chip" [class.active]="activeTag === tag"
                 (click)="selectTag(tag)">
                 {{ tag }}
             </button>
