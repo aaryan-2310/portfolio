@@ -8,6 +8,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  --navbar-height: 64px;
 }
 
 /* Navbar Base */
@@ -501,6 +502,10 @@
 }
 
 @media (max-width: 767px) {
+  .layout-container {
+    --navbar-height: 56px;
+  }
+
   .desktop-only {
     display: none !important;
   }

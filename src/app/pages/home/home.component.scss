@@ -7,7 +7,7 @@
 }
 
 .hero-surface {
-  min-height: calc(100dvh - 64px);
+  min-height: calc(100dvh - var(--navbar-height, 64px));
   display: grid;
   place-items: center;
   position: relative;
@@ -233,14 +233,6 @@
 
 /* Responsive adjustments */
 @media (max-width: 599px) {
-  .hero-surface {
-    min-height: calc(100dvh - 56px - 32px);
-  }
-
-  .hero-content {
-    padding: var(--space-32);
-  }
-
   .hero-buttons {
     flex-direction: column;
     gap: var(--space-12);
