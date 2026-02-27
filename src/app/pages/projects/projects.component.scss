@@ -346,8 +346,8 @@
   &:hover {
     transform: scale(1.1);
     box-shadow: var(--elev-4);
-    background: var(--theme-inverse-surface);
-    color: var(--theme-inverse-on-surface);
+    background: var(--theme-surface-2);
+    color: var(--theme-on-surface);
   }
 
   &.primary {
@@ -398,13 +398,13 @@
   margin-top: auto;
 
   // Hide on desktop to prefer overlay actions
-  @media (min-width: 1025px) {
+  @media (min-width: 1024px) {
     display: none;
   }
 }
 
 // Responsive adjustments
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
 
   // Hide overlay actions on touch/tablet
   .overlay-actions {
@@ -418,13 +418,13 @@
 }
 
 // Responsive adjustments for the section
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .projects-section {
     padding: var(--space-48) var(--space-24) var(--space-64);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 599px) {
   .projects-section {
     padding: var(--space-32) var(--space-16) var(--space-48);
   }

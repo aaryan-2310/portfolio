@@ -109,13 +109,13 @@
 }
 
 // Media Query adjustments (optional, matched from projects)
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .portfolio-card .card-body {
         padding: var(--space-24);
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 599px) {
     .portfolio-card .card-body {
         padding: var(--space-16);
         gap: var(--space-12);
