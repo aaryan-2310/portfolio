@@ -168,7 +168,9 @@
 
   <main class="content" id="main">
     <router-outlet></router-outlet>
-    <portfolio-chat-widget></portfolio-chat-widget>
+    @defer (on idle) {
+      <portfolio-chat-widget></portfolio-chat-widget>
+    }
   </main>
 
   <portfolio-footer></portfolio-footer>
