@@ -8,6 +8,7 @@ import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { formatDateLong, trackByValue } from '../../shared/utils';
 
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
@@ -56,8 +57,9 @@ export class BlogDetailComponent implements OnInit {
             if (post) {
                 this.post = post;
                 if (post.content) {
-                    const html = marked(post.content) as string;
-                    this.renderedContent = this.sanitizer.bypassSecurityTrustHtml(html);
+                    const rawHtml = marked(post.content) as string;
+                    const cleanHtml = DOMPurify.sanitize(rawHtml);
+                    this.renderedContent = this.sanitizer.bypassSecurityTrustHtml(cleanHtml);
                 }
             } else {
                 this.notFound = true;
