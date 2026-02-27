@@ -1,8 +1,9 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable, switchMap, map, shareReplay, take } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectService } from '../../core/services/project.service';
 import { Project, CaseStudy } from '../../shared/models/project.model';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -24,6 +25,8 @@ export class ProjectDetailComponent implements OnInit {
     lightboxOpen = false;
     currentImageIndex = 0;
 
+    private destroyRef = inject(DestroyRef);
+
     constructor(
         private route: ActivatedRoute,
         private projectService: ProjectService,
@@ -39,7 +42,9 @@ export class ProjectDetailComponent implements OnInit {
         );
 
         // Subscribe to project updates to set title
-        this.project$.subscribe(project => {
+        this.project$.pipe(
+            takeUntilDestroyed(this.destroyRef)
+        ).subscribe(project => {
             if (project) {
                 this.titleService.setTitle(`${project.title} | Aryan Mishra`);
             }
