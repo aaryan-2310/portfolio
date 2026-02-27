@@ -90,32 +90,6 @@ $radius-card: 20px;
             transform: translateX(-4px);
         }
     }
-
-    .nav-title-context {
-        .project-name {
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: -0.01em;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-    }
-
-    .nav-btn.primary {
-        background: #fff;
-        color: #000;
-        padding: 0.6rem 1.75rem;
-        border-radius: 14px;
-        font-weight: 700;
-        font-size: 0.85rem;
-        text-decoration: none;
-        transition: all 0.3s;
-
-        &:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-        }
-    }
 }
 
 // --- Hero Section ---
@@ -414,85 +388,6 @@ $radius-card: 20px;
     }
 }
 
-// --- Dynamic Sections ---
-.dynamic-section {
-    margin-bottom: 12rem;
-
-    .section-container {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 8rem;
-        align-items: center;
-
-        &.reversed {
-            grid-template-columns: 1.2fr 1fr;
-
-            .section-text {
-                order: 2;
-            }
-
-            .section-visual {
-                order: 1;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            grid-template-columns: 1fr !important;
-            gap: 4rem;
-
-            .section-text,
-            .section-visual {
-                order: unset !important;
-            }
-        }
-    }
-
-    .section-subtitle {
-        color: $accent;
-        font-family: 'JetBrains Mono', monospace;
-        text-transform: uppercase;
-        letter-spacing: 0.2rem;
-        font-size: 0.8rem;
-        display: block;
-        margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 2rem;
-        letter-spacing: -0.03em;
-    }
-
-    .section-content {
-        font-size: 1.2rem;
-        line-height: 1.7;
-        color: #94a3b8;
-    }
-
-    .image-wrapper {
-        border-radius: $radius-card;
-        overflow: hidden;
-        border: 1px solid $glass-border;
-        background: #000;
-
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-            opacity: 0.9;
-        }
-
-        .img-caption {
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-    }
-}
-
 // --- Gallery Section ---
 .gallery-section {
     margin-bottom: 10rem;
@@ -720,7 +615,6 @@ $radius-card: 20px;
         filter: blur(140px);
         opacity: 0.4;
         transform: translateZ(0); // Hardware acceleration
-        animation: pulseGradient 10s ease-in-out infinite alternate;
         z-index: 0;
     }
 
@@ -728,9 +622,8 @@ $radius-card: 20px;
     .noise-overlay {
         position: absolute;
         inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-        opacity: 0.4;
-        mix-blend-mode: overlay;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+        opacity: 0.2;
         z-index: 1;
         pointer-events: none;
     }
@@ -763,7 +656,6 @@ $radius-card: 20px;
             border-radius: 50%;
             background: $accent;
             box-shadow: 0 0 10px rgba($accent, 0.6);
-            animation: pulseDot 2s infinite;
         }
 
         .status-text {
@@ -855,243 +747,6 @@ $radius-card: 20px;
                 transform: translateY(-2px);
             }
         }
-    }
-}
-
-@keyframes pulseDot {
-    0% {
-        opacity: 0.5;
-        transform: scale(0.9);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-
-    100% {
-        opacity: 0.5;
-        transform: scale(0.9);
-    }
-}
-
-@keyframes pulseGradient {
-    0% {
-        transform: scale(1);
-        opacity: 0.3;
-    }
-
-    100% {
-        transform: scale(1.1);
-        opacity: 0.5;
-    }
-}
-
-// --- Animations ---
-.reveal-up {
-    opacity: 0;
-    animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.reveal-right {
-    opacity: 0;
-    animation: revealRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes revealUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes revealRight {
-    from {
-        opacity: 0;
-        transform: translateX(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.animate-in {
-    animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-// --- Lightbox Styles ---
-.lightbox-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 0.3s ease-out;
-
-    .lightbox-close-btn {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        background: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: #fff;
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        z-index: 2010;
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
-        }
-    }
-
-    .lightbox-nav-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.05);
-        border: none;
-        color: #fff;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        z-index: 2010;
-
-        &:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        &.prev {
-            left: 2rem;
-        }
-
-        &.next {
-            right: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            width: 40px;
-            height: 40px;
-
-            &.prev {
-                left: 1rem;
-            }
-
-            &.next {
-                right: 1rem;
-            }
-        }
-    }
-
-    .lightbox-content {
-        position: relative;
-        max-width: 90vw;
-        max-height: 90vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-            animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .lightbox-caption {
-            margin-top: 1.5rem;
-            text-align: center;
-            animation: slideUp 0.3s 0.1s backwards;
-
-            h3 {
-                color: #fff;
-                font-size: 1.25rem;
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-            }
-
-            p {
-                color: #94a3b8;
-                max-width: 600px;
-                line-height: 1.5;
-            }
-        }
-
-        .lightbox-counter {
-            position: absolute;
-            bottom: -3rem;
-            color: #525252;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-        }
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        transform: scale(0.95);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
     }
 }
 

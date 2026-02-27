@@ -694,40 +694,9 @@
   }
 }
 
-/* Enhanced button hover micro-animation */
-.hero-buttons portfolio-button {
-  transition: transform 0.15s ease;
-}
-
-.hero-buttons portfolio-button:hover {
-  transform: translateY(-2px);
-}
-
 /* Focus ring enhancement */
 .project-card:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-
-/* Shimmer effect on hover for project cards */
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      color-mix(in oklab, var(--theme-accent) 5%, transparent),
-      transparent);
-  transition: left 0.5s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.project-card:hover::before {
-  left: 100%;
 }
 
 /* Reduced motion - disable all micro-animations */
@@ -740,13 +709,6 @@
     animation: none;
   }
 
-  .project-card::before {
-    display: none;
-  }
-
-  .hero-buttons portfolio-button:hover {
-    transform: none;
-  }
 }
 
 /* ========================================

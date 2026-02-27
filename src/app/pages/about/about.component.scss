@@ -422,28 +422,6 @@
   }
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 /* Timeline */
 .journey {
   position: relative;
@@ -787,234 +765,31 @@
 }
 
 .scene {
-  width: 300px;
-  height: 200px;
-  position: relative;
-  transform-style: preserve-3d;
-  /* Isometric-ish view */
-  transform: rotateX(60deg) rotateZ(45deg) scale(0.8);
-}
-
-.assembly {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* --- 1. Chaotic Stream (Input) --- */
-.stream {
-  position: absolute;
-  /* Positioned "before" the gates in 3D space along Y/X */
-  transform: translate3d(-150px, -150px, 0);
-  transform-style: preserve-3d;
-}
-
-.particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--theme-on-surface-variant);
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
-  opacity: 0;
-  box-shadow: 0 0 10px var(--theme-accent);
-  animation: flowToOrder 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
-  animation-delay: calc(var(--i) * 0.2s);
-
-  /* Random starting positions for chaos */
-  &:nth-child(1) {
-    top: -20px;
-    left: 20px;
-  }
-
-  &:nth-child(2) {
-    top: 30px;
-    left: -10px;
-  }
-
-  &:nth-child(3) {
-    top: 0;
-    left: 0;
-  }
-
-  &:nth-child(4) {
-    top: -40px;
-    left: -20px;
-  }
-
-  &:nth-child(5) {
-    top: 20px;
-    left: 40px;
-  }
-
-  &:nth-child(6) {
-    top: 50px;
-    left: 10px;
-  }
+  background:
+    radial-gradient(circle at 40% 35%, color-mix(in oklab, var(--theme-accent) 38%, transparent), transparent 55%),
+    radial-gradient(circle at 65% 65%, color-mix(in oklab, var(--theme-accent) 16%, transparent), transparent 70%),
+    var(--theme-surface-2);
+  border: 1px solid color-mix(in oklab, var(--theme-accent) 30%, var(--theme-border));
+  box-shadow:
+    0 10px 32px color-mix(in oklab, var(--theme-accent) 14%, transparent),
+    inset 0 0 24px color-mix(in oklab, var(--theme-accent) 12%, transparent);
 }
 
-@keyframes flowToOrder {
-  0% {
-    transform: translate3d(0, 0, 20px) scale(0.5);
-    opacity: 0;
-  }
-
-  20% {
-    opacity: 0.8;
-    transform: translate3d(30px, 30px, 0) scale(1);
-  }
-
-  80% {
-    /* Converging towards the center (0,0) where the core is */
-    opacity: 0.4;
-    transform: translate3d(130px, 130px, 0) scale(0.2);
-  }
-
-  100% {
-    transform: translate3d(150px, 150px, 0) scale(0);
-    opacity: 0;
-  }
-}
-
-/* --- 2. Logic Gates (Process) --- */
-.gates {
-  position: absolute;
-  transform-style: preserve-3d;
-  /* Align with flow path */
-  transform: translate3d(-50px, -50px, 0);
-}
-
-.gate {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(2px);
-  box-shadow: 0 0 15px rgba(var(--theme-accent-rgb), 0.1);
-  transform-style: preserve-3d;
-  animation: gateSpin 8s infinite linear;
-  animation-delay: calc(var(--i) * -2s);
-
-  /* Spacing along the diagonal axis */
-  top: calc(var(--i) * 35px);
-  left: calc(var(--i) * 35px);
-
-  /* Make them look like frames */
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border: 1px solid color-mix(in oklab, var(--theme-accent) 40%, transparent);
-    opacity: 0.5;
-  }
-}
-
-@keyframes gateSpin {
-  0% {
-    transform: rotateZ(0deg);
-  }
-
-  100% {
-    transform: rotateZ(360deg);
-  }
-}
-
-/* --- 3. Stable Core (Output) --- */
-.core {
-  position: absolute;
-  /* End of the pipeline */
-  transform: translate3d(100px, 100px, 0);
-  width: 40px;
-  height: 40px;
-  transform-style: preserve-3d;
-  animation: coreFloat 4s ease-in-out infinite;
-}
-
-.face {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background: color-mix(in oklab, var(--theme-accent) 80%, white);
-  border: 1px solid white;
-  opacity: 0.9;
-  box-shadow: 0 0 20px var(--theme-accent);
-}
-
-.face.front {
-  transform: translateZ(20px);
-}
-
-.face.back {
-  transform: rotateY(180deg) translateZ(20px);
-}
-
-.face.right {
-  transform: rotateY(90deg) translateZ(20px);
-}
-
-.face.left {
-  transform: rotateY(-90deg) translateZ(20px);
-}
-
-.face.top {
-  transform: rotateX(90deg) translateZ(20px);
-}
-
-.face.bottom {
-  transform: rotateX(-90deg) translateZ(20px);
-}
-
-@keyframes coreFloat {
-
-  0%,
-  100% {
-    transform: translate3d(100px, 100px, 0) rotateZ(0deg);
-  }
-
-  50% {
-    transform: translate3d(100px, 100px, 20px) rotateZ(10deg);
-  }
-}
-
-/* --- Theme Adjustments --- */
-/* Ensure glow visibility in light/dark modes */
 .assembly {
-  --theme-accent-rgb: 16, 185, 129;
-  /* Default emerald */
+  display: none;
 }
 
-/* Responsive Scaling */
 @media (max-width: 599px) {
   .scene {
-    transform: rotateX(60deg) rotateZ(45deg) scale(0.6);
+    width: 180px;
+    height: 180px;
   }
 }
 
 @media (max-width: 1023px) {
-  .beyond .split {
-    grid-template-columns: 1fr;
-    gap: var(--space-40);
-  }
-
-  .beyond .text h2 {
-    text-align: center;
-  }
-
-  .beyond .art-box {
-    max-width: 100%;
-    height: 200px;
-  }
-}
-
-@media (max-width: 599px) {
-  .beyond .list li {
-    font-size: 1rem;
-    padding-left: var(--space-24);
-  }
 }
 
 .facts .facts-grid {
@@ -1139,24 +914,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
   }
 }
 
