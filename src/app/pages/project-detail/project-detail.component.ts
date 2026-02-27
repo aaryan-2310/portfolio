@@ -61,6 +61,7 @@ export class ProjectDetailComponent implements OnInit {
                 }
             })
         );
+        this.destroyRef.onDestroy(() => { document.body.style.overflow = ''; });
     }
 
     ngOnInit(): void {
