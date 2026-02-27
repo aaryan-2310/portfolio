@@ -39,7 +39,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-64) var(--space-24) var(--space-48);
+  min-height: clamp(300px, 46svh, 540px);
+  padding: var(--space-72) var(--space-24) var(--space-56);
   text-align: center;
   overflow: hidden;
   background:
@@ -47,6 +48,10 @@
       color-mix(in oklab, var(--theme-accent) 12%, transparent),
       transparent),
     var(--theme-surface);
+
+  @supports (height: 1dvh) {
+    min-height: clamp(300px, 46dvh, 540px);
+  }
 
   .hero-backdrop {
     position: absolute;
@@ -60,7 +65,7 @@
   .hero-content {
     position: relative;
     z-index: 1;
-    max-width: 700px;
+    max-width: 760px;
     animation: fadeInUp 0.6s ease-out both;
   }
 
@@ -85,7 +90,7 @@
   }
 
   .hero-title {
-    margin: 0 0 var(--space-16);
+    margin: 0 0 var(--space-24);
     font-size: clamp(2.5rem, 6vw, 3.5rem);
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -98,8 +103,63 @@
     color: var(--theme-on-surface-variant);
     line-height: 1.6;
     margin: 0;
-    max-width: 540px;
+    max-width: 62ch;
     margin-inline: auto;
+  }
+}
+
+.blogs-hero+.filters-bar {
+  margin-top: var(--space-8);
+}
+
+@media (max-width: 1023px) {
+  .blogs-hero {
+    min-height: clamp(280px, 42svh, 460px);
+    padding: var(--space-64) var(--space-24) var(--space-48);
+
+    @supports (height: 1dvh) {
+      min-height: clamp(280px, 42dvh, 460px);
+    }
+
+    .hero-content {
+      max-width: 680px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.125rem, 5.5vw, 3rem);
+      margin-bottom: var(--space-16);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.125rem);
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .blogs-hero {
+    min-height: clamp(240px, 38svh, 360px);
+    padding: var(--space-48) var(--space-16) var(--space-32);
+
+    @supports (height: 1dvh) {
+      min-height: clamp(240px, 38dvh, 360px);
+    }
+
+    .hero-badge {
+      margin-bottom: var(--space-16);
+    }
+
+    .hero-title {
+      font-size: clamp(1.875rem, 8vw, 2.375rem);
+      line-height: 1.15;
+      margin-bottom: var(--space-12);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.55;
+      max-width: 34ch;
+    }
   }
 }
 
@@ -109,8 +169,12 @@
 .blogs-grid-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--space-48) var(--space-24) var(--space-96);
+  padding: var(--space-32) var(--space-24) var(--space-96);
   width: 100%;
+
+  @media (max-width: 599px) {
+    padding: var(--space-24) var(--space-16) var(--space-64);
+  }
 }
 
 .blogs__grid {
