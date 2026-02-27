@@ -135,14 +135,16 @@
   top: var(--space-12);
   left: var(--space-12);
   padding: 4px 10px;
-  background: rgba(0, 0, 0, 0.6);
+  background: color-mix(in oklab, var(--theme-surface) 75%, transparent);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  color: white;
+  color: var(--theme-on-surface);
   font-size: 0.75rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  border: 1px solid color-mix(in oklab, var(--theme-border) 60%, transparent);
 }
 
 .blog-card__meta {
