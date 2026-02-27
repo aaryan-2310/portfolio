@@ -13,6 +13,9 @@ import { LoaderComponent } from '../../shared/components/loader/loader.component
 import { formatDate, trackById, trackByTitle } from '../../shared/utils';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
+import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
+import { NgOptimizedImage } from '@angular/common';
+
 // Adapters for view
 interface FeaturedProjectView {
   title: string;
@@ -24,7 +27,7 @@ interface FeaturedProjectView {
 @Component({
   selector: 'portfolio-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, EmptyStateComponent],
+  imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent, EmptyStateComponent, PortfolioCardComponent, NgOptimizedImage],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

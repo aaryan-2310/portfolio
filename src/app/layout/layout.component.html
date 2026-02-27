@@ -59,6 +59,11 @@
 
       <!-- Right Side Actions -->
       <div class="navbar-actions">
+        <!-- Global Search -->
+        <portfolio-toolbar-search mode="global" [placeholderTexts]="['Search projects...', 'Search blogs...']"
+          (searchChange)="onGlobalSearch($event)">
+        </portfolio-toolbar-search>
+
         <!-- Status Dot (Global Only, or both?) - User asked for Contextual to be minimal. Let's keep it clean. -->
         <div class="status-indicator desktop-only" *ngIf="!isProjectDetailPage && availableForFreelance"
           title="Available for work">

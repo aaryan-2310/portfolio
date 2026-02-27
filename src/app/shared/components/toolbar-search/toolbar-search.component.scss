@@ -69,7 +69,82 @@
             flex-grow: 1;
         }
     }
+
+
+    // GLOBAL MODE (Navbar)
+    &.global-mode {
+        position: static;
+        padding: 0;
+        margin: 0;
+        width: auto;
+        display: flex;
+        align-items: center;
+
+        .portfolio-toolbar {
+            background: transparent;
+            border: 1px solid var(--theme-border);
+            border-radius: var(--radius-full);
+            box-shadow: none;
+            padding: 4px;
+            /* Minimal padding */
+            backdrop-filter: none;
+            width: 320px;
+            /* Fixed width for navbar */
+            animation: none;
+
+            &:hover,
+            &.focused {
+                border-color: var(--theme-accent);
+                background: var(--theme-surface-2);
+            }
+
+            @media (max-width: 768px) {
+                // display: none; // REMOVED: User wants search visible on mobile
+                width: auto;
+                flex: 1;
+                min-width: 0; // Allow shrinking
+            }
+        }
+
+        .toolbar-search {
+            input {
+                height: 36px;
+                /* Smaller height for navbar */
+                padding: 0 32px 0 36px; // Reduced padding for mobile tight space
+                font-size: 0.875rem;
+                background: transparent;
+                border: none;
+                width: 100%;
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+
+
+
+            .search-icon-wrapper {
+                left: 12px;
+                width: 20px;
+
+                .search-icon {
+                    font-size: 20px;
+                }
+            }
+
+            .clear-btn {
+                right: 12px;
+            }
+        }
+
+        // Hide filters in global mode
+        .toolbar-divider,
+        .toolbar-filters {
+            display: none;
+        }
+    }
 }
+
 
 .portfolio-toolbar {
     pointer-events: auto;

@@ -4,6 +4,7 @@
 <!-- Hero Section -->
 <section id="hero" aria-labelledby="hero-title" *ngIf="settings$ | async as settings">
   <div class="hero-surface">
+    <div class="hero-texture"></div>
     <div class="hero-content">
       <h1 id="hero-title" class="hero-title">
         {{ settings.siteTitle || 'Full-stack engineer for TypeScript/Angular products.' }}
@@ -52,14 +53,9 @@
 
   <div class="projects-grid">
     <ng-container *ngIf="projects$ | async as projects; else projectsLoading">
-      <a *ngFor="let project of projects; trackBy: trackByProject" class="project-card" [routerLink]="project.link">
-        <div class="project-media" [style.background]="project.gradient"></div>
-        <div class="project-info">
-          <h3 class="project-title">{{ project.title }}</h3>
-          <p class="project-desc">{{ project.description }}</p>
-        </div>
-        <span class="project-arrow material-icons">arrow_forward</span>
-      </a>
+      <portfolio-card *ngFor="let project of projects; trackBy: trackByProject" [title]="project.title"
+        [description]="project.description" [gradient]="project.gradient" [routerLink]="project.link">
+      </portfolio-card>
     </ng-container>
     <ng-template #projectsLoading>
       <portfolio-skeleton *ngFor="let i of [1,2,3]" variant="card" height="300px"></portfolio-skeleton>
@@ -111,7 +107,8 @@
     <ng-container *ngIf="skills$ | async as skills; else skillsLoading">
       <div *ngFor="let skill of skills; trackBy: trackBySkill" class="skill-chip">
         <ng-container *ngIf="skill.icon">
-          <img *ngIf="skill.icon.startsWith('http')" [src]="skill.icon" [alt]="skill.name" class="skill-icon custom" />
+          <img *ngIf="skill.icon.startsWith('http')" [ngSrc]="skill.icon" [alt]="skill.name" width="24" height="24"
+            class="skill-icon custom" loading="lazy" />
           <span *ngIf="!skill.icon.startsWith('http')" class="material-icons skill-icon">{{ skill.icon }}</span>
         </ng-container>
         <span class="skill-name">{{ skill.name }}</span>

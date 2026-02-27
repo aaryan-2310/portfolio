@@ -14,6 +14,7 @@ import { SettingsService } from '../core/services/settings.service';
 import { A11yModule } from '@angular/cdk/a11y';
 import { AvailabilityBadgeComponent } from '../shared/components/availability-badge/availability-badge.component';
 import { ChatWidgetComponent } from '../shared/components/chat-widget/chat-widget.component';
+import { ToolbarSearchComponent } from '../shared/components/toolbar-search/toolbar-search.component';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -35,9 +36,19 @@ import { filter } from 'rxjs/operators';
     A11yModule,
     AvailabilityBadgeComponent,
     ChatWidgetComponent,
+    ToolbarSearchComponent,
   ],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
+  onGlobalSearch(query: string): void {
+    const currentUrl = this.router.url;
+    const targetPath = currentUrl.includes('/blogs') ? '/blogs' : '/projects';
+
+    this.router.navigate([targetPath], {
+      queryParams: { q: query || null },
+      queryParamsHandling: 'merge'
+    });
+  }
   currentYear = new Date().getFullYear();
   private _mobileMenuOpen = false;
   availableForFreelance = false;
@@ -72,12 +83,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       takeUntilDestroyed()
-    ).subscribe((event: any) => {
+    ).subscribe((event: NavigationEnd) => {
       this.isProjectDetailPage = event.url.includes('/projects/') && !event.url.endsWith('/projects');
       // Reset active section on navigation
       if (this.isProjectDetailPage) {
         this.activeSection = 'overview';
       }
+      this.mobileMenuOpen = false;
     });
   }
 

@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { Observable, startWith, shareReplay } from 'rxjs';
 import { ServiceOffering, ServiceOfferingService } from '../../core/services/service-offering.service';
 import { SettingsService, SiteSettings } from '../../core/services/settings.service';
-import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
@@ -15,8 +14,6 @@ import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scrol
     imports: [
         CommonModule,
         RouterModule,
-        SkeletonComponent,
-        SkeletonComponent,
         ButtonComponent,
         RevealOnScrollDirective,
         LoaderComponent

@@ -18,6 +18,7 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
     @Input() activeTag: string | null = null;
     @Input() resultCount: number | null = null;
     @Input() placeholderTexts: string[] = ['"Search..."', '"Explore..."'];
+    @Input() mode: 'inline' | 'global' = 'inline';
 
     // Outputs
     @Output() searchChange = new EventEmitter<string>();
@@ -35,6 +36,11 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
     private debounceTimer: any;
 
     ngAfterViewInit() {
+        if (this.mode === 'global') {
+            this.isDocked = false; // Always standard appearance, or handle via CSS
+            return;
+        }
+
         this.observer = new IntersectionObserver(([entry]) => {
             // docked if scrolled past the trigger line (64px)
             this.isDocked = !entry.isIntersecting && entry.boundingClientRect.top < 100;
@@ -47,6 +53,7 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy() {
         this.observer?.disconnect();
+        clearTimeout(this.debounceTimer);
     }
 
     onSearch(event: Event): void {
@@ -92,6 +99,8 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
             this.focusChange.emit(false);
         }, 200);
     }
+
+    trackByTag = (_: number, tag: string): string => tag;
 
     // Bind to parent if they want to trigger shake externally, or check internal
     triggerShake() {
