@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
@@ -24,6 +25,7 @@ export class BlogDetailComponent implements OnInit {
     renderedContent: SafeHtml = '';
     notFound = false;
     isLoading = true;
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         private route: ActivatedRoute,
@@ -34,6 +36,7 @@ export class BlogDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.paramMap.pipe(
+            takeUntilDestroyed(this.destroyRef),
             switchMap(params => {
                 const slug = params.get('slug');
                 if (!slug) {
