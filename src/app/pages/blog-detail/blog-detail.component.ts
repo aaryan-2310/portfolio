@@ -11,13 +11,12 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { formatDateLong, trackByValue } from '../../shared/utils';
 
-import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
     selector: 'portfolio-blog-detail',
     standalone: true,
-    imports: [CommonModule, ButtonComponent, SkeletonComponent, LoaderComponent],
+    imports: [CommonModule, ButtonComponent, LoaderComponent],
     templateUrl: './blog-detail.component.html',
     styleUrl: './blog-detail.component.scss',
 })

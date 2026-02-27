@@ -8,6 +8,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  --navbar-height: 64px;
 }
 
 /* Navbar Base */
@@ -107,8 +108,8 @@
       bottom: 0px;
       left: 12px;
       right: 12px;
-      height: 1px;
-      background: var(--theme-on-surface);
+      height: 2px;
+      background: var(--theme-accent);
     }
   }
 }
@@ -136,7 +137,7 @@
     color: var(--theme-on-surface);
   }
 
-  mat-icon {
+  .material-icons {
     font-size: 18px;
     width: 18px;
     height: 18px;
@@ -249,7 +250,7 @@
     transform: scale(0.92);
   }
 
-  mat-icon {
+  .material-icons {
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -398,7 +399,7 @@
     background 0.2s ease,
     color 0.2s ease;
 
-  mat-icon {
+  .material-icons {
     font-size: 22px;
     width: 22px;
     height: 22px;
@@ -446,7 +447,7 @@
     border-color: var(--theme-accent);
   }
 
-  mat-icon {
+  .material-icons {
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -484,7 +485,7 @@
    RESPONSIVE BREAKPOINTS
    ======================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .navbar-inner {
     padding: 0 var(--space-16);
     gap: var(--space-16);
@@ -500,7 +501,11 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  .layout-container {
+    --navbar-height: 56px;
+  }
+
   .desktop-only {
     display: none !important;
   }
@@ -583,7 +588,7 @@
           }
         }
 
-        mat-icon {
+        .material-icons {
           font-size: 18px;
           vertical-align: middle;
           margin-right: 2px;
@@ -605,7 +610,7 @@
           color: var(--theme-accent);
         }
 
-        mat-icon {
+        .material-icons {
           color: var(--theme-on-surface);
           font-size: 22px;
           vertical-align: middle;
@@ -631,7 +636,7 @@
       align-items: center;
       gap: var(--space-4);
 
-      mat-icon {
+      .material-icons {
         font-size: 18px;
         vertical-align: middle;
       }
@@ -639,7 +644,7 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   .footer {
 
     .footer-content,

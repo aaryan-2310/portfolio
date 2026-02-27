@@ -20,6 +20,7 @@
   --elev-1: var(--theme-shadow-sm);
   --elev-2: var(--theme-shadow-md);
   --elev-3: var(--theme-shadow-lg);
+  --elev-4: 0 14px 24px -8px color-mix(in oklab, var(--theme-on-surface) 28%, transparent);
   // Keep original for back-compat or delete? Let's delete hardcoded shadows from root and rely on theme vars injected by theme mixin.
   // Actually, we need to map the theme variables to these global tokens if components use --elev-*.
   // Since theme vars are CSS vars (--theme-shadow-sm), we can just point to them.
@@ -35,6 +36,7 @@
   --space-12: 12px;
   --space-14: 14px;
   --space-16: 16px;
+  --space-20: 20px;
   --space-24: 24px;
   --space-32: 32px;
   --space-42: 42px;
@@ -45,6 +47,7 @@
   --space-88: 88px;
   --space-96: 96px;
   --space-128: 128px;
+  --space-lg: var(--space-24);
 
   /* Focus ring */
   --focus-ring-width: 2px;
@@ -59,7 +62,6 @@ body {
   background: var(--theme-surface);
   color: var(--theme-on-surface);
   scroll-behavior: smooth;
-  user-select: none;
 }
 
 *,
@@ -291,5 +293,127 @@ small,
     background: var(--theme-on-surface);
     color: var(--theme-background);
     box-shadow: var(--elev-1);
+  }
+}
+
+/* Project Detail lightbox (moved from component stylesheet for budget control) */
+.project-detail .lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .lightbox-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2010;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+  }
+
+  .lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: #fff;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2010;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &.prev {
+      left: 2rem;
+    }
+
+    &.next {
+      right: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+
+      &.prev {
+        left: 1rem;
+      }
+
+      &.next {
+        right: 1rem;
+      }
+    }
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-caption {
+      margin-top: 1.5rem;
+      text-align: center;
+
+      h3 {
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #94a3b8;
+        max-width: 600px;
+        line-height: 1.5;
+      }
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: -3rem;
+      color: #525252;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+    }
   }
 }

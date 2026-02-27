@@ -10,7 +10,8 @@
 	"settings": {
 		"java.compile.nullAnalysis.mode": "automatic",
 		"chat.tools.terminal.autoApprove": {
-			"claude": true
+			"claude": true,
+			"git -C c:/usr/workspace/personal/portfolio": true
 		}
 	}
 }

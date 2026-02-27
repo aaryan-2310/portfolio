@@ -1,6 +1,6 @@
 // Responsive Grid Mixin
 // Usage: @include responsive-grid(1, 2, 3);
-@mixin responsive-grid($cols-sm: 1, $cols-md: 2, $cols-lg: 3, $gap: var(--space-lg)) {
+@mixin responsive-grid($cols-sm: 1, $cols-md: 2, $cols-lg: 3, $gap: var(--space-24)) {
     display: grid;
     grid-template-columns: repeat($cols-sm, 1fr);
     gap: $gap;

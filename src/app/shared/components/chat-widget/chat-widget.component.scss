@@ -6,6 +6,18 @@
     font-family: inherit;
 }
 
+@media (max-width: 767px) {
+    :host {
+        right: var(--space-16);
+        bottom: calc(env(safe-area-inset-bottom) + var(--space-16));
+    }
+
+    .chat-toggle {
+        width: 56px;
+        height: 56px;
+    }
+}
+
 // ============================================
 // TOGGLE BUTTON
 // ============================================
@@ -104,7 +116,7 @@
         pointer-events: all;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 767px) {
         position: fixed;
         inset: 0;
         width: 100%;

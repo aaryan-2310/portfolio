@@ -7,7 +7,7 @@
 }
 
 .hero-surface {
-  min-height: calc(100dvh - 64px);
+  min-height: calc(100dvh - var(--navbar-height, 64px));
   display: grid;
   place-items: center;
   position: relative;
@@ -45,7 +45,7 @@
       transparent 70%);
   top: -100px;
   right: -100px;
-  animation: floatOrb 8s ease-in-out infinite;
+  animation: floatOrb 8s ease-in-out 6;
   pointer-events: none;
 }
 
@@ -60,7 +60,7 @@
       transparent 70%);
   bottom: -50px;
   left: -50px;
-  animation: floatOrb 10s ease-in-out infinite reverse;
+  animation: floatOrb 10s ease-in-out 6 reverse;
   pointer-events: none;
 }
 
@@ -116,7 +116,7 @@
   border-radius: 50%;
   background: var(--theme-accent);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--theme-accent) 30%, transparent);
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse 2s ease-in-out 6;
 }
 
 @keyframes pulse {
@@ -215,9 +215,11 @@
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
 
+  .hero-eyebrow,
   .hero-title,
   .hero-sub,
-  .hero-buttons {
+  .hero-buttons,
+  .hero-trust {
     opacity: 1;
     transform: none;
     animation: none;
@@ -230,15 +232,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
-  .hero-surface {
-    min-height: calc(100dvh - 56px - 32px);
-  }
-
-  .hero-content {
-    padding: var(--space-32);
-  }
-
+@media (max-width: 599px) {
   .hero-buttons {
     flex-direction: column;
     gap: var(--space-12);
@@ -341,6 +335,16 @@
   color: var(--theme-on-accent);
 }
 
+.service-card:active {
+  transform: translateY(-2px);
+  box-shadow: var(--elev-1);
+  border-color: color-mix(in oklab, var(--theme-accent) 50%, var(--theme-border));
+}
+
+.service-card:active .service-icon-wrapper {
+  background: color-mix(in oklab, var(--theme-accent) 60%, transparent);
+}
+
 .service-icon-wrapper {
   display: flex;
   align-items: center;
@@ -390,14 +394,14 @@
   border-radius: var(--radius-full);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .services-grid {
     @include responsive-grid(1, 2, 4);
     gap: var(--space-24);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   .service-card {
     padding: var(--space-24);
   }
@@ -516,8 +520,8 @@
    COMPREHENSIVE RESPONSIVE BREAKPOINTS
    ======================================== */
 
-/* Tablet (768px - 900px) */
-@media (max-width: 900px) {
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
   .section {
     padding: var(--space-24) var(--space-16);
   }
@@ -527,8 +531,8 @@
   }
 }
 
-/* Mobile (max-width: 600px) */
-@media (max-width: 600px) {
+/* Mobile (max-width: 599px) */
+@media (max-width: 599px) {
   .section {
     padding: var(--space-16) var(--space-12);
   }
@@ -682,40 +686,9 @@
   }
 }
 
-/* Enhanced button hover micro-animation */
-.hero-buttons portfolio-button {
-  transition: transform 0.15s ease;
-}
-
-.hero-buttons portfolio-button:hover {
-  transform: translateY(-2px);
-}
-
 /* Focus ring enhancement */
 .project-card:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-
-/* Shimmer effect on hover for project cards */
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      color-mix(in oklab, var(--theme-accent) 5%, transparent),
-      transparent);
-  transition: left 0.5s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.project-card:hover::before {
-  left: 100%;
 }
 
 /* Reduced motion - disable all micro-animations */
@@ -728,13 +701,6 @@
     animation: none;
   }
 
-  .project-card::before {
-    display: none;
-  }
-
-  .hero-buttons portfolio-button:hover {
-    transform: none;
-  }
 }
 
 /* ========================================
@@ -972,7 +938,7 @@
   outline-offset: var(--focus-ring-offset);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .posts-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -982,7 +948,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599px) {
   #latest-posts {
     padding: var(--space-32) var(--space-12);
   }

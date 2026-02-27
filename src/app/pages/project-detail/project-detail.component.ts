@@ -6,14 +6,12 @@ import { Observable, switchMap, map, shareReplay, take } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectService } from '../../core/services/project.service';
 import { Project, CaseStudy } from '../../shared/models/project.model';
-import { ButtonComponent } from '../../shared/button/button.component';
-import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
     selector: 'portfolio-project-detail',
     standalone: true,
-    imports: [CommonModule, RouterModule, ButtonComponent, SkeletonComponent, LoaderComponent],
+    imports: [CommonModule, RouterModule, LoaderComponent],
     templateUrl: './project-detail.component.html',
     styleUrl: './project-detail.component.scss'
 })
