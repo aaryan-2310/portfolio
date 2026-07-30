@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import {
@@ -18,6 +18,8 @@ import { LoaderComponent } from '../../shared/components/loader/loader.component
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent implements OnInit {
+  @ViewChild(ContactFormComponent) contactFormRef?: ContactFormComponent;
+
   isSubmitting = false;
   successMessage = '';
   errorMessage = '';
@@ -36,16 +38,21 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactService.getSocialLinks().subscribe(links => {
-      this.socialLinks = links.filter(l => l.showInContact);
+    this.contactService.getSocialLinks().subscribe({
+      next: links => {
+        this.socialLinks = links.filter(l => l.showInContact);
 
-      const linkedin = links.find(l => l.name.toLowerCase() === 'linkedin');
-      const x = links.find(l => l.name.toLowerCase() === 'twitter' || l.name.toLowerCase() === 'x');
+        const linkedin = links.find(l => l.name.toLowerCase() === 'linkedin');
+        const x = links.find(l => l.name.toLowerCase() === 'twitter' || l.name.toLowerCase() === 'x');
 
-      if (linkedin) this.linkedinUrl = linkedin.url;
-      if (x) this.xUrl = x.url;
+        if (linkedin) this.linkedinUrl = linkedin.url;
+        if (x) this.xUrl = x.url;
 
-      this.isLoading = false;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
@@ -63,6 +70,7 @@ export class ContactComponent implements OnInit {
       }).toPromise();
 
       this.successMessage = "Thanks for reaching out! I'll get back to you within 24-48 hours.";
+      this.contactFormRef?.resetForm();
     } catch {
       this.errorMessage = 'Something went wrong. Please try again or email me directly.';
     } finally {

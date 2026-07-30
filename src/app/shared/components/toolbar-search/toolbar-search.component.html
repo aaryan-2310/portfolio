@@ -30,11 +30,12 @@
 
         <!-- Filters -->
         <div class="toolbar-filters" *ngIf="tags.length > 0">
-            <button class="filter-chip" [class.active]="activeTag === null" (click)="selectTag(null)">
+            <button class="filter-chip" [class.active]="activeTag === null" [attr.aria-pressed]="activeTag === null"
+                (click)="selectTag(null)">
                 All
             </button>
             <button *ngFor="let tag of tags; trackBy: trackByTag" class="filter-chip" [class.active]="activeTag === tag"
-                (click)="selectTag(tag)">
+                [attr.aria-pressed]="activeTag === tag" (click)="selectTag(tag)">
                 {{ tag }}
             </button>
         </div>

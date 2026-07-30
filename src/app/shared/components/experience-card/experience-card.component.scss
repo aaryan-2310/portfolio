@@ -256,7 +256,7 @@ mat-card-content {
 
 /* Normalize the duration separator bullet using theme-friendly dot */
 .experience-card .duration::before {
-  content: '�' !important;
+  content: '\2022' !important;
 }
 
 // Responsive styles
@@ -323,11 +323,6 @@ mat-card-content {
       font-size: 0.75rem;
     }
   }
-}
-
-/* Force the correct bullet character for the duration separator */
-.experience-card .duration::before {
-  content: '�' !important;
 }
 
 /* Emphasis styling for highlighted phrases */

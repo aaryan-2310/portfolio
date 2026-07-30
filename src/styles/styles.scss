@@ -39,8 +39,10 @@
   --space-20: 20px;
   --space-24: 24px;
   --space-32: 32px;
+  --space-40: 40px;
   --space-42: 42px;
   --space-48: 48px;
+  --space-56: 56px;
   --space-64: 64px;
   --space-72: 72px;
   --space-80: 80px;
@@ -48,6 +50,27 @@
   --space-96: 96px;
   --space-128: 128px;
   --space-lg: var(--space-24);
+
+  /* Layout */
+  --container-width: 1200px;
+  --container-width-narrow: 1100px;
+
+  /* Button sizing */
+  --btn-height-sm: 36px;
+  --btn-height-md: 44px;
+  --btn-height-lg: 52px;
+
+  /* Typography scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-hero: clamp(2.5rem, 7vw, 4rem);
+  --font-size-section: clamp(1.75rem, 4vw, 2.25rem);
+  --font-size-card-title: 1.25rem;
+  /* Reserved for project-detail's intentionally larger/heavier "case study" display type — not used elsewhere */
+  --font-size-display: clamp(3.5rem, 10vw, 6.5rem);
 
   /* Focus ring */
   --focus-ring-width: 2px;

@@ -16,4 +16,5 @@ export class PortfolioCardComponent {
     @Input() gradient?: string;
     @Input() routerLink?: any[] | string | null;
     @Input() index = 0; // For stagger animation
+    @Input() headingLevel: 'h2' | 'h3' = 'h3';
 }

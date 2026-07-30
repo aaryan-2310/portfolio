@@ -4,21 +4,25 @@
     <mat-form-field appearance="outline" class="full">
       <mat-label>Your name</mat-label>
       <input matInput formControlName="name" required />
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('minlength')">Name must be at least 2 characters</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" required type="email" />
+      <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('email')">Enter a valid email address</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full">
       <mat-label>Message</mat-label>
       <textarea matInput rows="3" formControlName="message"></textarea>
     </mat-form-field>
   </form>
-  <p class="hint">I’ll get back to you as soon as a slot opens.</p>
+  <p class="hint">This opens your email client with a pre-filled message &mdash; I'll get back to you as soon as a slot opens.</p>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
-    Send
+    Email me to join
   </button>
 </div>

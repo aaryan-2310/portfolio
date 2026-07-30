@@ -38,8 +38,8 @@
         flex-shrink: 0;
 
         &.on {
-            background: #10b981;
-            box-shadow: 0 0 0 4px color-mix(in oklab, #10b981 25%, transparent);
+            background: var(--theme-success);
+            box-shadow: 0 0 0 4px color-mix(in oklab, var(--theme-success) 25%, transparent);
             animation: badgePulse 2s ease-in-out infinite;
         }
     }
@@ -54,11 +54,11 @@
 
     0%,
     100% {
-        box-shadow: 0 0 0 3px color-mix(in oklab, #10b981 25%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--theme-success) 25%, transparent);
     }
 
     50% {
-        box-shadow: 0 0 0 5px color-mix(in oklab, #10b981 15%, transparent);
+        box-shadow: 0 0 0 5px color-mix(in oklab, var(--theme-success) 15%, transparent);
     }
 }
 

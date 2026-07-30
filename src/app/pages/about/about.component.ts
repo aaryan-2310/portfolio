@@ -10,12 +10,12 @@ import { SettingsService, SiteSettings } from '../../core/services/settings.serv
 import { Experience, ExperienceService } from '../../core/services/experience.service';
 import { formatDateRange, trackById, trackByTitle } from '../../shared/utils';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
-import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, RouterModule, ButtonComponent, RevealOnScrollDirective, SkeletonComponent, LoaderComponent],
+  imports: [CommonModule, NgOptimizedImage, RouterModule, ButtonComponent, RevealOnScrollDirective, SkeletonComponent, EmptyStateComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })

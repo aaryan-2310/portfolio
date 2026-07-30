@@ -87,7 +87,8 @@
 
   .hero-title {
     margin: 0 0 var(--space-24);
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-family: 'Playfair Display', serif;
+    font-size: var(--font-size-hero);
     font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--theme-on-surface);
@@ -95,7 +96,7 @@
   }
 
   .hero-sub {
-    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+    font-size: clamp(1rem, 2.5vw, var(--font-size-lg));
     color: var(--theme-on-surface-variant);
     line-height: 1.6;
     margin: 0;
@@ -155,13 +156,17 @@
 // GRID SECTION
 // ============================================
 .blogs-grid-section {
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
-  padding: var(--space-32) var(--space-24) var(--space-96);
+  padding: var(--space-80) var(--space-24);
   width: 100%;
 
+  @media (max-width: 1023px) {
+    padding: var(--space-64) var(--space-24);
+  }
+
   @media (max-width: 599px) {
-    padding: var(--space-24) var(--space-16) var(--space-64);
+    padding: var(--space-48) var(--space-16);
   }
 }
 
@@ -170,7 +175,7 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-32);
 
-  @media (max-width: 600px) {
+  @media (max-width: 599px) {
     grid-template-columns: 1fr;
     gap: var(--space-24);
   }

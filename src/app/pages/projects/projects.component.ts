@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { Observable, map, shareReplay, catchError, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -56,7 +56,7 @@ export class ProjectsComponent {
   isLoading = true;
 
   private gradients = [
-    'linear-gradient(135deg, #34D399 0%, #10B981 100%)',
+    'linear-gradient(135deg, var(--theme-accent) 0%, color-mix(in srgb, var(--theme-accent), black 20%) 100%)',
     'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
     'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
     'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
@@ -67,8 +67,7 @@ export class ProjectsComponent {
     private projectService: ProjectService,
     private settingsService: SettingsService,
     private contactService: ContactService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {
     // React to Query Params
     this.route.queryParams.pipe(takeUntilDestroyed()).subscribe(params => {
@@ -127,21 +126,9 @@ export class ProjectsComponent {
     map(([tag, q]) => tag !== null || q !== '')
   );
 
-  onSearch(query: string): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { q: query || null },
-      queryParamsHandling: 'merge'
-    });
-  }
-
   onTagChange(tag: string | null): void {
     this.selectedTag = tag;
     this.selectedTag$.next(tag);
-  }
-
-  onFocusChange(focused: boolean): void {
-    this.spotlightActive = focused;
   }
 
   private mapToView(project: Project, index: number): ProjectView {

@@ -59,7 +59,17 @@
     <div class="timeline-rail" aria-hidden="true"></div>
 
     <!-- Loading State -->
-    <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
+    <ng-container *ngIf="isLoading">
+      <article class="event" *ngFor="let i of [1,2,3]">
+        <div class="marker" aria-hidden="true"></div>
+        <div class="content">
+          <div class="eyebrow"><portfolio-skeleton variant="text" width="120px"></portfolio-skeleton></div>
+          <portfolio-skeleton variant="text" width="70%"></portfolio-skeleton>
+          <portfolio-skeleton variant="text" width="90%"></portfolio-skeleton>
+          <portfolio-skeleton variant="text" width="60%"></portfolio-skeleton>
+        </div>
+      </article>
+    </ng-container>
 
     <ng-container *ngIf="!isLoading">
       <article class="event" *ngFor="let exp of experiences; trackBy: trackByExperience">
@@ -73,6 +83,10 @@
         </div>
       </article>
     </ng-container>
+
+    <portfolio-empty-state *ngIf="!isLoading && experiences.length === 0" icon="work_history"
+      title="No experience yet" message="Check back soon for updates to my journey.">
+    </portfolio-empty-state>
   </div>
 </section>
 

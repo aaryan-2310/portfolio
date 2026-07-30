@@ -2,6 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, AfterVie
 import { CommonModule } from '@angular/common';
 import { TypewriterDirective } from '../../directives/typewriter.directive';
 import { FormsModule } from '@angular/forms';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'portfolio-toolbar-search',
@@ -33,7 +35,15 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
     isDocked = false;
 
     private observer: IntersectionObserver | undefined;
-    private debounceTimer: any;
+    private searchInput$ = new Subject<string>();
+    private searchSubscription: Subscription;
+
+    constructor() {
+        this.searchSubscription = this.searchInput$.pipe(debounceTime(300)).subscribe(query => {
+            this.isTyping = false;
+            this.searchChange.emit(query);
+        });
+    }
 
     ngAfterViewInit() {
         if (this.mode === 'global') {
@@ -53,13 +63,12 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy() {
         this.observer?.disconnect();
-        clearTimeout(this.debounceTimer);
+        this.searchSubscription.unsubscribe();
     }
 
     onSearch(event: Event): void {
         const query = (event.target as HTMLInputElement).value;
         this.searchQuery = query;
-        this.isTyping = true;
 
         // Smart Tag Check
         const exactTagMatch = this.tags.find(t => t.toLowerCase() === query.toLowerCase());
@@ -67,20 +76,19 @@ export class ToolbarSearchComponent implements AfterViewInit, OnDestroy {
         if (exactTagMatch) {
             this.selectTag(exactTagMatch);
             this.searchQuery = '';
-            this.searchChange.emit('');
             this.isTyping = false;
+            this.searchInput$.next('');
             return;
         }
 
-        this.searchChange.emit(query);
-
-        clearTimeout(this.debounceTimer);
-        this.debounceTimer = setTimeout(() => this.isTyping = false, 500);
+        this.isTyping = true;
+        this.searchInput$.next(query);
     }
 
     clearSearch(): void {
         this.searchQuery = '';
-        this.searchChange.emit('');
+        this.isTyping = false;
+        this.searchInput$.next('');
         this.selectTag(null);
     }
 

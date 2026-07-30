@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--space-24);
   gap: var(--space-32);
@@ -58,8 +58,7 @@
   }
 
   .logo-text {
-    font-family: 'Geist Mono', monospace;
-    /* Assuming Geist Mono or similar is available, otherwise system-ui */
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: -0.02em;
@@ -175,8 +174,7 @@
 .status-dot {
   width: 8px;
   height: 8px;
-  background-color: #10b981;
-  /* Success Green */
+  background-color: var(--theme-success);
   border-radius: 50%;
   position: relative;
 
@@ -188,7 +186,7 @@
     right: -4px;
     bottom: -4px;
     border-radius: 50%;
-    border: 2px solid #10b981;
+    border: 2px solid var(--theme-success);
     opacity: 0.5;
     animation: pulse-ring 2s infinite;
   }
@@ -551,7 +549,7 @@
     gap: var(--space-24);
     flex-wrap: wrap;
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-width);
     margin: 0 auto;
     justify-content: space-between;
     padding: 0 var(--space-16);
@@ -564,7 +562,7 @@
       .footer-title {
         font-size: 1.2rem;
         font-weight: 600;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.03em;
       }
 
       .footer-tagline {
@@ -621,7 +619,7 @@
 
   .footer-bottom {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-width);
     margin: var(--space-12) auto 0 auto;
     padding: 0 var(--space-16);
     display: flex;

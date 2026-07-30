@@ -35,8 +35,12 @@
 
   <!-- Content Grid -->
   <div class="blogs-grid-section">
-    <!-- Loader -->
-    <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
+    <h2 class="visually-hidden">All Articles</h2>
+
+    <!-- Loading Skeletons -->
+    <div class="blogs__grid" *ngIf="isLoading">
+      <portfolio-skeleton *ngFor="let i of [1,2,3,4,5,6]" variant="card"></portfolio-skeleton>
+    </div>
 
     <!-- Post Grid -->
     <div class="blogs__grid" *ngIf="!isLoading">
