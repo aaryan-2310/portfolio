@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 var(--space-24);
   gap: var(--space-32);
@@ -549,7 +549,7 @@
     gap: var(--space-24);
     flex-wrap: wrap;
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-width);
     margin: 0 auto;
     justify-content: space-between;
     padding: 0 var(--space-16);
@@ -562,7 +562,7 @@
       .footer-title {
         font-size: 1.2rem;
         font-weight: 600;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.03em;
       }
 
       .footer-tagline {
@@ -619,7 +619,7 @@
 
   .footer-bottom {
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-width);
     margin: var(--space-12) auto 0 auto;
     padding: 0 var(--space-16);
     display: flex;

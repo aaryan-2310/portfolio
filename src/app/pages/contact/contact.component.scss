@@ -48,11 +48,12 @@
 
   .hero-title {
     margin: 0 0 var(--space-16);
+    font-family: 'Playfair Display', serif;
     animation: fadeInUp 0.6s ease-out 0.1s both;
 
     .title-line {
       display: block;
-      font-size: clamp(2.25rem, 8vw, 3.5rem);
+      font-size: var(--font-size-hero);
       font-weight: 800;
       line-height: 1.1;
       color: var(--theme-on-surface);
@@ -65,7 +66,7 @@
   }
 
   .hero-sub {
-    font-size: clamp(1rem, 3vw, 1.125rem);
+    font-size: clamp(1rem, 2.5vw, var(--font-size-lg));
     color: var(--theme-on-surface-variant);
     line-height: 1.6;
     margin: 0 0 var(--space-32);
@@ -171,7 +172,7 @@
 // CONTACT SECTION
 // ============================================
 .contact-section {
-  padding: var(--space-32) var(--space-16) var(--space-48);
+  padding: var(--space-48) var(--space-16);
   background: var(--theme-background);
 }
 
@@ -179,7 +180,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-24);
-  max-width: 1100px;
+  max-width: var(--container-width-narrow);
   margin: 0 auto;
 }
 
@@ -230,7 +231,7 @@
 
 .form-title {
   margin: 0 0 var(--space-4);
-  font-size: 1.25rem;
+  font-size: clamp(var(--font-size-xl), 3vw, 1.5rem);
   font-weight: 700;
   color: var(--theme-on-surface);
 }
@@ -492,7 +493,7 @@
   }
 
   .contact-section {
-    padding: var(--space-64) var(--space-32);
+    padding: var(--space-80) var(--space-32);
   }
 
   .contact-container {
@@ -528,10 +529,6 @@
     .material-icons {
       font-size: 28px;
     }
-  }
-
-  .form-title {
-    font-size: 1.5rem;
   }
 
   .info-card {
