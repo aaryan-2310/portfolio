@@ -3,7 +3,8 @@
 
     <!-- Media Section -->
     <div class="card-media" [style.background-image]="image ? 'url(' + image + ')' : gradient"
-        [class.has-image]="!!image">
+        [class.has-image]="!!image" [attr.role]="image ? 'img' : null"
+        [attr.aria-label]="image ? title + ' preview' : null">
 
         <div class="card-overlay">
             <ng-content select="[card-overlay-content]"></ng-content>
@@ -14,9 +15,8 @@
 
     <!-- Body Section -->
     <div class="card-body">
-        <h2 class="card-title">
-            {{ title }}
-        </h2>
+        <h2 *ngIf="headingLevel === 'h2'" class="card-title">{{ title }}</h2>
+        <h3 *ngIf="headingLevel === 'h3'" class="card-title">{{ title }}</h3>
         <p class="card-desc">{{ description }}</p>
 
         <!-- Slot for Footer (Skills, Tags, Actions) -->

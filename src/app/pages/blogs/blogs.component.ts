@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest, map, catchError, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
 import { formatDateLong, trackById, trackByValue } from '../../shared/utils';
-import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { PortfolioCardComponent } from '../../shared/components/portfolio-card/portfolio-card.component';
 
 @Component({
     selector: 'portfolio-blogs',
     standalone: true,
-    imports: [CommonModule, RouterModule, LoaderComponent, EmptyStateComponent, PortfolioCardComponent],
+    imports: [CommonModule, RouterModule, SkeletonComponent, EmptyStateComponent, PortfolioCardComponent],
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.scss',
 })
@@ -43,8 +43,7 @@ export class BlogsComponent {
 
     constructor(
         private blogService: BlogService,
-        private route: ActivatedRoute,
-        private router: Router
+        private route: ActivatedRoute
     ) {
         // React to Query Params
         this.route.queryParams.pipe(takeUntilDestroyed()).subscribe(params => {
@@ -92,18 +91,6 @@ export class BlogsComponent {
     onTagChange(tag: string | null): void {
         this.selectedTag = tag;
         this.selectedTag$.next(tag);
-    }
-
-    onSearch(query: string): void {
-        this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: { q: query || null },
-            queryParamsHandling: 'merge'
-        });
-    }
-
-    onFocusChange(focused: boolean): void {
-        this.spotlightActive = focused;
     }
 
     formatDate = formatDateLong;

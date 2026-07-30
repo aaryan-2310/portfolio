@@ -24,9 +24,9 @@
 }
 
 .form-alert--success {
-  background: color-mix(in oklab, #10b981 15%, transparent);
-  color: #059669;
-  border: 1px solid color-mix(in oklab, #10b981 30%, transparent);
+  background: color-mix(in oklab, var(--theme-success) 15%, transparent);
+  color: var(--theme-success);
+  border: 1px solid color-mix(in oklab, var(--theme-success) 30%, transparent);
 }
 
 .form-alert--error {

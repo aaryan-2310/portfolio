@@ -34,13 +34,15 @@ $light-vars: (
   shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
   surface-rgb: (255, 255, 255),
   accent-rgb: (5, 150, 105),
+  error: #dc2626,
+  success: #059669,
 );
 
 $dark-vars: (
   background: #181818,
   // Alias for surface in some contexts
   inverse-on-surface: #1f2937,
-  on-accent: #ffffff,
+  on-accent: #{colors.$color-primary},
   surface: #181818,
   on-surface: #f9fafb,
   primary: #{colors.$color-accent},
@@ -65,6 +67,8 @@ $dark-vars: (
   shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
   surface-rgb: (24, 24, 24),
   accent-rgb: (52, 211, 153),
+  error: #{colors.$color-error},
+  success: #{colors.$color-accent},
 );
 
 @mixin theme-vars($map) {

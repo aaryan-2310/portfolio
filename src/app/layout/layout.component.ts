@@ -1,4 +1,4 @@
-import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../core/services/theme.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
@@ -25,13 +25,16 @@ import { filter } from 'rxjs/operators';
   ],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
+  @ViewChild(ChatWidgetComponent) chatWidget?: ChatWidgetComponent;
+
   onGlobalSearch(query: string): void {
     const currentUrl = this.router.url;
     const targetPath = currentUrl.includes('/blogs') ? '/blogs' : '/projects';
 
     this.router.navigate([targetPath], {
       queryParams: { q: query || null },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
+      replaceUrl: true
     });
   }
   currentYear = new Date().getFullYear();
@@ -75,6 +78,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         this.activeSection = 'overview';
       }
       this.mobileMenuOpen = false;
+      this.chatWidget?.closeChat();
     });
   }
 

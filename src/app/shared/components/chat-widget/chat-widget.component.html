@@ -26,7 +26,8 @@
     <!-- Messages -->
     <div class="chat-messages" #messagesContainer>
         <div class="message-group" *ngFor="let msg of messages">
-            <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+            <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'"
+                [class.error]="msg.isError">
                 <div class="message-avatar" *ngIf="msg.role === 'assistant'">
                     <span class="material-icons">smart_toy</span>
                 </div>

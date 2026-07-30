@@ -252,7 +252,7 @@
     background: var(--theme-accent);
 
     .material-icons {
-      color: var(--theme-on-primary);
+      color: var(--theme-on-accent);
     }
   }
 
@@ -576,7 +576,7 @@
 
   :host ::ng-deep .mat-step-icon-selected {
     background: var(--theme-accent) !important;
-    color: var(--theme-on-primary) !important;
+    color: var(--theme-on-accent) !important;
     border-color: var(--theme-accent) !important;
   }
 

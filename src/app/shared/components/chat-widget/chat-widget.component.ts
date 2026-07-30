@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Injector, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,6 +8,7 @@ interface ChatMessage {
     role: 'user' | 'assistant';
     content: string;
     timestamp: Date;
+    isError?: boolean;
 }
 
 @Component({
@@ -30,7 +31,7 @@ export class ChatWidgetComponent implements OnInit, OnDestroy {
 
     private destroy$ = new Subject<void>();
 
-    constructor(private aiService: AiService) { }
+    constructor(private aiService: AiService, private injector: Injector) { }
 
     ngOnInit(): void {
         this.loadSuggestions();
@@ -94,7 +95,8 @@ export class ChatWidgetComponent implements OnInit, OnDestroy {
                     this.messages.push({
                         role: 'assistant',
                         content: response.errorMessage || 'Sorry, I encountered an error. Please try again.',
-                        timestamp: new Date()
+                        timestamp: new Date(),
+                        isError: true
                     });
                 } else {
                     this.messages.push({
@@ -112,7 +114,8 @@ export class ChatWidgetComponent implements OnInit, OnDestroy {
                 this.messages.push({
                     role: 'assistant',
                     content: 'Sorry, I encountered an error. Please try again.',
-                    timestamp: new Date()
+                    timestamp: new Date(),
+                    isError: true
                 });
                 this.scrollToBottom();
             }
@@ -140,11 +143,11 @@ export class ChatWidgetComponent implements OnInit, OnDestroy {
     }
 
     private scrollToBottom(): void {
-        setTimeout(() => {
+        afterNextRender(() => {
             if (this.messagesContainer) {
                 const container = this.messagesContainer.nativeElement;
                 container.scrollTop = container.scrollHeight;
             }
-        }, 100);
+        }, { injector: this.injector });
     }
 }

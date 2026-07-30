@@ -49,6 +49,15 @@
   --space-128: 128px;
   --space-lg: var(--space-24);
 
+  /* Layout */
+  --container-width: 1200px;
+  --container-width-narrow: 1100px;
+
+  /* Button sizing */
+  --btn-height-sm: 36px;
+  --btn-height-md: 44px;
+  --btn-height-lg: 52px;
+
   /* Focus ring */
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;

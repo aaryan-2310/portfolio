@@ -99,7 +99,7 @@ export class HomeComponent {
 
   private getGradient(index: number): string {
     const gradients = [
-      'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+      'linear-gradient(135deg, var(--theme-accent) 0%, color-mix(in srgb, var(--theme-accent), black 20%) 100%)',
       'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
       'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
     ];

@@ -46,6 +46,11 @@
   <!-- Loading State -->
   <portfolio-loader *ngIf="isLoading" [fullscreen]="true"></portfolio-loader>
 
+  <!-- Empty State -->
+  <portfolio-empty-state *ngIf="!isLoading && experiences.length === 0" icon="work_history" title="No experience yet"
+    message="Check back soon for updates to my career timeline.">
+  </portfolio-empty-state>
+
   <!-- Mobile Timeline (Cards Layout) -->
   <div class="mobile-timeline">
 
