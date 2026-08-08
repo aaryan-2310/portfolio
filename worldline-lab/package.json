@@ -1,0 +1,24 @@
+{
+  "name": "worldline-lab",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Rendering-engine bake-off for WORLDLINE: the same cinematic cockpit scene built per candidate engine, measured.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "playcanvas": "^2.11.0",
+    "three": "0.182.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.182.0",
+    "typescript": "~5.6.3",
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
