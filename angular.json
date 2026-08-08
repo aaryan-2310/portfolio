@@ -76,6 +76,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "prebundle": {
+              "exclude": ["playcanvas"]
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "portfolio:build:production"
