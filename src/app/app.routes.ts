@@ -14,11 +14,6 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
-      },
-      {
         path: 'home',
         title: 'Home',
         data: { description: 'Full-stack engineer for TypeScript/Angular products.' },
