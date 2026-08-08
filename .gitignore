@@ -46,3 +46,7 @@ Thumbs.db
 # Claude temporary files
 tmpclaude*
 
+# Debug / browser test artifacts
+.playwright-mcp/
+*.png
+
