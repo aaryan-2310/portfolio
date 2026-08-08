@@ -2,15 +2,18 @@ import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 
 export const routes: Routes = [
+  // WORLDLINE — full-bleed 3D entry point, no layout wrapper
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'WORLDLINE',
+    loadComponent: () => import('./worldline/worldline.component').then(m => m.WorldlineComponent),
+  },
+  // Portfolio pages — standard layout shell
   {
     path: '',
     component: LayoutComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
-      },
       {
         path: 'home',
         title: 'Home',

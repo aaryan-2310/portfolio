@@ -1,8 +1,8 @@
-import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject, OnDestroy, OnInit, DOCUMENT } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../core/services/theme.service';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { SettingsService } from '../core/services/settings.service';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
@@ -43,27 +43,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
   isProjectDetailPage = false;
   activeSection = 'overview';
 
-  private document = inject(DOCUMENT);
-  private router = inject(Router);
-
-  get mobileMenuOpen(): boolean {
-    return this._mobileMenuOpen;
-  }
-
+  get mobileMenuOpen(): boolean { return this._mobileMenuOpen; }
   set mobileMenuOpen(value: boolean) {
     this._mobileMenuOpen = value;
-    if (value) {
-      this.document.body.style.overflow = 'hidden';
-    } else {
-      this.document.body.style.overflow = '';
-    }
+    this.document.body.style.overflow = value ? 'hidden' : '';
   }
 
-  constructor(
-    private theme: ThemeService,
-    private settingsService: SettingsService,
-    private destroyRef: DestroyRef,
-  ) {
+  private document = inject(DOCUMENT);
+  private router = inject(Router);
+  private theme = inject(ThemeService);
+  private settingsService = inject(SettingsService);
+  private destroyRef = inject(DestroyRef);
+
+  constructor() {
     // Monitor Route Changes for Context Switching
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
