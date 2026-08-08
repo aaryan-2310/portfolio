@@ -5,6 +5,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap, catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BlogPostView, BlogService } from '../../core/services/blog.service';
+import { SeoService } from '../../core/services/seo.service';
+import { breadcrumbSchema, personRef } from '../../core/seo/seo.schema';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { marked } from 'marked';
@@ -31,7 +33,8 @@ export class BlogDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private blogService: BlogService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private seo: SeoService
     ) { }
 
     ngOnInit(): void {
@@ -55,6 +58,7 @@ export class BlogDetailComponent implements OnInit {
         ).subscribe(post => {
             if (post) {
                 this.post = post;
+                this.applySeo(post);
                 if (post.content) {
                     const rawHtml = marked.parse(post.content, { async: false });
                     const cleanHtml = DOMPurify.sanitize(rawHtml);
@@ -64,6 +68,50 @@ export class BlogDetailComponent implements OnInit {
                 this.notFound = true;
             }
             this.isLoading = false;
+        });
+    }
+
+    /**
+     * Blog posts are the highest-value content here for search and AI citation,
+     * and previously carried no SEO metadata at all — every post served the
+     * generic route-level fallback title.
+     */
+    private applySeo(post: BlogPostView): void {
+        const publishedAt = post.publishedAt;
+        const publishedTime = Number.isNaN(publishedAt?.getTime())
+            ? undefined
+            : publishedAt?.toISOString();
+        const path = `/blogs/${post.slug}`;
+        const url = this.seo.absoluteUrl(path);
+
+        const blogPosting: Record<string, unknown> = {
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.excerpt,
+            url,
+            mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+            author: personRef,
+            publisher: personRef,
+            ...(publishedTime ? { datePublished: publishedTime, dateModified: publishedTime } : {}),
+            ...(post.coverImage ? { image: this.seo.absoluteUrl(post.coverImage) } : {}),
+            ...(post.tags.length > 0 ? { keywords: post.tags.join(', ') } : {}),
+        };
+
+        this.seo.update({
+            title: post.title,
+            description: post.excerpt,
+            path,
+            image: post.coverImage,
+            type: 'article',
+            publishedTime,
+            jsonLd: [
+                breadcrumbSchema([
+                    { name: 'Home', path: '/home' },
+                    { name: 'Blog', path: '/blogs' },
+                    { name: post.title, path },
+                ]),
+                blogPosting,
+            ],
         });
     }
 

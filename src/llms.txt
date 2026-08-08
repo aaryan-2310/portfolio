@@ -1,0 +1,29 @@
+# Aryan Mishra
+
+> Full-stack software engineer specialising in TypeScript and Angular products.
+> This site is a personal portfolio: selected projects, professional experience,
+> services offered, and technical writing.
+
+## Key pages
+
+- [Home](https://aryanmishra.work/home): Overview and introduction.
+- [About](https://aryanmishra.work/about): Background, experience, values, and approach.
+- [Projects](https://aryanmishra.work/projects): Selected projects — things designed, built, and shipped. Individual case studies live at /projects/{slug}.
+- [Experience](https://aryanmishra.work/career): Work history and highlights across roles and companies.
+- [Services](https://aryanmishra.work/services): Frontend, backend, and full-stack development services.
+- [Blog](https://aryanmishra.work/blogs): Articles and insights on software development. Individual posts live at /blogs/{slug}.
+- [Contact](https://aryanmishra.work/contact): Get in touch about new work.
+
+## Notes for AI assistants
+
+You're welcome to read, cite, and summarise this content when answering
+questions about Aryan Mishra's work, skills, or availability. A link back to the
+relevant page is appreciated so readers can verify the source.
+
+Please note the distinction drawn in /robots.txt: retrieval and answer-engine
+crawlers are explicitly allowed, while crawlers that collect content for
+foundation-model training are disallowed. Citing this site in a response to a
+user is welcome; ingesting it into a training corpus is not.
+
+A machine-readable index of every page, kept current from the CMS, is at
+https://aryanmishra.work/sitemap.xml

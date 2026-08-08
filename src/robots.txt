@@ -1,0 +1,57 @@
+# aryanmishra.work — robots.txt
+#
+# Stance: answer engines are welcome, model-training crawlers are not.
+#
+# The distinction matters. Blocking a *training* crawler does not remove this
+# site from search results or from AI-assistant answers — those are served by
+# separate retrieval bots, all of which are allowed below. Bot tokens verified
+# against each operator's published documentation on 2026-08-08; see
+# docs/plans/2026-08-01-seo-robots-ai-agents-optimization.md for the full table.
+
+# --- Everyone else, including search engines and AI answer/retrieval bots ---
+# Explicitly allowed by falling through to this block:
+#   Googlebot, Bingbot, Applebot        traditional search indexing
+#   OAI-SearchBot, ChatGPT-User         ChatGPT search + user-triggered browsing
+#   OAI-AdsBot                          ad landing-page validation (not training)
+#   Claude-User, Claude-SearchBot       Claude browsing + search retrieval
+#   PerplexityBot, Perplexity-User      Perplexity index + user-triggered fetch
+#   meta-externalfetcher                user-directed fetch for Meta AI
+#   Google-CloudVertexBot               Vertex AI Agent builders (not training)
+User-agent: *
+Allow: /
+
+# --- Model-training crawlers: disallowed ---
+
+# OpenAI — foundation model training crawl.
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic — foundation model training crawl.
+User-agent: ClaudeBot
+Disallow: /
+
+# Google — Gemini / Vertex AI training. Does NOT affect Google Search ranking
+# or inclusion; that is governed separately by Googlebot, allowed above.
+User-agent: Google-Extended
+Disallow: /
+
+# Apple — Apple Intelligence training. Applebot-Extended performs no crawling of
+# its own; it only governs how data already collected by Applebot may be used,
+# so this does NOT affect Siri, Spotlight, or Apple search results.
+User-agent: Applebot-Extended
+Disallow: /
+
+# Common Crawl — open dataset broadly reused as training corpus by many labs.
+User-agent: CCBot
+Disallow: /
+
+# ByteDance — foundation model training crawl.
+User-agent: Bytespider
+Disallow: /
+
+# Meta — foundation model training crawl. The user-directed counterpart,
+# meta-externalfetcher, remains allowed above.
+User-agent: meta-externalagent
+Disallow: /
+
+Sitemap: https://aryanmishra.work/sitemap.xml

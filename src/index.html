@@ -3,9 +3,64 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Portfolio</title>
+  <title>Aryan Mishra — Full-Stack Software Engineer</title>
   <base href="/" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!--
+    Static SEO fallback. Everything below is replaced per-route at runtime by
+    SeoService (src/app/core/services/seo.service.ts), but the app is client-
+    rendered only, so crawlers that don't execute JavaScript never get that far —
+    this block is all they ever see. Keep it in sync with SEO_CONFIG.
+  -->
+  <meta name="description"
+    content="Full-stack software engineer specialising in TypeScript and Angular products. Selected projects, professional experience, services, and technical writing." />
+  <link rel="canonical" href="https://aryanmishra.work/home" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Aryan Mishra" />
+  <meta property="og:title" content="Aryan Mishra — Full-Stack Software Engineer" />
+  <meta property="og:description"
+    content="Full-stack software engineer specialising in TypeScript and Angular products. Selected projects, professional experience, services, and technical writing." />
+  <meta property="og:url" content="https://aryanmishra.work/home" />
+  <meta property="og:image" content="https://aryanmishra.work/assets/img/my_pic.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aryan Mishra — Full-Stack Software Engineer" />
+  <meta name="twitter:description"
+    content="Full-stack software engineer specialising in TypeScript and Angular products. Selected projects, professional experience, services, and technical writing." />
+  <meta name="twitter:image" content="https://aryanmishra.work/assets/img/my_pic.jpg" />
+
+  <!--
+    Identity graph, static so it survives without JavaScript. LayoutComponent
+    replaces this same block at runtime to add `sameAs` profile links, which live
+    in the CMS and therefore can't be baked in at build time.
+  -->
+  <script type="application/ld+json" data-seo-jsonld-site>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://aryanmishra.work/#person",
+          "name": "Aryan Mishra",
+          "jobTitle": "Full-Stack Software Engineer",
+          "url": "https://aryanmishra.work",
+          "image": "https://aryanmishra.work/assets/img/my_pic.jpg",
+          "description": "Full-stack software engineer specialising in TypeScript and Angular products. Selected projects, professional experience, services, and technical writing."
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://aryanmishra.work/#website",
+          "name": "Aryan Mishra",
+          "url": "https://aryanmishra.work",
+          "description": "Full-stack software engineer specialising in TypeScript and Angular products. Selected projects, professional experience, services, and technical writing.",
+          "publisher": { "@id": "https://aryanmishra.work/#person" }
+        }
+      ]
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />

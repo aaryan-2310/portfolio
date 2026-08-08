@@ -4,7 +4,11 @@
     "outputDirectory": "dist/browser",
     "rewrites": [
         {
-            "source": "/(.*)",
+            "source": "/sitemap.xml",
+            "destination": "/api/sitemap"
+        },
+        {
+            "source": "/((?!robots\\.txt|llms\\.txt|sitemap\\.xml|api/).*)",
             "destination": "/index.html"
         }
     ]

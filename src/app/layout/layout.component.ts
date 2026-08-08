@@ -5,6 +5,9 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { SettingsService } from '../core/services/settings.service';
+import { ContactService } from '../core/services/contact.service';
+import { SeoService } from '../core/services/seo.service';
+import { personSchema, webSiteSchema } from '../core/seo/seo.schema';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { ChatWidgetComponent } from '../shared/components/chat-widget/chat-widget.component';
 import { ToolbarSearchComponent } from '../shared/components/toolbar-search/toolbar-search.component';
@@ -65,6 +68,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     private theme: ThemeService,
     private settingsService: SettingsService,
+    private contactService: ContactService,
+    private seo: SeoService,
     private destroyRef: DestroyRef,
   ) {
     // Monitor Route Changes for Context Switching
@@ -90,6 +95,20 @@ export class LayoutComponent implements OnInit, OnDestroy {
           this.availableForFreelance = settings.availableForFreelance;
         }
       });
+
+    // `index.html` already ships a static Person/WebSite graph so non-JS
+    // crawlers see it. Upgrade it here with the `sameAs` profile links, which
+    // only exist in the CMS and so can't be baked in at build time.
+    this.contactService.getSocialLinks()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: links => this.applySiteSchema(links.map(link => link.url).filter(Boolean)),
+        error: () => this.applySiteSchema([]),
+      });
+  }
+
+  private applySiteSchema(sameAs: string[]): void {
+    this.seo.setSiteJsonLd([personSchema(sameAs), webSiteSchema()]);
   }
 
   getCurrentTheme(): 'light' | 'dark' {
