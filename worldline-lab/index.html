@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WORLDLINE — rendering-engine bake-off</title>
+  <style>
+    :root{color-scheme:dark}
+    body{margin:0;background:#05060a;color:#98a0ac;
+      font:14px/1.7 "Segoe UI",system-ui,sans-serif;padding:48px 24px}
+    .wrap{max-width:760px;margin:0 auto}
+    h1{font:400 13px Consolas,monospace;letter-spacing:.5em;color:#e8e6e0;margin:0 0 6px}
+    h1 i{font-style:normal;color:#d9a648}
+    p.sub{font-size:13px;color:#5d646f;margin:0 0 34px}
+    .card{display:block;border:1px solid #2a2f3b;padding:18px 20px;margin-bottom:14px;
+      text-decoration:none;color:inherit;position:relative}
+    .card:hover{border-color:#7a5e28;background:rgba(217,166,72,.05)}
+    .card h2{font:600 15px "Segoe UI",sans-serif;color:#e8e6e0;margin:0 0 4px;letter-spacing:.06em}
+    .card h2 b{color:#d9a648;font-weight:400;font-family:Consolas,monospace;font-size:11px;
+      letter-spacing:.2em;margin-right:10px}
+    .card p{margin:0;font-size:12.5px;color:#98a0ac}
+    .card .st{position:absolute;right:16px;top:18px;font:10px Consolas,monospace;
+      letter-spacing:.18em;color:#7fae8c}
+    .card .st.off{color:#5d646f}
+    table{width:100%;border-collapse:collapse;margin-top:34px;font-size:12.5px}
+    th,td{border:1px solid #1d212b;padding:8px 10px;text-align:left}
+    th{font:10px Consolas,monospace;letter-spacing:.18em;color:#5d646f;text-transform:uppercase}
+    td b{color:#d9a648;font-weight:400}
+    .note{margin-top:26px;font-size:12px;color:#5d646f;border-left:2px solid #2a2f3b;padding-left:14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>WORLDLINE <i>//</i> ENGINE BAKE-OFF</h1>
+    <p class="sub">The same cockpit-at-night scene, one build per candidate engine.
+      Judge fidelity with your eyes; judge cost with the on-screen measured HUD.</p>
+
+    <a class="card" href="./three/">
+      <span class="st">READY</span>
+      <h2><b>CANDIDATE A</b> Three.js 0.182</h2>
+      <p>PMREM image-based lighting · physical glass transmission · Points starfield ·
+         UnrealBloom · PCF soft shadows.</p>
+    </a>
+    <a class="card" href="./playcanvas/">
+      <span class="st">READY</span>
+      <h2><b>CANDIDATE B</b> PlayCanvas engine 2.x</h2>
+      <p>EnvLighting IBL atlas · metalness workflow · emissive star dome ·
+         CameraFrame bloom (feature-detected) · PCF shadows.</p>
+    </a>
+    <a class="card" href="./needle/README.md">
+      <span class="st off">DEFERRED</span>
+      <h2><b>CANDIDATE C</b> Needle Engine</h2>
+      <p>Wraps Three.js — a code-only round would measure Three, not Needle. Enters
+         round 2 when a Blender-authored GLB of the deck exists.</p>
+    </a>
+
+    <table>
+      <thead><tr><th>Judge</th><th>How</th></tr></thead>
+      <tbody>
+        <tr><td><b>Visual fidelity</b></td><td>metal response to the warm key light · screens lighting nearby hull · glass believability · planet/atmosphere</td></tr>
+        <tr><td><b>Performance</b></td><td>HUD: FPS, frame ms, draw calls, heap — same machine, same window size</td></tr>
+        <tr><td><b>Loading</b></td><td>HUD: ms to first frame (cold reload, dev server)</td></tr>
+        <tr><td><b>Interaction</b></td><td>hover the centre console, click to engage — latency and feel of the cinematic transition</td></tr>
+        <tr><td><b>Angular fit</b></td><td>assessed in the decision record, not here</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">Both builds read the identical scene contract in
+      <code>shared/spec.ts</code> — geometry, palette, camera choreography, console copy,
+      and the equirect environment are number-for-number the same. Where an engine
+      couldn't express something idiomatically, its HUD carries an honest flag.</p>
+  </div>
+</body>
+</html>
