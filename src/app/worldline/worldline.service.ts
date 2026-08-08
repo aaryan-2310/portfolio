@@ -2,6 +2,7 @@ import { Injectable, NgZone, OnDestroy, inject } from '@angular/core';
 import * as pc from 'playcanvas';
 import { C, G, CAM, CONSOLE, DISPLAY_LIGHT, REDUCED, drawScreen, drawEquirectEnv } from './spec';
 import { drawTimeline, drawConstellation, drawJournal, drawSystem } from './content';
+import { BloomEffect } from './bloom';
 
 interface Display {
   e: pc.Entity;
@@ -265,6 +266,17 @@ export class WorldlineService implements OnDestroy {
       },
     };
     try { camE.camera!.postEffects.addEffect(lensing as any); } catch (e) { console.warn('lensing failed', e); }
+
+    // Bloom post-effect, chained after lensing so the lensed disk glow blooms too.
+    // CameraFrame owns the engine's built-in bloom render pass and is incompatible with the
+    // manual postEffects used for lensing above, so this runs its own extract/blur/combine chain.
+    try {
+      const bloom = new BloomEffect(app.graphicsDevice);
+      bloom.bloomThreshold = 0.35;
+      bloom.blurAmount = 5;
+      bloom.bloomIntensity = 0.7;
+      camE.camera!.postEffects.addEffect(bloom);
+    } catch (e) { console.warn('bloom failed', e); }
 
     // Camera rig
     const rig = {

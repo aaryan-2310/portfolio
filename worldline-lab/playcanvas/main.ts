@@ -8,6 +8,7 @@ import * as pc from 'playcanvas';
 import { C, G, CAM, CONSOLE, DISPLAY_LIGHT, REDUCED, drawScreen, drawEquirectEnv } from '../shared/spec';
 import { drawTimeline, drawConstellation, drawJournal, drawSystem } from '../shared/content';
 import { MetricsHud } from '../shared/hud';
+import { BloomEffect } from '../shared/bloom';
 
 const canvas = document.getElementById('app') as HTMLCanvasElement;
 const app = new pc.Application(canvas, {
@@ -261,24 +262,13 @@ app.root.addChild(fill);
 
 /* ── post: CameraFrame disabled — postEffects (lensing) not compatible with frame passes ── */
 // ACES tonemapping is already set on the camera component above.
-// Bloom runs via a postEffects BloomEffect below alongside the lensing pass.
+// Bloom runs via a manual postEffects BloomEffect below, chained after the lensing pass.
 hud.flag('Post: CameraFrame bloom', false, 'disabled — incompatible with postEffects lensing');
 
 /* ── post: gravitational lensing — α = 2r_s/b (Schwarzschild weak field) ── */
 // BH world pos Three.js(-6, 3, -75) matches the Blender GLB coordinate mapping.
 const BH_WORLD_PC = new pc.Vec3(-6, 3, -75);
 const BH_RS_WORLD  = 2.0;
-
-// Try to add PlayCanvas built-in bloom before lensing
-try {
-  const BloomEffect = (pc as any).BloomEffect;
-  if (BloomEffect) {
-    const bloom = new BloomEffect(app.graphicsDevice);
-    bloom.bloomThreshold = 0.3; bloom.blurAmount = 4; bloom.bloomAmount = 0.03;
-    camE.camera!.postEffects.addEffect(bloom);
-    hud.flag('Post: bloom (postEffects)', true);
-  }
-} catch { /* bloom unavailable — lensing still runs */ }
 
 const lensingShader = new pc.Shader(app.graphicsDevice, {
   attributes: { aPosition: pc.SEMANTIC_POSITION },
@@ -333,6 +323,19 @@ try {
   lensingOk = true;
 } catch (e) { console.warn('GravLensing PostEffect failed', e); }
 hud.flag('Post: GR lensing (α=2r_s/b)', lensingOk, lensingOk ? '' : 'PostEffect unavailable');
+
+// Bloom, chained after lensing so the lensed disk glow blooms too. PlayCanvas 2.x has no
+// standalone BloomEffect postEffect class (real bloom lives inside CameraFrame's render-pass
+// graph, incompatible with the manual postEffects lensing above) — this runs its own
+// extract/blur/combine chain instead.
+let bloomOk = false;
+try {
+  const bloom = new BloomEffect(app.graphicsDevice);
+  bloom.bloomThreshold = 0.35; bloom.blurAmount = 5; bloom.bloomIntensity = 0.7;
+  camE.camera!.postEffects.addEffect(bloom as any);
+  bloomOk = true;
+} catch (e) { console.warn('Bloom PostEffect failed', e); }
+hud.flag('Post: bloom (postEffects)', bloomOk, bloomOk ? '' : 'PostEffect unavailable');
 
 /* ── camera rig + interaction (same maths as the three build) ── */
 const rig = {

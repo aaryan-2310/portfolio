@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio-dev",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start"],
+      "port": 4200
+    },
+    {
+      "name": "portfolio-dist",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-s", "dist/browser", "-l", "4300"],
+      "port": 4300
+    }
+  ]
+}
