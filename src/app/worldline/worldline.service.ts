@@ -19,6 +19,7 @@ export class WorldlineService implements OnDestroy {
   private pointerDownFn?: (e: PointerEvent) => void;
   private keyDownFn?: (e: KeyboardEvent) => void;
   private resizeFn?: () => void;
+  private exteriorToggleFn?: () => void;
 
   private readonly zone = inject(NgZone);
 
@@ -37,6 +38,10 @@ export class WorldlineService implements OnDestroy {
     this.resizeFn && window.removeEventListener('resize', this.resizeFn);
     this.app.destroy();
     this.app = null;
+  }
+
+  toggleExterior(): void {
+    this.exteriorToggleFn?.();
   }
 
   ngOnDestroy(): void { this.destroy(); }
@@ -85,6 +90,7 @@ export class WorldlineService implements OnDestroy {
     const displays: Display[] = [];
     let deckLoaded = false;
     let center: Display | undefined;
+    let deckRoot: pc.Entity | null = null;
 
     const wireDisplay = (
       entity: pc.Entity, title: string, lines: readonly string[],
@@ -118,6 +124,7 @@ export class WorldlineService implements OnDestroy {
     app.assets.load(deckAsset);
     deckAsset.on('load', () => {
       const root = (deckAsset.resource as pc.ContainerResource).instantiateRenderEntity();
+      deckRoot = root;
       app.root.addChild(root);
       root.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
 
@@ -171,6 +178,25 @@ export class WorldlineService implements OnDestroy {
         (renderE.render!.meshInstances[0] as any).material = mat;
       }
     });
+
+    // Exterior vessel — reveal mode. Coordinate mapping matches the three.js/PlayCanvas lab
+    // builds (both share this convention already — see BH_WORLD below).
+    const EXT_CAM = {
+      pos:  [-10.72, -3.07,  5.62] as [number, number, number],
+      look: [  0.05,  0.26, 11.84] as [number, number, number],
+    };
+    let exteriorRoot: pc.Entity | null = null;
+    let exteriorMode = false;
+    const exteriorAsset = new pc.Asset('exterior', 'container', { url: '/assets/worldline/wlv01_exterior.glb' });
+    app.assets.add(exteriorAsset);
+    app.assets.load(exteriorAsset);
+    exteriorAsset.on('load', () => {
+      exteriorRoot = (exteriorAsset.resource as pc.ContainerResource).instantiateRenderEntity();
+      exteriorRoot.enabled = false;
+      app.root.addChild(exteriorRoot);
+      exteriorRoot.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
+    });
+    exteriorAsset.on('error', (err: string) => console.error('wlv01_exterior.glb failed to load', err));
 
     // Key star billboard
     const buildBillboard = (
@@ -310,6 +336,18 @@ export class WorldlineService implements OnDestroy {
       center.light.light!.color = col(on ? C.teal : C.amber);
     };
 
+    const setExteriorMode = (on: boolean) => {
+      if (exteriorMode === on) return;
+      exteriorMode = on;
+      if (deckRoot) deckRoot.enabled = !on;
+      if (exteriorRoot) exteriorRoot.enabled = on;
+      rig.animStart = performance.now();
+      rig.fromP.copy(camE.getPosition());
+      rig.fromL.copy(lookTmp);
+      if (on) setEngaged(false);
+    };
+    this.exteriorToggleFn = () => setExteriorMode(!exteriorMode);
+
     this.pointerMoveFn = (e: PointerEvent) => {
       rig.tpx = (e.clientX / innerWidth - 0.5) * 2;
       rig.tpy = (e.clientY / innerHeight - 0.5) * 2;
@@ -335,7 +373,7 @@ export class WorldlineService implements OnDestroy {
       rig.px += (rig.tpx - rig.px) * 0.06;
       rig.py += (rig.tpy - rig.py) * 0.06;
 
-      const target = rig.engaged ? CAM.focus : CAM.base;
+      const target = exteriorMode ? EXT_CAM : (rig.engaged ? CAM.focus : CAM.base);
       const k = REDUCED ? 1 : Math.min(1, (performance.now() - rig.animStart) / CAM.transitionMs);
       const e = easeInOut(k);
       const tp = new pc.Vec3(...target.pos as [number,number,number]);
@@ -343,12 +381,11 @@ export class WorldlineService implements OnDestroy {
       const p = new pc.Vec3().lerp(rig.fromP, tp, e);
       lookTmp.lerp(rig.fromL, tl, e);
 
-      const idle = REDUCED || rig.engaged ? 0 : Math.sin(rig.t * (Math.PI * 2) / CAM.idlePeriodS);
-      camE.setPosition(
-        p.x + rig.px * CAM.parallax,
-        p.y - rig.py * CAM.parallax * 0.6,
-        p.z + idle * CAM.idleAmpZ);
-      camE.lookAt(lookTmp.x + rig.px * 0.24, lookTmp.y - rig.py * 0.18, lookTmp.z);
+      const idle = REDUCED || rig.engaged || exteriorMode ? 0 : Math.sin(rig.t * (Math.PI * 2) / CAM.idlePeriodS);
+      const px = exteriorMode ? 0 : rig.px * CAM.parallax;
+      const py = exteriorMode ? 0 : rig.py * CAM.parallax * 0.6;
+      camE.setPosition(p.x + px, p.y - py, p.z + idle * CAM.idleAmpZ);
+      camE.lookAt(lookTmp.x + (exteriorMode ? 0 : rig.px * 0.24), lookTmp.y - (exteriorMode ? 0 : rig.py * 0.18), lookTmp.z);
 
       if (!REDUCED) {
         const dome = (app as any)._starDome as pc.Entity;
