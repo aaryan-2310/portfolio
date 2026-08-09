@@ -67,6 +67,7 @@ const displays: Display[] = [];
 // seated figure's reach and visible past the seat. The 3 dash displays are
 // now ambient-only (idle content, no hover/click).
 let deckLoaded = false;
+let deckRoot: pc.Entity | null = null;
 
 function wireDisplay(
   entity: pc.Entity, title: string, lines: readonly string[],
@@ -105,6 +106,7 @@ app.assets.add(deckAsset);
 app.assets.load(deckAsset);
 deckAsset.on('load', () => {
   const root = (deckAsset.resource as pc.ContainerResource).instantiateRenderEntity();
+  deckRoot = root;
   app.root.addChild(root);
   root.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
 
@@ -177,6 +179,31 @@ deckAsset.on('load', () => {
 deckAsset.on('error', (err: string) => {
   console.error('deck.glb failed to load', err);
   hud.flag('Geometry: Blender GLB (round 2)', false, 'load failed — see console');
+});
+
+/* ── exterior vessel — reveal mode. Coordinate mapping matches the three.js build:
+   Blender (x,y,z) → engine (x, z, −y), same convention already shared by both engines
+   (see BH_WORLD_PC below, identical value used in three.js's BH_WORLD). ── */
+const EXT_CAM = {
+  pos:  [-10.72, -3.07,  5.62] as [number, number, number],
+  look: [  0.05,  0.26, 11.84] as [number, number, number],
+};
+let exteriorRoot: pc.Entity | null = null;
+let exteriorMode = false;
+const exteriorAsset = new pc.Asset('exterior', 'container',
+  { url: new URL('../shared/assets/wlv01_exterior.glb', import.meta.url).href });
+app.assets.add(exteriorAsset);
+app.assets.load(exteriorAsset);
+exteriorAsset.on('load', () => {
+  exteriorRoot = (exteriorAsset.resource as pc.ContainerResource).instantiateRenderEntity();
+  exteriorRoot.enabled = false;
+  app.root.addChild(exteriorRoot);
+  exteriorRoot.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
+  hud.flag('Exterior: WLV-01 vessel GLB', true);
+});
+exteriorAsset.on('error', (err: string) => {
+  console.error('wlv01_exterior.glb failed to load', err);
+  hud.flag('Exterior: WLV-01 vessel GLB', false, 'load failed');
 });
 
 /* ── exterior: key star billboard + starfield (planet removed — black hole is the backdrop) ── */
@@ -381,6 +408,19 @@ function setEngaged(on: boolean) {
   center.tex.setSource(center.cv);
   center.light.light!.color = col(on ? C.teal : C.amber);
 }
+
+function setExteriorMode(on: boolean) {
+  if (exteriorMode === on) return;
+  exteriorMode = on;
+  if (deckRoot) deckRoot.enabled = !on;
+  if (exteriorRoot) exteriorRoot.enabled = on;
+  rig.animStart = performance.now();
+  rig.fromP.copy(camE.getPosition());
+  rig.fromL.copy(lookTmp);
+  if (on) setEngaged(false);
+}
+hud.button('EXTERIOR VIEW', () => setExteriorMode(!exteriorMode));
+
 canvas.addEventListener('pointermove', e => {
   if (!center) return;
   const h = rayHitsConsole(e.clientX, e.clientY);
@@ -403,7 +443,7 @@ app.on('update', (dt: number) => {
   rig.px += (rig.tpx - rig.px) * 0.06;
   rig.py += (rig.tpy - rig.py) * 0.06;
 
-  const target = rig.engaged ? CAM.focus : CAM.base;
+  const target = exteriorMode ? EXT_CAM : (rig.engaged ? CAM.focus : CAM.base);
   const k = REDUCED ? 1 : Math.min(1, (performance.now() - rig.animStart) / CAM.transitionMs);
   const e = easeInOut(k);
   const tp = new pc.Vec3(...target.pos as [number, number, number]);
@@ -411,12 +451,11 @@ app.on('update', (dt: number) => {
   const p = new pc.Vec3().lerp(rig.fromP, tp, e);
   lookTmp.lerp(rig.fromL, tl, e);
 
-  const idle = REDUCED || rig.engaged ? 0 : Math.sin(rig.t * (Math.PI * 2) / CAM.idlePeriodS);
-  camE.setPosition(
-    p.x + rig.px * CAM.parallax,
-    p.y - rig.py * CAM.parallax * 0.6,
-    p.z + idle * CAM.idleAmpZ);
-  camE.lookAt(lookTmp.x + rig.px * 0.24, lookTmp.y - rig.py * 0.18, lookTmp.z);
+  const idle = REDUCED || rig.engaged || exteriorMode ? 0 : Math.sin(rig.t * (Math.PI * 2) / CAM.idlePeriodS);
+  const px = exteriorMode ? 0 : rig.px * CAM.parallax;
+  const py = exteriorMode ? 0 : rig.py * CAM.parallax * 0.6;
+  camE.setPosition(p.x + px, p.y - py, p.z + idle * CAM.idleAmpZ);
+  camE.lookAt(lookTmp.x + (exteriorMode ? 0 : rig.px * 0.24), lookTmp.y - (exteriorMode ? 0 : rig.py * 0.18), lookTmp.z);
 
   if (!REDUCED) {
     const dome = (app as any)._starDome as pc.Entity;
