@@ -107,6 +107,7 @@ app.assets.load(deckAsset);
 deckAsset.on('load', () => {
   const root = (deckAsset.resource as pc.ContainerResource).instantiateRenderEntity();
   deckRoot = root;
+  root.enabled = !exteriorMode;
   app.root.addChild(root);
   root.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
 
@@ -184,6 +185,8 @@ deckAsset.on('error', (err: string) => {
 /* ── exterior vessel — reveal mode. Coordinate mapping matches the three.js build:
    Blender (x,y,z) → engine (x, z, −y), same convention already shared by both engines
    (see BH_WORLD_PC below, identical value used in three.js's BH_WORLD). ── */
+// Mirrored in src/app/worldline/worldline.service.ts — keep both in sync if EXT_CAM or
+// setExteriorMode logic changes.
 const EXT_CAM = {
   pos:  [-10.72, -3.07,  5.62] as [number, number, number],
   look: [  0.05,  0.26, 11.84] as [number, number, number],
@@ -196,7 +199,7 @@ app.assets.add(exteriorAsset);
 app.assets.load(exteriorAsset);
 exteriorAsset.on('load', () => {
   exteriorRoot = (exteriorAsset.resource as pc.ContainerResource).instantiateRenderEntity();
-  exteriorRoot.enabled = false;
+  exteriorRoot.enabled = exteriorMode;
   app.root.addChild(exteriorRoot);
   exteriorRoot.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
   hud.flag('Exterior: WLV-01 vessel GLB', true);

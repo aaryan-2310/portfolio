@@ -6,7 +6,7 @@ import { WorldlineService } from './worldline.service';
   standalone: true,
   template: `
     <canvas #wlCanvas></canvas>
-    <button class="exterior-toggle" [class.active]="exteriorActive()" (click)="onToggleExterior()">
+    <button type="button" class="exterior-toggle" [class.active]="exteriorActive()" (click)="onToggleExterior()">
       {{ exteriorActive() ? 'COCKPIT VIEW' : 'EXTERIOR VIEW' }}
     </button>
   `,
@@ -25,6 +25,7 @@ import { WorldlineService } from './worldline.service';
       background: rgba(10, 12, 18, 0.55);
       border: 1px solid rgba(217, 166, 72, 0.4);
       border-radius: 4px;
+      -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s;
@@ -53,7 +54,6 @@ export class WorldlineComponent implements OnInit, OnDestroy {
   }
 
   onToggleExterior(): void {
-    this.exteriorActive.set(!this.exteriorActive());
-    this.wl.toggleExterior();
+    this.exteriorActive.set(this.wl.toggleExterior());
   }
 }

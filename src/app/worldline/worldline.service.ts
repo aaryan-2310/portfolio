@@ -19,7 +19,7 @@ export class WorldlineService implements OnDestroy {
   private pointerDownFn?: (e: PointerEvent) => void;
   private keyDownFn?: (e: KeyboardEvent) => void;
   private resizeFn?: () => void;
-  private exteriorToggleFn?: () => void;
+  private exteriorToggleFn?: () => boolean;
 
   private readonly zone = inject(NgZone);
 
@@ -36,12 +36,13 @@ export class WorldlineService implements OnDestroy {
     this.pointerDownFn && window.removeEventListener('pointerdown', this.pointerDownFn);
     this.keyDownFn && window.removeEventListener('keydown', this.keyDownFn);
     this.resizeFn && window.removeEventListener('resize', this.resizeFn);
+    this.exteriorToggleFn = undefined;
     this.app.destroy();
     this.app = null;
   }
 
-  toggleExterior(): void {
-    this.exteriorToggleFn?.();
+  toggleExterior(): boolean {
+    return this.exteriorToggleFn?.() ?? false;
   }
 
   ngOnDestroy(): void { this.destroy(); }
@@ -125,6 +126,7 @@ export class WorldlineService implements OnDestroy {
     deckAsset.on('load', () => {
       const root = (deckAsset.resource as pc.ContainerResource).instantiateRenderEntity();
       deckRoot = root;
+      root.enabled = !exteriorMode;
       app.root.addChild(root);
       root.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
 
@@ -181,6 +183,8 @@ export class WorldlineService implements OnDestroy {
 
     // Exterior vessel — reveal mode. Coordinate mapping matches the three.js/PlayCanvas lab
     // builds (both share this convention already — see BH_WORLD below).
+    // Mirrored in worldline-lab/playcanvas/main.ts — keep both in sync if EXT_CAM or
+    // setExteriorMode logic changes.
     const EXT_CAM = {
       pos:  [-10.72, -3.07,  5.62] as [number, number, number],
       look: [  0.05,  0.26, 11.84] as [number, number, number],
@@ -192,7 +196,7 @@ export class WorldlineService implements OnDestroy {
     app.assets.load(exteriorAsset);
     exteriorAsset.on('load', () => {
       exteriorRoot = (exteriorAsset.resource as pc.ContainerResource).instantiateRenderEntity();
-      exteriorRoot.enabled = false;
+      exteriorRoot.enabled = exteriorMode;
       app.root.addChild(exteriorRoot);
       exteriorRoot.findComponents('render').forEach((r: any) => { r.castShadows = true; r.receiveShadows = true; });
     });
@@ -346,7 +350,7 @@ export class WorldlineService implements OnDestroy {
       rig.fromL.copy(lookTmp);
       if (on) setEngaged(false);
     };
-    this.exteriorToggleFn = () => setExteriorMode(!exteriorMode);
+    this.exteriorToggleFn = () => { setExteriorMode(!exteriorMode); return exteriorMode; };
 
     this.pointerMoveFn = (e: PointerEvent) => {
       rig.tpx = (e.clientX / innerWidth - 0.5) * 2;
