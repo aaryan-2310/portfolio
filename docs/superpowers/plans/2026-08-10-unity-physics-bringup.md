@@ -194,6 +194,7 @@ public class ImpulseDriftTest : MonoBehaviour
     private float elapsed;
     private float nextSampleTime;
     private float baselineSpeed;
+    private bool impulseApplied;
     private bool baselineCaptured;
     private float maxDeviation;
     private bool finished;
@@ -204,13 +205,24 @@ public class ImpulseDriftTest : MonoBehaviour
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
         rb.useGravity = false;
-        rb.AddForce(impulseDirection.normalized * impulseMagnitude, ForceMode.Impulse);
         nextSampleTime = sampleIntervalSeconds;
     }
 
     void FixedUpdate()
     {
         if (finished) return;
+
+        if (!impulseApplied)
+        {
+            // Apply on this tick's FixedUpdate rather than Start(): AddForce with
+            // ForceMode.Impulse is integrated during this tick's physics step, so
+            // linearVelocity only reflects it starting next tick. Sampling baseline
+            // on this same tick (as a naive Start()-based version does) reads the
+            // pre-impulse velocity and produces a spurious ~impulseMagnitude "drift".
+            rb.AddForce(impulseDirection.normalized * impulseMagnitude, ForceMode.Impulse);
+            impulseApplied = true;
+            return;
+        }
 
         elapsed += Time.fixedDeltaTime;
         float speed = rb.linearVelocity.magnitude;
