@@ -30,7 +30,7 @@
 
 **Interfaces:** None — infrastructure only.
 
-- [ ] **Step 1: Create the Unity `.gitignore`**
+- [x] **Step 1: Create the Unity `.gitignore`**
 
 Write `C:/Users/U6077517/SpaceSim/.gitignore`:
 
@@ -64,7 +64,7 @@ sysinfo.txt
 crashlytics-build.properties
 ```
 
-- [ ] **Step 2: Init repo and make the baseline commit**
+- [x] **Step 2: Init repo and make the baseline commit**
 
 Run (cwd = `C:/Users/U6077517/SpaceSim`):
 
@@ -80,7 +80,7 @@ Confirm `git status` shows `Assets/`, `Packages/`, `ProjectSettings/`, `.gitigno
 git commit -m "chore: baseline commit of fresh Unity 6000.5.8f1 URP project"
 ```
 
-- [ ] **Step 3: Verify**
+- [x] **Step 3: Verify**
 
 ```bash
 git log --oneline -1
@@ -100,7 +100,7 @@ Expected: one commit, clean working tree.
 
 **Interfaces:** None yet — later tasks add scripts under `Assets/Scripts/PhysicsSmokeTest/`.
 
-- [ ] **Step 1: Set project-wide gravity to zero**
+- [x] **Step 1: Set project-wide gravity to zero**
 
 Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -118,7 +118,7 @@ internal class CommandScript : IRunCommand
 }
 ```
 
-- [ ] **Step 2: Verify gravity is zero**
+- [x] **Step 2: Verify gravity is zero**
 
 Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -136,13 +136,13 @@ internal class CommandScript : IRunCommand
 
 Expected log: `Physics.gravity = (0.0, 0.0, 0.0)`.
 
-- [ ] **Step 3: Create the `PhysicsSmokeTest` scene**
+- [x] **Step 3: Create the `PhysicsSmokeTest` scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Create"`, `Name: "PhysicsSmokeTest"`, `Path: "Assets/Scenes"`.
 
 Then call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Load"`, `Name: "PhysicsSmokeTest"`, `Path: "Assets/Scenes"` to make it the active scene (all subsequent GameObject creation in Tasks 3-5 targets this scene).
 
-- [ ] **Step 4: Create the scripts folder and save the scene**
+- [x] **Step 4: Create the scripts folder and save the scene**
 
 Call `mcp__unity-mcp__Unity_ManageAsset` with `Action: "CreateFolder"`, `Path: "Assets/Scripts"` (parent must exist before creating the subfolder below — this project has no `Assets/Scripts` folder yet).
 
@@ -150,11 +150,11 @@ Call `mcp__unity-mcp__Unity_ManageAsset` with `Action: "CreateFolder"`, `Path: "
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 5: Verify scene is active and gravity persisted**
+- [x] **Step 5: Verify scene is active and gravity persisted**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "GetActive"`. Expected: `name: "PhysicsSmokeTest"`, `path: "Assets/Scenes/PhysicsSmokeTest.unity"`.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Assets/Scenes/PhysicsSmokeTest.unity Assets/Scenes/PhysicsSmokeTest.unity.meta \
@@ -175,7 +175,7 @@ git commit -m "feat: add PhysicsSmokeTest scene, zero project gravity"
 **Interfaces:**
 - Produces: `ImpulseDriftTest : MonoBehaviour` with public fields `impulseDirection` (Vector3), `impulseMagnitude` (float), `sampleIntervalSeconds` (float), `totalDurationSeconds` (float), `speedToleranceUnits` (float). Logs `[ImpulseDriftTest] RESULT: PASS|FAIL maxDeviation=<f> tolerance=<f>` when `elapsed >= totalDurationSeconds`.
 
-- [ ] **Step 1: Write `ImpulseDriftTest.cs`**
+- [x] **Step 1: Write `ImpulseDriftTest.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/PhysicsSmokeTest/ImpulseDriftTest.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -252,7 +252,7 @@ public class ImpulseDriftTest : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Create the test GameObject**
+- [x] **Step 2: Create the test GameObject**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -264,11 +264,11 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 (`y: 20` — see the note on lane separation in Task 5's Step 2. This object drifts unbounded along X for the whole test; it must never share a Y-lane with anything that could be in its path.)
 
-- [ ] **Step 3: Save the scene**
+- [x] **Step 3: Save the scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 4: Run the test**
+- [x] **Step 4: Run the test**
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`.
 
@@ -280,13 +280,13 @@ sleep 12
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Stop"`.
 
-- [ ] **Step 5: Verify the result**
+- [x] **Step 5: Verify the result**
 
 Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Log"]`, `FilterText: "ImpulseDriftTest] RESULT"`.
 
 Expected: exactly one line, `[ImpulseDriftTest] RESULT: PASS maxDeviation=0.00000 tolerance=0.00100` (deviation should be at or near `0.00000` — true momentum conservation, no hidden drag). If `FAIL`, inspect the intermediate `t=...s speed=...` log lines from the same filter without `"RESULT"` to see where velocity changed, and check `Rigidbody.linearDamping`/`angularDamping` were actually zeroed (re-check Step 1's code, not a config issue elsewhere).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Assets/Scripts/PhysicsSmokeTest/ImpulseDriftTest.cs Assets/Scripts/PhysicsSmokeTest/ImpulseDriftTest.cs.meta \
@@ -305,7 +305,7 @@ git commit -m "feat: add impulse+drift physics smoke test, verified PASS"
 **Interfaces:**
 - Produces: `ContinuousThrustTest : MonoBehaviour` with public fields `thrustDirection` (Vector3), `thrustForce` (float), `thrustDurationSeconds` (float), `holdDurationSeconds` (float), `holdToleranceUnits` (float). Logs `[ContinuousThrustTest] RESULT: PASS|FAIL monotonicIncrease=<bool> maxHoldDeviation=<f> tolerance=<f>` when `elapsed >= thrustDurationSeconds + holdDurationSeconds`.
 
-- [ ] **Step 1: Write `ContinuousThrustTest.cs`**
+- [x] **Step 1: Write `ContinuousThrustTest.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/PhysicsSmokeTest/ContinuousThrustTest.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -384,7 +384,7 @@ public class ContinuousThrustTest : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Create the test GameObject**
+- [x] **Step 2: Create the test GameObject**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -396,11 +396,11 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 (`y: 40` — see the note on lane separation in Task 5's Step 2. At `thrustForce=5`/`mass=1` this object covers tens of units in Z well before the thrust phase ends; it needs its own permanently-clear lane, not just a few units of initial offset.)
 
-- [ ] **Step 3: Save the scene**
+- [x] **Step 3: Save the scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 4: Run the test**
+- [x] **Step 4: Run the test**
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`.
 
@@ -412,13 +412,13 @@ sleep 12
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Stop"`.
 
-- [ ] **Step 5: Verify the result**
+- [x] **Step 5: Verify the result**
 
 Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Log"]`, `FilterText: "ContinuousThrustTest] RESULT"`.
 
 Expected: `[ContinuousThrustTest] RESULT: PASS monotonicIncrease=True maxHoldDeviation=0.00000 tolerance=0.00100`. If `FAIL` on `monotonicIncrease`, check the object isn't colliding with anything else in the scene (it shouldn't be, but confirm no stray collider overlap from Task 3's object — different `position` values should prevent this). If `FAIL` on `maxHoldDeviation`, damping wasn't actually zero — re-check Step 1.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Assets/Scripts/PhysicsSmokeTest/ContinuousThrustTest.cs Assets/Scripts/PhysicsSmokeTest/ContinuousThrustTest.cs.meta \
@@ -438,7 +438,7 @@ git commit -m "feat: add continuous thrust physics smoke test, verified PASS"
 - Produces: `CollisionMomentumTest : MonoBehaviour` with public fields `otherBody` (Rigidbody), `initialVelocitySelf` (Vector3), `initialVelocityOther` (Vector3), `momentumToleranceFraction` (float). Logs `[CollisionMomentumTest] RESULT: PASS|FAIL relativeError=<f> tolerance=<f>` from `OnCollisionEnter`.
 - Consumes: nothing from Tasks 3-4 — fully self-contained.
 
-- [ ] **Step 1: Write `CollisionMomentumTest.cs`**
+- [x] **Step 1: Write `CollisionMomentumTest.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/PhysicsSmokeTest/CollisionMomentumTest.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -504,7 +504,7 @@ public class CollisionMomentumTest : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Create the two colliding GameObjects**
+- [x] **Step 2: Create the two colliding GameObjects**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -524,11 +524,11 @@ Then call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 **Lane separation across all three tests (`y` coordinate, not `z`):** none of the three test scripts ever apply force along Y, so each test's group is placed on its own permanent Y-lane and can never re-enter another test's lane no matter how far it travels: `ImpulseDriftTest` at `y=20` (drifts unbounded along X), `ContinuousThrustTest` at `y=40` (accelerates unbounded along Z — at `thrustForce=5`/`mass=1` it covers tens of units before the thrust phase even ends), `CollisionBodyA`/`CollisionBodyB` at `y=0` (move only along X, converging then separating along the same line). A same-Y, few-units-of-Z offset would NOT be sufficient here — both `ImpulseDriftTest` and `ContinuousThrustTest` cover far more distance than a small fixed offset over a 10s window, so only an axis none of them ever moves along (Y) gives permanent isolation.
 
-- [ ] **Step 3: Save the scene**
+- [x] **Step 3: Save the scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 4: Run the test**
+- [x] **Step 4: Run the test**
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`.
 
@@ -540,13 +540,13 @@ sleep 12
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Stop"`.
 
-- [ ] **Step 5: Verify the result**
+- [x] **Step 5: Verify the result**
 
 Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Log"]`, `FilterText: "CollisionMomentumTest] RESULT"`.
 
 Expected: `[CollisionMomentumTest] RESULT: PASS relativeError=0.00000 tolerance=0.01000`. If `FAIL`, first confirm a collision actually happened at all (look for the `momentumBefore=...momentumAfter=...` line under the same script's tag without `"RESULT"` — if that line is entirely missing, the two cubes never touched: check their `position`/velocity values from Step 2 put them on a genuine collision course) before suspecting the physics engine itself.
 
-- [ ] **Step 6: Run all three tests together and do a combined final check**
+- [x] **Step 6: Run all three tests together and do a combined final check**
 
 This step confirms nothing regressed across the three GameObjects sharing one scene. Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`, wait, then `Action: "Stop"`:
 
@@ -558,7 +558,7 @@ Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Log"]`,
 
 Expected: three `RESULT: PASS` lines, one per script (`ImpulseDriftTest`, `ContinuousThrustTest`, `CollisionMomentumTest`).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add Assets/Scripts/PhysicsSmokeTest/CollisionMomentumTest.cs Assets/Scripts/PhysicsSmokeTest/CollisionMomentumTest.cs.meta \
@@ -576,3 +576,31 @@ After Task 5, all three pass conditions from the spec are proven simultaneously 
 3. Momentum-conserving collision between differently-massed bodies.
 
 This closes sub-project 1. Sub-project 2 (Newtonian flight controls) can now build real player input on top of a verified-correct physics foundation — it should reuse the same "zero damping, explicit force application" pattern established here, and can delete or keep this smoke-test scene as a reference (not part of this plan's scope to decide).
+
+---
+
+## Execution Record
+
+All 5 tasks executed via subagent-driven-development, per-task reviews skipped per standing instruction (one final review only). Full ledger with every controller ruling: `.superpowers/sdd/2026-08-10-unity-physics-bringup/progress.md` (deleted after this plan closes — this section is the durable summary).
+
+**SpaceSim commit history** (`C:/Users/U6077517/SpaceSim`, a separate repo this plan's Task 1 created):
+- `767d493` — baseline commit of the fresh Unity template
+- `fe4a017` — Task 2: zero gravity + `PhysicsSmokeTest.unity`
+- `e54559f` — chore: Editor-generated ProjectSettings churn from scene creation
+- `07b30dc` — Task 3: impulse+drift test (round 2 — round 1 caught a real bug, see below)
+- `c187147` — Task 4: continuous thrust test
+- `74501b8` — Task 5: collision momentum test
+- `31f396e` — final-review fix wave (round 2 — round 1 caught a self-inflicted tolerance bug, see below)
+
+**Two real bugs found and fixed during execution** (both in this plan's own script specifications, not implementer error — each implementer correctly refused to fudge a FAIL rather than force a pass):
+1. **Task 3, round 1:** the original `ImpulseDriftTest.cs` applied its impulse in `Start()` but sampled "baseline" velocity on that same first `FixedUpdate` tick — one tick too early for `ForceMode.Impulse` to have integrated, reading the pre-impulse value (0) as baseline and producing a spurious `RESULT: FAIL maxDeviation=10.00000`. Fixed by applying the impulse on its own `FixedUpdate` tick (with an early `return`) and sampling baseline starting the tick after.
+2. **Final-review fix wave, round 1:** adding an expected-magnitude assertion to `ContinuousThrustTest` (`speedMagnitudeToleranceUnits = 0.1f`) was too tight — float32 accumulation in `elapsed += Time.fixedDeltaTime` drifts slightly under the 5.0s thrust-duration boundary, so the release check doesn't trip until one tick late, contributing a deterministic extra `0.1` units of speed. Fixed by loosening the tolerance to `0.15f`.
+
+**Final whole-branch review** (opus, range `767d493..74501b8`) found 3 Important findings, all fixed and re-verified clean in one fix wave (commit `31f396e`, re-reviewed over `74501b8..31f396e`):
+1. All three test scripts could produce a false `PASS` on an inert/no-op object — none asserted the *expected magnitude* of motion, only internal self-consistency. Fixed by adding expected-magnitude assertions to all three (`ImpulseDriftTest`: `expectedSpeed = impulseMagnitude/mass`; `ContinuousThrustTest`: `expectedThrustSpeed = (thrustForce/mass) × thrustDurationSeconds`; `CollisionMomentumTest`: a `minVelocityChangeUnits` gate requiring the collision actually changed either body's velocity).
+2. `CollisionMomentumTest` had dropped the spec-required per-body velocity logging (design doc: "log both bodies' velocity ... immediately before and immediately after"). Restored.
+3. SpaceSim's `.gitignore` directory patterns were unanchored (no leading `/`), so they'd match at any depth and could silently untrack real content (and its `.meta` files) nested under `Assets/`. Anchored all eight directory patterns.
+
+Two Minors were also fixed in the same wave (a dropped explanatory comment on the Task-3 fix, and `ImpulseDriftTest`'s `maxDeviation` only updating at sample points instead of every tick). One new Minor surfaced in the fix wave's own re-review — `ContinuousThrustTest.cs`'s `RESULT` log prints the wrong tolerance field name next to `magnitudeError` (cosmetic only, the underlying pass/fail logic is correct) — parked rather than spending a third fix round on a non-blocking diagnostic label; trivial to fix whenever that script is next touched. Four other Minors (no in-scene camera, Discrete vs. Continuous collision detection, a one-tick-stale logged value, checking speed magnitude but not direction) were parked as real-but-out-of-scope for a throwaway smoke-test scene, per the review's own reasoning.
+
+**Final committed script contents** (`Assets/Scripts/PhysicsSmokeTest/` in the SpaceSim repo) reflect both bug fixes above — read the files directly for the authoritative current version rather than the code blocks in Tasks 3-5 above, which show each script's state as originally planned before the timing-bug fix and before the final-review fix wave.
