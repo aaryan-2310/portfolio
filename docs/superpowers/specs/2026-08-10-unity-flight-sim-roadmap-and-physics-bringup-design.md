@@ -24,7 +24,7 @@ URP**, not HDRP — confirmed as already configured in the connected Unity proje
 6000.5.8f1 project, Universal 3D template, `PC_RPAsset`/`Mobile_RPAsset` present, new Input
 System package already installed).
 
-## Roadmap: 6 sub-projects
+## Roadmap: 7 sub-projects
 
 Each gets its own spec → plan → build cycle. Order respects dependencies:
 
@@ -45,6 +45,10 @@ Each gets its own spec → plan → build cycle. Order respects dependencies:
    Unity via the **glTFast** (or UnityGLTF) package, rather than re-modeling from scratch. Not
    strictly ordered relative to 2-5 — needed whenever the real ship model (rather than a
    placeholder) is required. Sub-project 1 deliberately does NOT need this (see below).
+7. **Cockpit / first-person camera mode** *(needs #2)*: a toggleable first-person view from the
+   ship's cockpit, alongside sub-project 3's chase camera. Added 2026-08-15 — was one of the
+   options considered for sub-project 3 (chase-cam vs. cockpit vs. both), which chose chase-cam
+   only; tracked here rather than left unscheduled. Unordered relative to #4-#6; not started.
 
 ## Sub-Project 1: Physics Bring-Up — detailed design
 
