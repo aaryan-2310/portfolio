@@ -31,7 +31,7 @@
 **Interfaces:**
 - Produces: an action map named `"Ship"` with three actions — `"Thrust"` (Vector3), `"Look"` (Vector2), `"Roll"` (float/Axis) — that Task 2's `ShipInputReader` looks up by these exact string names.
 
-- [ ] **Step 1: Confirm the exact built-in composite type names**
+- [x] **Step 1: Confirm the exact built-in composite type names**
 
 Composite binding names (e.g. whether a 3D vector composite is registered as `"3DVector"`) must be confirmed against the actually-installed Input System package version before use — do not assume. Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -53,7 +53,7 @@ internal class CommandScript : IRunCommand
 
 Find the 3D vector composite name (expected `"3DVector"`) and the 1D axis composite name (expected `"1DAxis"`) in the logged output. If either differs from these expected values, use the actual logged name in Step 2 instead.
 
-- [ ] **Step 2: Build the `Ship` action map via the Input System's C# API**
+- [x] **Step 2: Build the `Ship` action map via the Input System's C# API**
 
 Building it through `InputActionSetupExtensions` (the officially supported API) rather than hand-editing the `.inputactions` JSON avoids getting the composite-binding serialization format subtly wrong. Call `mcp__unity-mcp__Unity_RunCommand` with (replace `"3DVector"`/`"1DAxis"` below if Step 1 found different names):
 
@@ -106,7 +106,7 @@ internal class CommandScript : IRunCommand
 
 If `AddCompositeBinding` throws because a composite name is wrong, that's Step 1 not being followed correctly — go back and use the exact logged name, don't guess a variant.
 
-- [ ] **Step 3: Verify the map**
+- [x] **Step 3: Verify the map**
 
 Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -133,7 +133,7 @@ internal class CommandScript : IRunCommand
 
 Expected: `Ship map found: True`, three actions logged — `Thrust` (bindingCount 7 = 1 composite + 6 parts), `Look` (bindingCount 1), `Roll` (bindingCount 3 = 1 composite + 2 parts).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add Assets/InputSystem_Actions.inputactions
@@ -155,7 +155,7 @@ git commit -m "feat: add Ship input action map (Thrust/Look/Roll)"
 - Produces: `class ShipInputReader : MonoBehaviour` with `public InputActionAsset actionsAsset;`, `public float mouseSensitivity = 0.1f;`, `public bool invertPitch = true;` — reads input each `FixedUpdate` and calls `GetComponent<ShipPhysicsController>().ApplyControlInput(...)`.
 - Consumes: the `"Ship"` action map with `"Thrust"`/`"Look"`/`"Roll"` actions from Task 1.
 
-- [ ] **Step 1: Create the folder and the `ShipControlInput` struct**
+- [x] **Step 1: Create the folder and the `ShipControlInput` struct**
 
 Call `mcp__unity-mcp__Unity_ManageAsset` with `Action: "CreateFolder"`, `Path: "Assets/Scripts/Ship"`.
 
@@ -171,7 +171,7 @@ public struct ShipControlInput
 }
 ```
 
-- [ ] **Step 2: Write `ShipPhysicsController.cs`**
+- [x] **Step 2: Write `ShipPhysicsController.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/Ship/ShipPhysicsController.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -201,7 +201,7 @@ public class ShipPhysicsController : MonoBehaviour
 }
 ```
 
-- [ ] **Step 3: Write `ShipInputReader.cs`**
+- [x] **Step 3: Write `ShipInputReader.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/Ship/ShipInputReader.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -255,11 +255,11 @@ public class ShipInputReader : MonoBehaviour
 }
 ```
 
-- [ ] **Step 4: Validate scripts compile**
+- [x] **Step 4: Validate scripts compile**
 
 Call `mcp__unity-mcp__Unity_ValidateScript` with `Uri: "Assets/Scripts/Ship/ShipInputReader.cs"`, `Level: "standard"`, `IncludeDiagnostics: true`. Expected: no errors. Repeat for `ShipPhysicsController.cs`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Assets/Scripts/Ship/ShipControlInput.cs Assets/Scripts/Ship/ShipControlInput.cs.meta \
@@ -281,7 +281,7 @@ git commit -m "feat: add ShipControlInput/ShipInputReader/ShipPhysicsController"
 - Consumes: `ShipInputReader`, `ShipPhysicsController` (Task 2).
 - Produces: a scene with a GameObject named `"Ship"` (the playable placeholder) that Task 4's test harness object coexists with (positioned far apart — see Step 3's note).
 
-- [ ] **Step 1: Write `ShipFollowCamera.cs`**
+- [x] **Step 1: Write `ShipFollowCamera.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/Ship/ShipFollowCamera.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -305,13 +305,13 @@ public class ShipFollowCamera : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Create the scene**
+- [x] **Step 2: Create the scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Create"`, `Name: "FlightControlTest"`, `Path: "Assets/Scenes"`.
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Load"`, `Name: "FlightControlTest"`, `Path: "Assets/Scenes"`.
 
-- [ ] **Step 3: Create the placeholder ship**
+- [x] **Step 3: Create the placeholder ship**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -324,7 +324,7 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 (Scale `[1, 1, 2.5]` makes local +Z visibly the long/"forward" axis, matching `Transform.forward`. This scene is separate from sub-project 1's `PhysicsSmokeTest.unity` — Task 4's isolated test object will additionally be placed far from this ship, e.g. at a distinct Y-lane like sub-project 1 used, so a runaway physics response during automated testing can never physically reach the playable ship.)
 
-- [ ] **Step 4: Create the follow camera**
+- [x] **Step 4: Create the follow camera**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -335,7 +335,7 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 (The earlier physics smoke-test plan found `component_properties`'s `{"find": ..., "component": ...}` reference syntax unreliable via `create`/`modify`/`set_component_property`. If this doesn't take effect — check with `Unity_ManageGameObject get_components` on `FollowCamera` afterward — fall back to `Unity_RunCommand` to assign `GetComponent<ShipFollowCamera>().target` directly in C#, the same workaround used in that plan.)
 
-- [ ] **Step 5: Save and verify**
+- [x] **Step 5: Save and verify**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
@@ -343,7 +343,7 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with `action: "get_components"`, `
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with `action: "get_components"`, `target: "Ship"`. Confirm `ShipInputReader.actionsAsset` is assigned (not `null`) and `Rigidbody.mass` reads `1`. Sub-project 1's final review found `component_properties` writes can silently fail beyond just cross-object references (it missed `useGravity`/mass on some objects there) — verify every field this step set, not only the reference ones. If anything is missing or wrong, use `mcp__unity-mcp__Unity_RunCommand` to assign it directly in C# (`GetComponent<ShipInputReader>().actionsAsset = AssetDatabase.LoadAssetAtPath<InputActionAsset>("Assets/InputSystem_Actions.inputactions")`, etc.), matching the workaround from that plan.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Assets/Scripts/Ship/ShipFollowCamera.cs Assets/Scripts/Ship/ShipFollowCamera.cs.meta \
@@ -363,7 +363,7 @@ git commit -m "feat: add FlightControlTest scene with placeholder ship and follo
 - Consumes: `ShipPhysicsController.ApplyControlInput(ShipControlInput)` (Task 2) — called directly with synthetic values, bypassing `ShipInputReader` entirely.
 - Produces: `class ShipControlMappingTest : MonoBehaviour`. Logs one `[ShipControlMappingTest] RESULT: PASS|FAIL ...` line per phase (7 total: 3 thrust axes, 3 torque axes, 1 zero-input check).
 
-- [ ] **Step 1: Write `ShipControlMappingTest.cs`**
+- [x] **Step 1: Write `ShipControlMappingTest.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/Ship/ShipControlMappingTest.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -475,7 +475,7 @@ public class ShipControlMappingTest : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Create the test harness GameObject**
+- [x] **Step 2: Create the test harness GameObject**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -487,11 +487,11 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 (`y: 30` keeps this object permanently isolated from the playable `Ship` at `y: 0`, following the same Y-lane-separation reasoning sub-project 1 used — this object never applies Y-axis force from thrust/torque phases other than the deliberate `ThrustVertical` phase, which moves it a small, bounded distance over 1 second, nowhere near the playable ship's lane.)
 
-- [ ] **Step 3: Save the scene**
+- [x] **Step 3: Save the scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 4: Run the test**
+- [x] **Step 4: Run the test**
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`.
 
@@ -505,13 +505,13 @@ Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Stop"`.
 
 **If simulated time is barely advancing despite the wait** (check the intermediate phase-completion logs' timing), the Unity Editor window has likely lost OS focus — this exact issue occurred repeatedly during sub-project 1's execution and was fixed by clicking into the Editor window. Report this to the controller rather than treating it as a script bug; don't loop indefinitely on retries.
 
-- [ ] **Step 5: Verify the results**
+- [x] **Step 5: Verify the results**
 
 Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Log"]`, `FilterText: "ShipControlMappingTest] RESULT"`, `Count: 20`.
 
 Expected: 7 lines, one per phase (`ThrustForward`, `ThrustStrafe`, `ThrustVertical`, `TorquePitch`, `TorqueYaw`, `TorqueRoll`, `ZeroInput`), all `PASS`. If any `FAIL`, report the actual logged values — do not adjust `minTargetAxisUnits`/`maxOffAxisUnits` to force a pass; a genuine failure here means the input-to-physics mapping is wrong (e.g. an axis swap or sign error), which is exactly the class of bug this task exists to catch.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Assets/Scripts/Ship/ShipControlMappingTest.cs Assets/Scripts/Ship/ShipControlMappingTest.cs.meta \
@@ -528,3 +528,35 @@ After Task 4, the control-mapping code is proven correct: each of the 6 control 
 If pitch feels inverted, flip `ShipInputReader.invertPitch` on the `Ship` GameObject. If the ship feels too sluggish or too twitchy, tune `ShipPhysicsController.maxThrustForce`/`maxTorqueForce` (currently 10/5) or `ShipInputReader.mouseSensitivity` (currently 0.1) directly in the Inspector or via `Unity_ManageGameObject set_component_property`, then re-save the scene.
 
 This closes sub-project 2. Sub-project 3 (flying camera mode) replaces `ShipFollowCamera` with a properly designed system; sub-project 4 (visual feedback) adds thruster visuals tied to the same `ShipControlInput` values already flowing through `ShipPhysicsController`.
+
+**One thing to notice during your playtest, not yet decided:** the `Thrust` action's `3DVector` composite defaults to `Analog` mode, so pressing two thrust keys at once (e.g. `W`+`A`) produces a diagonal thrust vector of magnitude ≈1.73×, not 1×. For a ship with independent per-axis thrusters this is arguably more physically honest than clamping to 1×, but it wasn't a deliberate design decision — it's worth forming an opinion on while flying.
+
+---
+
+## Execution Record
+
+All 4 tasks executed via subagent-driven-development, per-task reviews skipped per standing instruction (one final review only). Full ledger with every controller ruling: `.superpowers/sdd/2026-08-15-unity-flight-controls/progress.md` (deleted after this plan closes — this section is the durable summary).
+
+**SpaceSim commit history** (`C:/Users/U6077517/SpaceSim`, building on sub-project 1's `31f396e`):
+- `8213f4d` — Task 1: `Ship` input action map
+- `cf5a6e8` — Task 2: `ShipControlInput`/`ShipInputReader`/`ShipPhysicsController`
+- `ddeb035` — Task 3: `FlightControlTest.unity` scene, placeholder ship, follow camera
+- `f509215` — Task 4: automated control-mapping verification (round 2 — round 1 caught a real test-harness bug, see below)
+- `48a584e` — final-review fix wave
+
+**Two real bugs found and fixed during execution**, both in this plan's own script text, not implementer error — both implementers correctly refused to fudge a FAIL rather than force a pass:
+1. **Task 4, round 1:** `ShipControlMappingTest` reset `linearVelocity`/`angularVelocity` between phases but never `transform.rotation`. `TorquePitch` (which runs while still at identity, so its own check passes clean) left the object rotated; that leftover rotation misaligned local vs. world axes for `TorqueYaw`/`TorqueRoll` after it — 2 genuine `FAIL`s with real off-axis leakage (6-8 units), not a mapping bug in `ApplyControlInput` itself. Fixed by resetting `transform.rotation = Quaternion.identity` alongside the velocity resets.
+2. **Input System package tooling** (Task 1, not a script bug but a real environment finding): `InputSystem.ListComposites()` doesn't exist in the installed package version, and `AssetDatabase.SaveAssets()` silently no-ops on the `.inputactions` asset's custom JSON importer. Worked around via empirical composite-name testing and the documented `InputActionAsset.ToJson()`/reimport round-trip, independently verified safe by the final reviewer (parsed both JSON versions, confirmed the pre-existing `Player`/`UI` maps were byte-identical apart from behavior-neutral schema-default fields).
+
+**Final whole-branch review** (opus, range `31f396e..f509215`) found 5 Important findings, all fixed and re-verified in one fix wave (commit `48a584e`):
+1. `ShipControlMappingTest`'s axis assertions used `Mathf.Abs()`, so a fully inverted control mapping would still `PASS` — could catch axis swaps but not sign errors. Fixed by asserting the correct sign directly.
+2. The `ZeroInput` phase zeroed velocity then checked it stayed zero — the exact "passes on an inert controller" shape sub-project 1's review ruled unacceptable, and it never checked for phantom torque or a damping regression. Fixed to seed a known nonzero linear+angular velocity and assert both are preserved.
+3. `ShipInputReader` read mouse `Look` delta inside `FixedUpdate`, making rotation sensitivity frame-rate dependent — directly corrupts the live playtest's judgment of pitch/yaw feel. Fixed by accumulating in `Update()` and consuming in `FixedUpdate()`.
+4. `ShipFollowCamera` used world-up, which gimbal-flips when the ship pitches through vertical — routine in unassisted 6DOF and corrupts the playtest's ability to judge pitch/roll. Fixed to use `target.up` and explicit `LookRotation`.
+5. `ShipInputReader`'s action lookups were unguarded despite the ledger's own evidence that `actionsAsset` assignment had already silently failed once (Task 3). Added guards with specific error logging.
+
+Also fixed in the same wave: `ShipPhysicsController` missing `RequireComponent`/using `Start()` instead of `Awake()` (Minors), and 3 scene-level playtest-quality issues — serialized `angularDamping: 0.05` (runtime-corrected but misleading in the Inspector), no light source, and `Ship`'s Rigidbody missing interpolation (visible stutter at 50Hz).
+
+One new Minor surfaced *during* the fix wave itself (not from the review): the `get_components` MCP tool's reflection-based inspection duplicates `MeshFilter`/`Renderer` instances (a `.mesh`/`.material` vs `.sharedMesh`/`.sharedMaterial` gotcha) — self-reported by the implementer, independently confirmed by the controller (embedded `Mesh` blocks named "Cube Instance" now serialized in the scene instead of a shared built-in-asset reference), parked as functionally inert scene bloat, not worth a third fix round.
+
+**Final committed script contents** (`Assets/Scripts/Ship/` in the SpaceSim repo) reflect both the Task-4 fix and the final-review fix wave — read the files directly for the authoritative current version rather than the code blocks in Tasks 2-4 above, which show each script's state as originally planned.
