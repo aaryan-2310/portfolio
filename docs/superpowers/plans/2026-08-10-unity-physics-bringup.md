@@ -246,9 +246,11 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
 - `name: "ImpulseDriftTest"`
 - `primitive_type: "Cube"`
-- `position: [-5, 0, 0]`
+- `position: [-5, 20, 0]`
 - `components_to_add: ["Rigidbody", "ImpulseDriftTest"]`
 - `component_properties: {"Rigidbody": {"mass": 1.0, "useGravity": false}}`
+
+(`y: 20` — see the note on lane separation in Task 5's Step 2. This object drifts unbounded along X for the whole test; it must never share a Y-lane with anything that could be in its path.)
 
 - [ ] **Step 3: Save the scene**
 
@@ -376,9 +378,11 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
 - `name: "ContinuousThrustTest"`
 - `primitive_type: "Cube"`
-- `position: [0, 0, 0]`
+- `position: [0, 40, 0]`
 - `components_to_add: ["Rigidbody", "ContinuousThrustTest"]`
 - `component_properties: {"Rigidbody": {"mass": 1.0, "useGravity": false}}`
+
+(`y: 40` — see the note on lane separation in Task 5's Step 2. At `thrustForce=5`/`mass=1` this object covers tens of units in Z well before the thrust phase ends; it needs its own permanently-clear lane, not just a few units of initial offset.)
 
 - [ ] **Step 3: Save the scene**
 
@@ -494,7 +498,7 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
 - `name: "CollisionBodyB"`
 - `primitive_type: "Cube"`
-- `position: [5, 0, 5]`
+- `position: [5, 0, 0]`
 - `components_to_add: ["Rigidbody"]`
 - `component_properties: {"Rigidbody": {"mass": 5.0, "useGravity": false}}`
 
@@ -502,11 +506,11 @@ Then call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
 - `name: "CollisionBodyA"`
 - `primitive_type: "Cube"`
-- `position: [-5, 0, 5]`
+- `position: [-5, 0, 0]`
 - `components_to_add: ["Rigidbody", "CollisionMomentumTest"]`
 - `component_properties: {"Rigidbody": {"mass": 2.0, "useGravity": false}, "CollisionMomentumTest": {"otherBody": {"find": "CollisionBodyB", "component": "Rigidbody"}}}`
 
-(`z: 5` for both keeps this pair clear of the `ImpulseDriftTest`/`ContinuousThrustTest` objects at `z: 0`, so drifting bodies from Tasks 3-4 can't spuriously collide with these.)
+**Lane separation across all three tests (`y` coordinate, not `z`):** none of the three test scripts ever apply force along Y, so each test's group is placed on its own permanent Y-lane and can never re-enter another test's lane no matter how far it travels: `ImpulseDriftTest` at `y=20` (drifts unbounded along X), `ContinuousThrustTest` at `y=40` (accelerates unbounded along Z — at `thrustForce=5`/`mass=1` it covers tens of units before the thrust phase even ends), `CollisionBodyA`/`CollisionBodyB` at `y=0` (move only along X, converging then separating along the same line). A same-Y, few-units-of-Z offset would NOT be sufficient here — both `ImpulseDriftTest` and `ContinuousThrustTest` cover far more distance than a small fixed offset over a 10s window, so only an axis none of them ever moves along (Y) gives permanent isolation.
 
 - [ ] **Step 3: Save the scene**
 
