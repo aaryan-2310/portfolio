@@ -428,6 +428,14 @@ public class ShipControlMappingTest : MonoBehaviour
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            // ApplyControlInput's torque is local-space (transform.TransformDirection),
+            // by design — pitch/yaw/roll always mean "relative to the ship's current
+            // facing," which is correct for a flight controller. But this test checks
+            // world-space rb.angularVelocity against fixed world axes, so it must also
+            // reset orientation between phases — otherwise a rotation left over from an
+            // earlier torque phase misaligns local and world axes for every phase after
+            // it, producing spurious off-axis "leakage" that isn't actually a mapping bug.
+            transform.rotation = Quaternion.identity;
         }
 
         var phase = phases[phaseIndex];
