@@ -34,7 +34,7 @@
 **Interfaces:**
 - Produces: `class ShipChaseCamera : MonoBehaviour` with `public Transform target;`, `public float distance = 8f;`, `public float height = 3f;`, `public float positionSmoothSpeed = 5f;`, `public float rotationSmoothSpeed = 5f;`, `public float verticalDotThreshold = 0.98f;` — Task 2's verification script reads this component's resulting `transform.forward`/`transform.up` via the `FollowCamera` GameObject's `Transform`, but does not call any of its methods directly (it only observes, since the behavior under test is `LateUpdate` itself).
 
-- [ ] **Step 1: Write `ShipChaseCamera.cs`**
+- [x] **Step 1: Write `ShipChaseCamera.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/Ship/ShipChaseCamera.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -94,17 +94,17 @@ public class ShipChaseCamera : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Delete `ShipFollowCamera.cs`**
+- [x] **Step 2: Delete `ShipFollowCamera.cs`**
 
 Call `mcp__unity-mcp__Unity_ManageAsset` with `Action: "Delete"`, `Path: "Assets/Scripts/Ship/ShipFollowCamera.cs"`, `GeneratePreview: false`. This removes both the script and its `.meta` file.
 
-- [ ] **Step 3: Swap the component on `FollowCamera`**
+- [x] **Step 3: Swap the component on `FollowCamera`**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with `action: "remove_component"`, `target: "FollowCamera"`, `components_to_remove: ["ShipFollowCamera"]`.
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with `action: "add_component"`, `target: "FollowCamera"`, `components_to_add: ["ShipChaseCamera"]`.
 
-- [ ] **Step 4: Assign the `target` reference**
+- [x] **Step 4: Assign the `target` reference**
 
 Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -127,13 +127,13 @@ internal class CommandScript : IRunCommand
 }
 ```
 
-- [ ] **Step 5: Verify and save**
+- [x] **Step 5: Verify and save**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with `action: "get_components"`, `target: "FollowCamera"`. Confirm `ShipChaseCamera` is present with `target` assigned (not null) and `ShipFollowCamera` is absent from the component list.
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 6: Basic Play-mode smoke check**
+- [x] **Step 6: Basic Play-mode smoke check**
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`.
 
@@ -145,7 +145,7 @@ Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Stop"`.
 
 Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Error", "Warning"]`, `Count: 20`. Expected: no errors or warnings referencing `ShipChaseCamera`. This is a basic sanity check only — Task 2 provides the actual numeric proof of correctness.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add Assets/Scripts/Ship/ShipChaseCamera.cs Assets/Scripts/Ship/ShipChaseCamera.cs.meta \
@@ -166,7 +166,7 @@ git commit -m "feat: replace ShipFollowCamera with horizon-stabilized ShipChaseC
 - Consumes: `ShipPhysicsController.ApplyControlInput(ShipControlInput)` (drives the real `Ship`), `ShipChaseCamera`'s resulting `transform.forward`/`transform.up` on the real `FollowCamera` (observed only, not called into).
 - Produces: `class ShipCameraVerificationTest : MonoBehaviour`. Logs one `[ShipCameraVerificationTest] RESULT: PASS|FAIL ...` line per phase (4 total: `YawTracking`, `PitchTracking`, `RollStability`, `VerticalGimbalSafety`).
 
-- [ ] **Step 1: Write `ShipCameraVerificationTest.cs`**
+- [x] **Step 1: Write `ShipCameraVerificationTest.cs`**
 
 Call `mcp__unity-mcp__Unity_CreateScript` with `Path: "Assets/Scripts/Ship/ShipCameraVerificationTest.cs"`, `ScriptType: "MonoBehaviour"`, `Contents`:
 
@@ -283,7 +283,7 @@ public class ShipCameraVerificationTest : MonoBehaviour
 }
 ```
 
-- [ ] **Step 2: Create the test harness GameObject**
+- [x] **Step 2: Create the test harness GameObject**
 
 Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 - `action: "create"`
@@ -293,7 +293,7 @@ Call `mcp__unity-mcp__Unity_ManageGameObject` with:
 
 (This object has no `Rigidbody`/`Collider` of its own — it drives the real `Ship`'s existing `Rigidbody`/`ShipPhysicsController` and observes the real `FollowCamera`'s `Transform` directly, rather than using an isolated test rig. Position is cosmetic only.)
 
-- [ ] **Step 3: Assign the cross-object references**
+- [x] **Step 3: Assign the cross-object references**
 
 Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -323,11 +323,11 @@ internal class CommandScript : IRunCommand
 }
 ```
 
-- [ ] **Step 4: Save the scene**
+- [x] **Step 4: Save the scene**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
-- [ ] **Step 5: Run the test**
+- [x] **Step 5: Run the test**
 
 Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Play"`.
 
@@ -341,13 +341,13 @@ Call `mcp__unity-mcp__Unity_ManageEditor` with `Action: "Stop"`.
 
 **If simulated time is barely advancing despite the wait**, the Unity Editor window has likely lost OS focus — this happened repeatedly during sub-projects 1-2 and was fixed by clicking into the Editor window. Report this to the controller rather than treating it as a script bug; don't loop indefinitely on retries.
 
-- [ ] **Step 6: Verify the results**
+- [x] **Step 6: Verify the results**
 
 Call `mcp__unity-mcp__Unity_ReadConsole` with `Action: "Get"`, `Types: ["Log"]`, `FilterText: "ShipCameraVerificationTest] RESULT"`, `Count: 20`.
 
 Expected: 4 lines (`YawTracking`, `PitchTracking`, `RollStability`, `VerticalGimbalSafety`), all `PASS`. If any `FAIL`, report the actual logged values — do not adjust the dot-product thresholds to force a pass; a genuine failure here means the camera's tracking, roll-stabilization, or gimbal-safety logic is actually wrong, which is exactly what this task exists to catch.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add Assets/Scripts/Ship/ShipCameraVerificationTest.cs Assets/Scripts/Ship/ShipCameraVerificationTest.cs.meta \
@@ -364,3 +364,35 @@ After Task 2, the camera's tracking, roll-stabilization, and gimbal-safety are p
 If the camera feels laggy or too snappy, tune `ShipChaseCamera.positionSmoothSpeed`/`rotationSmoothSpeed` (currently 5/5). If it feels too close/far or too high/low, tune `distance`/`height` (currently 8/3). Adjust via the Inspector or `Unity_ManageGameObject set_component_property`, then re-save the scene.
 
 This closes sub-project 3. Sub-project 4 (visual feedback) can now add thruster visuals with a stable camera to view them through; sub-project 7 (cockpit/first-person mode, added to the roadmap 2026-08-15) is an independent addition whenever it's scheduled.
+
+**One open item to watch for during the playtest, deliberately not fixed:** the camera aims parallel to the ship's heading (`LookRotation(target.forward, upHint)`) rather than at the ship itself, so in level flight the ship sits noticeably below center in frame — the final review flagged this as a real spec gap, not an implementer bug. It wasn't fixed in this plan because doing so changes what `YawTracking`/`PitchTracking` actually measure (camera would aim at a point near the ship rather than parallel to its heading, adding position-lag error on top of the already-tuned smoothing-lag error those phases assert against) and risked yet another round retuning already-passing thresholds — this sub-project had already gone through 5 fix-wave rounds by the time this was triaged. If the framing looks off, the fix is to aim at a point near the ship (e.g. `LookRotation(target.position + Vector3.up * aimHeight - transform.position, upHint)`, which still preserves roll-discarding since the up-hint still controls only roll) — treat it as a small follow-up, not a re-open of this plan.
+
+---
+
+## Execution Record
+
+All 2 tasks executed via subagent-driven-development, per-task reviews skipped per standing instruction (one final review only). Full ledger with every controller ruling: `.superpowers/sdd/2026-08-15-unity-flying-camera/progress.md` (deleted after this plan closes — this section is the durable summary).
+
+**SpaceSim commit history** (`C:/Users/U6077517/SpaceSim`, building on sub-project 2's `c83cccd`):
+- `5f6af50` — Task 1: `ShipChaseCamera` replacing `ShipFollowCamera`
+- `bf8227b` — Task 2: automated 4-phase verification harness (initial version — later substantially reworked, see below)
+- `104e14c` — final-review fix wave (5 rounds — see below)
+
+**Both tasks landed clean on the first attempt** — no bugs during Tasks 1-2 themselves, unlike sub-projects 1-2. The final whole-branch review is where this plan got genuinely hard.
+
+**Final whole-branch review** (opus, range `c83cccd..bf8227b`) found 2 Critical and 4 Important findings, all rooted in the *verification harness*, not the camera implementation as originally shipped:
+1. The harness left `Ship`'s `ShipInputReader` enabled during its own run — live input summed silently with the harness's synthetic torque (`ApplyControlInput` is purely additive), producing unrepeatable results. The reviewer independently re-read the live console and caught a `RollStability FAIL` that contradicted the recorded PASS.
+2. The `VerticalGimbalSafety` no-flip check sampled camera state *after* Slerp smoothing, which mathematically bounds single-tick rotation regardless of how discontinuous the underlying target was — the check could not fail for any camera, broken or not.
+3. The harness component was saved *enabled* in the scene, so it would re-run and disrupt the ship on every future Play session, including the live playtest.
+4. `RollStability` sampled once at phase-end against a loose threshold, rather than continuously — a fully-roll-inheriting camera could pass by luck of timing.
+
+**What it took to actually close those findings — 5 fix-wave rounds, not 1:**
+- **Round 1** (sonnet): applied the direct fixes for findings 1-4 — disable `ShipInputReader` during the run, expose `ShipChaseCamera.DesiredRotation` for a pre-smoothing flip check, redesign `VerticalGimbalSafety` as a controlled pulse-then-coast sweep (closing a 3rd, related finding — the near-vertical *exit* was never exercised — as a side effect), continuous min-tracking for `RollStability`. Hit real Editor Play-mode throttling (window losing OS focus under headless MCP automation) repeatedly during this round and the ones after — a known issue from sub-projects 1-2, but markedly worse here, at one point fully stalling (simulated time frozen for 20+ real seconds) rather than just slowing down.
+- **Round 2**: after the throttling resolved, 2/4 phases genuinely FAILed — not the environment. Root cause: only the ship's Rigidbody state was reset between phases, not the camera's own `transform.rotation`/`lastUpHint`, so a phase inherited the *previous* phase's orientation and had to visibly "catch up," which the new continuous monitoring (correctly) flagged as a discontinuity. Fixed by adding `ShipChaseCamera.SnapToTarget()` — an instant, no-smoothing snap to the current target, invoked only by the test harness between phases.
+- **Round 3**: `RollStability` still failed identically. Root cause: `Ship`'s `Rigidbody.interpolation = Interpolate` means a direct `Rigidbody.rotation` assignment doesn't synchronously update `Transform.forward`. Approved fix: `Physics.SyncTransforms()` before `SnapToTarget()` — **this was wrong**, see round 5.
+- **Round 4**: `RollStability`'s failing value was byte-identical before and after round 3's fix — a strong signal the real bug was untouched. Escalated to a fresh implementer on a more capable model per the standard fix-loop escalation pattern (3 rounds resuming the same agent, then a fresh one on a stronger model), rather than a 4th guess.
+- **Round 5** (fresh implementer, opus): found the real story via live instrumentation, not further reasoning. `Physics.SyncTransforms()` syncs Transform→PhysX — the *opposite* direction from what round 3 needed; it never helped. The actual fix was writing `shipRigidbody.transform.rotation` directly. Separately, this round also found and fixed a genuine latent bug in `ShipChaseCamera` **itself** (not just the test): blending the gimbal-safety up-hint as a raw `Vector3.Slerp` could sweep it through the ship's forward axis when pitched steeply, leaving `LookRotation` deriving roll from a near-zero, sign-flipping residual — reworked to project both candidate hints onto the plane perpendicular to forward before blending. All 4 phases passed cleanly afterward with real margin (`RollStability` exact 1.00000, `VerticalGimbalSafety` 16.76° against a 45° threshold, down from 166° in round 1).
+
+**Lesson for future sub-projects on this project:** `Physics.SyncTransforms()` syncs Transform state *into* PhysX, not the reverse — if a `Rigidbody` write needs to be immediately visible via `.transform`, write the `Transform` directly too, don't reach for `SyncTransforms()`. This cost a full extra round in this plan.
+
+**Final committed script contents** (`Assets/Scripts/Ship/` in the SpaceSim repo) reflect the full round-5 fix — read the files directly for the authoritative current version rather than the code blocks in Tasks 1-2 above, which show each script's state as originally planned, well before the review found what was actually wrong.
