@@ -31,7 +31,7 @@
 **Interfaces:**
 - Produces: `Assets/Environment/StarfieldSkybox.mat` assigned as `RenderSettings.skybox` — Task 2 doesn't consume this directly (it only touches the `Sun` light and ambient values, which are downstream effects of this task, not a direct code interface).
 
-- [ ] **Step 1: Download the starfield and write the credits file**
+- [x] **Step 1: Download the starfield and write the credits file**
 
 ```bash
 mkdir -p /c/Users/U6077517/SpaceSim/Assets/Environment
@@ -59,7 +59,7 @@ Used as-is (celestial/ICRF coordinates, 4K resolution) with no modification,
 per the dataset's free-use-with-credit terms.
 ```
 
-- [ ] **Step 2: Trigger import and fix the texture's color-space setting**
+- [x] **Step 2: Trigger import and fix the texture's color-space setting**
 
 Call `mcp__unity-mcp__Unity_ManageAsset` with `Action: "Import"`, `Path: "Assets/Environment/starmap_2020_4k.exr"`, `GeneratePreview: false`.
 
@@ -94,7 +94,7 @@ internal class CommandScript : IRunCommand
 
 Expected: `starTexture loaded: True, width=4096, height=2048`.
 
-- [ ] **Step 3: Confirm the Panoramic skybox shader's texture property name before using it**
+- [x] **Step 3: Confirm the Panoramic skybox shader's texture property name before using it**
 
 Don't assume the property name — verify it. Call `mcp__unity-mcp__Unity_RunCommand` with:
 
@@ -122,7 +122,7 @@ internal class CommandScript : IRunCommand
 
 Find the property of type `Texture` (there should be exactly one, most likely named `_MainTex` — Unity's built-in Panoramic skybox shader has used this name across recent versions, but confirm from the actual logged output before the next step, and substitute the real name if it differs).
 
-- [ ] **Step 4: Build the material, assign it, refresh ambient**
+- [x] **Step 4: Build the material, assign it, refresh ambient**
 
 Call `mcp__unity-mcp__Unity_RunCommand` with (replace `_MainTex` if Step 3 found a different property name):
 
@@ -158,13 +158,13 @@ internal class CommandScript : IRunCommand
 
 Expected: `skybox assigned: True`, and `ambientSkyColor` reading something close to black (e.g. each channel well under `0.05`) — not the old default's blue-ish `(0.212, 0.227, 0.259)`. If it's still close to the old value, `DynamicGI.UpdateEnvironment()` may need the Editor to process a frame first — try calling `mcp__unity-mcp__Unity_ManageEditor` with `Action: "GetState"` (a harmless round-trip that lets pending Editor work flush) and re-check `RenderSettings.ambientSkyColor` via a fresh `Unity_RunCommand` log before concluding it didn't work.
 
-- [ ] **Step 5: Save the scene and take a sanity-check screenshot**
+- [x] **Step 5: Save the scene and take a sanity-check screenshot**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
 Call `mcp__unity-mcp__Unity_SceneView_Capture2DScene` (or `Unity_Camera_Capture`) to confirm visually: the background should now show stars against black/near-black, not Unity's default blue gradient sky.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Assets/Environment/starmap_2020_4k.exr Assets/Environment/starmap_2020_4k.exr.meta \
@@ -185,7 +185,7 @@ git commit -m "feat: import NASA Deep Star Maps 2020 starfield as the scene skyb
 
 **Interfaces:** None — this task only changes serialized values on an existing component, no new code or cross-task interface.
 
-- [ ] **Step 1: Load the scene and enable shadows on `Sun`**
+- [x] **Step 1: Load the scene and enable shadows on `Sun`**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Load"`, `Name: "FlightControlTest"`, `Path: "Assets/Scenes"` (if not already the active scene).
 
@@ -215,7 +215,7 @@ internal class CommandScript : IRunCommand
 }
 ```
 
-- [ ] **Step 2: Save, screenshot, and tune intensity visually**
+- [x] **Step 2: Save, screenshot, and tune intensity visually**
 
 Call `mcp__unity-mcp__Unity_ManageScene` with `Action: "Save"`.
 
@@ -228,7 +228,7 @@ Judge the result against these criteria, not a specific target number:
 
 If the ship looks too dark/flat, increase `light.intensity` (try `5`, then `8` if still not enough) via another `Unity_RunCommand` call setting `light.intensity` directly on the same `Light` component, re-screenshot, repeat. If it looks overexposed, decrease it. Once satisfied, note the final chosen value for the report — there's no single "correct" number here, only "looks convincingly like a spacecraft lit by a real star in vacuum."
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add Assets/Scenes/FlightControlTest.unity
@@ -242,3 +242,27 @@ git commit -m "feat: configure true vacuum lighting for the Sun light (shadows, 
 After Task 2, the scene shows the real ship against a real, Gaia-catalog-based starfield, lit by a single directional light with hard shadows and minimal skybox-sourced ambient — no more default procedural sky, no more placeholder lighting. There's no automated check for this (it's visual configuration, not logic), so the actual acceptance signal is the screenshots taken in both tasks — hand them to your human partner. If the lighting intensity or shadow softness still doesn't look right once seen at full resolution, that's a quick follow-up (`Light.intensity`/`Light.shadows` on the `Sun` GameObject), not a re-open of this plan.
 
 This closes sub-project 5. Sub-project 4 (thruster VFX, using the built-in Particle System per the researched ecosystem survey — VFX Graph is unavailable on WebGL) is next.
+
+**Known follow-up, tracked separately, not part of this plan:** `Ship/wlv01_exterior/Ext_AftFairing` is still on glTFast's fallback default material (fully metallic, fully rough, no diffuse response) — a pre-existing gap from sub-project 6's import, made visible now that the environment is dark instead of a bright default sky. Flagged as its own follow-up task rather than fixed here, since fixing it would reopen an already-closed plan's scope.
+
+---
+
+## Execution Record
+
+Both tasks executed via subagent-driven-development, per-task reviews skipped per standing instruction (one final review only). Full ledger with every controller ruling: `.superpowers/sdd/2026-08-22-unity-space-environment/progress.md` (deleted after this plan closes — this section is the durable summary).
+
+**SpaceSim commit history** (`C:/Users/U6077517/SpaceSim`, building on sub-project 6's `b70a0d6`):
+- `39fc3dd` — Task 1: import the starfield, build the skybox, refresh ambient
+- `9e3dffa` — Task 2: true vacuum lighting for the `Sun` light
+- `30f2ff1` — Git LFS configured for forward-only `*.exr`/`*.glb` tracking (user-requested during final review triage, not a retroactive history migration — that would rewrite every commit hash referenced throughout this session's documentation)
+- `ae19267` — `CREDITS.md` licensing-language precision fix
+- `aeb1f41` — final-review fix wave (WebGL texture format, measured lighting)
+
+**Two real findings caught and self-corrected by implementers, no escalation needed:** Task 1's import script (as written in the plan) omitted `maxTextureSize`, silently halving the texture to 2048×1024 — caught via self-review, fixed to the correct 4096×2048 before committing. Separately, the plan's own verification criterion checked the wrong `RenderSettings` field (`ambientSkyColor`, which is Trilight-mode-only) for confirming the ambient refresh — the implementer correctly identified `ambientProbe` as the field that actually matters for this scene's Skybox ambient mode, and verified against that instead.
+
+**Final whole-branch review** (opus, range `b70a0d6..9e3dffa`) verified extensively via live Unity queries rather than trusting the diff or either party's claims — confirmed the texture's actual resolution and color-space settings, confirmed every asset reference resolves with no dangling `{fileID: 0}`, and independently verified the ambient-mode correction by reading which `RenderSettings` field Unity's own shaders actually consume for Skybox mode, backed by two discriminators (a 12× magnitude jump and a hue-order flip that a stale value couldn't produce). Found 3 Important findings, no Critical:
+1. **Fixed** (commit `aeb1f41`): the WebGL texture platform override was never set, so Unity would resolve the starfield to 8-bit LDR `DXT5` at build time — clipping HDR star brightness and banding across the near-black gradients. A spec-required setting the plan's script silently dropped. Overrode with `RGB9E5` (HDR-capable, uncompressed), verified via readback.
+2. **Fixed** (commit `aeb1f41`): the screenshot-tuned `Sun.intensity=3` was never checked against actual pixel values, and with zero `Volume`/tonemapper components in the scene, URP hard-clips at 1.0 with no headroom — a screenshot can't visually distinguish a value just over 1.0 from exactly 1.0. Measured via pixel readback (not just re-judged by eye): p95-of-hull-pixels at intensity 3 was `1.087`, closely matching the reviewer's own analytical prediction (`~1.17`) and confirming the finding was real, not speculative. Reduced to intensity `2` (p95 = `0.733`, comfortably non-clipping) using a p95 threshold rather than literal single-pixel max — a small specular-glint pixel population clips at any reasonable intensity, and chasing zero clipped pixels anywhere would underexpose the entire hull to avoid a physically normal artifact. Also set a deliberate light direction (`(35, 200, 0)`, confirmed via close-up render to give real three-quarter shading, not a flat face) and enabled realistic color temperature (`6570K`, reusing the scene's existing dormant value) — both explicitly requested by the spec ("deliberately chosen values") but dropped by the plan, which only tuned intensity.
+3. **Not fixed here, flagged as a follow-up** (see above): `Ext_AftFairing`'s missing material — confirmed pre-existing from sub-project 6, not introduced by this plan.
+
+**Final committed scene/asset state** (`FlightControlTest.unity`, `starmap_2020_4k.exr.meta` in the SpaceSim repo) reflects the fix wave — read those files directly for the authoritative current values (intensity, direction, color temperature, WebGL texture format) rather than the plan's own Task 2 code block above, which shows the pre-review starting values.
