@@ -33,22 +33,59 @@ Each gets its own spec → plan → build cycle. Order respects dependencies:
    before building anything user-facing on top of it.
 2. **Newtonian flight controls** *(needs #1)*: real input (new Input System, already installed)
    mapped to force/torque on the ship's rigid body. Degrees-of-freedom (full 6DOF vs. constrained)
-   is an open question for that spec.
+   is an open question for that spec. Apply the **engineering-grounded lens** (see below): decompose
+   the propulsion/RCS layout as a real subsystem before mapping input to force/torque.
 3. **Flying camera mode** *(needs #2)*: replaces the old static `EXT_CAM` reveal shot entirely
    (per the "fully replace" decision) — chase-cam vs. other options TBD in that spec.
 4. **Visual feedback** *(needs #2)*: thruster particles (URP-compatible VFX Graph), engine glow
-   tied to throttle, speed sensation.
+   tied to throttle, speed sensation. Apply the **engineering-grounded lens**: drive these visuals
+   from the propulsion subsystem's actual state (throttle → fuel flow → thrust → exhaust), not as
+   decoration bolted onto the hull.
 5. **Play space** *(needs #1, informs #3's bounds)*: what's actually flown through/toward —
    explicitly deferred until physics bring-up shows what's feasible.
 6. **Asset pipeline into Unity**: bringing the existing Blender-authored GLB assets (`deck.glb`,
    `wlv01_exterior.glb`, with today's radiator/hull-fix/curved-window/PBR-materials work) into
    Unity via the **glTFast** (or UnityGLTF) package, rather than re-modeling from scratch. Not
    strictly ordered relative to 2-5 — needed whenever the real ship model (rather than a
-   placeholder) is required. Sub-project 1 deliberately does NOT need this (see below).
+   placeholder) is required. Sub-project 1 deliberately does NOT need this (see below). Apply the
+   **engineering-grounded lens**: preserve component-level object structure on import (engine
+   housing/nozzle/gimbal as separate nodes, not one fused mesh) wherever sub-projects 2/4 need to
+   drive a part independently.
 7. **Cockpit / first-person camera mode** *(needs #2)*: a toggleable first-person view from the
    ship's cockpit, alongside sub-project 3's chase camera. Added 2026-08-15 — was one of the
    options considered for sub-project 3 (chase-cam vs. cockpit vs. both), which chose chase-cam
    only; tracked here rather than left unscheduled. Unordered relative to #4-#6; not started.
+
+### Design lens for sub-projects 2, 4, 6: engineering-grounded subsystems
+
+Decided 2026-08-16, folded in rather than spun up as standing infrastructure: no new Claude Code
+agents (`spacecraft-systems-engineer`, `physics-reviewer`), no four-layer asset ontology, no
+runtime digital-twin/telemetry API. WLV-01 is one hero ship for a portfolio site, not a
+multi-vessel sim — docking, deployable radiators, and landing-gear actuation stay out of scope
+unless a future sub-project actually needs them. What *is* adopted, applied inline when each of
+these three sub-projects gets its own brainstorming cycle:
+
+- **Subsystem decomposition before mapping.** For sub-project 2, work out the propulsion/RCS
+  layout as a real system first — how many thrusters, where, opposing pairs for pure rotation vs.
+  offset for combined translation+rotation, gimbaled main engine or fixed — *then* map Input
+  System actions to the forces/torques that layout actually produces. Not "map WASD to
+  AddForce/AddTorque and call it done."
+- **Physics-plausibility check, not a separate review agent.** Before finalizing sub-project 2's
+  thruster placement, sanity-check by hand (or ask in the same session) whether the claimed
+  authority is real: does this RCS arrangement actually produce the yaw/pitch/roll authority the
+  design assumes, given where the thrusters sit relative to the center of mass? This is a question
+  asked during that spec's own design section, not a standing gate run by a dedicated agent.
+  Mirrors the discipline sub-project 1 already applies to momentum (logged, asserted, not
+  eyeballed) and that the in-flight PBR-materials plan already applies to surface detail (anchored
+  to a real Apollo CM reference, not invented).
+- **State-driven visuals, not decoration.** Sub-project 4's thruster/engine-glow VFX should read
+  from the propulsion subsystem's actual per-thruster/throttle state established in sub-project 2,
+  so visual intensity tracks real thrust rather than an independently-tuned particle system.
+- **Component-preserving import.** Sub-project 6's GLB import should keep the physical parts that
+  sub-projects 2/4 need to drive individually — main-engine nozzle, any gimbal mount, thruster
+  nozzles — as separately addressable objects/nodes in the Unity scene graph, not baked into one
+  static mesh, *if* those sub-projects end up needing to move or light a specific part
+  independently. Don't restructure the existing export for parts nothing yet drives.
 
 ## Sub-Project 1: Physics Bring-Up — detailed design
 
